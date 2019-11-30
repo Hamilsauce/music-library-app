@@ -180,7 +180,6 @@
 		flex-direction: column;
 		text-align: right;
 		justify-content: space-around;
-		/* width: 30px; */
 		margin-right: 0;
 		z-index: 3;
 		padding: 0px;
@@ -211,7 +210,6 @@
 		background: var(--mainRed);
 	}
 
-	/* Start of Head Grid Styles*/
 	.grid-head {
 		box-sizing: border-box;
 		display: grid;
@@ -222,7 +220,6 @@
 		border-radius: 5px;
 		padding-right: 0px;
 		z-index: 0;
-		/* width: 750px; */
 	}
 	.header {
 		box-sizing: border-box;
@@ -238,7 +235,6 @@
 		justify-content: flex-start;
 		font-weight: 800;
 		user-select: none;
-		/* width: 250px; */
 	}
 
 	.header-button-container {

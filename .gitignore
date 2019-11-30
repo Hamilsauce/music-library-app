@@ -1,10 +1,13 @@
 .DS_Store
 node_modules
 stashed-files
-
+vue.config.js
+.gitignore
 # local env files
 .env.local
 .env.*.local
+vue.config.js
+.gitignore
 
 # Log files
 npm-debug.log*
@@ -20,3 +23,5 @@ yarn-error.log*
 *.sln
 *.sw?
 *.code-workspace
+vue.config.js
+.gitignore

@@ -61,26 +61,6 @@
 		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.637);
 		margin: 0;
 	}
-/* 
-	.MainGrid {
-		box-sizing: border-box;
-		max-width: 750px;
-		max-height: fit-content;
-		padding: 0px 0px 0px 0px;
-	}
-
-	.MainGrid {
-		box-sizing: border-box;
-		max-width: 750px;
-		max-height: 100%;
-		margin-top: 0px;
-		padding: 2px 10px 25px 10px;
-		border: 2px solid var(--transparentBlue);
-		border-radius: 7px;
-		background: var(--mainRed);
-        box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
-        width: 100%;
-	} */
 
 
 	.body-flex {
@@ -113,8 +93,6 @@
 		margin: 0;
 		background: var(--mainRed);
 	}
-
-	/* Start of Head Grid Styles*/
 	.grid-head {
 		box-sizing: border-box;
 		display: grid;
@@ -193,7 +171,6 @@
 		opacity: 0;
 		touch-action: manipulation;
 	}
-	/*! End of Head grid styles */
 
 	.grid-body {
 		box-sizing: border-box;
