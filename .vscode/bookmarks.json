@@ -1,0 +1,47 @@
+[
+	{
+		"path": "$ROOTPATH$\\models\\compClassModel.html",
+		"bookmarks": [
+			{
+				"line": 133,
+				"column": 2,
+				"label": ""
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$\\grid\\cellblue-main.js",
+		"bookmarks": [
+			{
+				"line": 23,
+				"column": 1,
+				"label": ""
+			},
+			{
+				"line": 95,
+				"column": 19,
+				"label": ""
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$\\grid\\cellblue-main.css",
+		"bookmarks": [
+			{
+				"line": 300,
+				"column": 28,
+				"label": ""
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$\\src\\App.vue",
+		"bookmarks": [
+			{
+				"line": 289,
+				"column": 39,
+				"label": ""
+			}
+		]
+	}
+]
