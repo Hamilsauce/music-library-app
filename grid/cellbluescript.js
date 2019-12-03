@@ -5,7 +5,7 @@ let headerDisplayState = true;
 const sidebar = document.querySelector('#sidebar-div');
 const toggleButton = document.querySelector('i');
 
-headerInput.addEventListener('click', (e) => {
+headerInput.addEventListener('click', () => {
     const submitButton = document.querySelector('.header-button');
 
     let buttonState = submitButton.style.opacity == 0 ? true : false;
@@ -16,7 +16,7 @@ headerInput.addEventListener('click', (e) => {
     }
 });
 
-const messenger = (msg) => {
+const messenger = msg => {
     const chatCell = document.querySelector('.cell5');
     chatCell.innerHTML = msg;
 }
@@ -36,7 +36,7 @@ document.querySelector('.header-button').addEventListener('click', (e) => {
 
 });
 
-const hiddenDiv = hide => {
+const hiddenDiv = () => {
     if (headerDisplayState === true) {
         headerDisplayState = false;
 

@@ -4,45 +4,47 @@
 			<h1>Jake's Sweet Grid Interface</h1>
 			<h3>Such cool, very wow!</h3>
 		</header>
-		<div class="content-container">
-			<div class="grid-head">
+		<div class="app-shell">
+			<div class="shell-head">
 				<div class="header header1">
 					<h1>grid STUFF</h1>
 				</div>
 				<div class="header header2">
-					<div class="header-button-container">
 						<label for="header-text-input" class="header2-label">inputs in here like a boss</label>
+					<div class="header-button-container">
 						<span class="header-form">
 							<div>
-								<input type="text" name="header-text-input" class="header-text-input" />
+								<input type="text" v-model="userMessage"  name="header-text-input" class="header-text-input" />
 							</div>
 							<span>
-								<input type="image" src="../src/assets/check-solid.svg" class="header-button" value />
+								<input type="submit" @click="getUserInput"  class="header-button"  />
 							</span>
 						</span>
+						<p class="messageOut">{{userMessage}}</p>
 					</div>
 				</div>
-			</div>
 			<div class="sidebar-toggle">
 				<span>
-					<i class="fas fa-angle-double-left"></i>
+					<i @click="toggleSidebar"  class="fas fa-angle-double-left"></i>
 				</span>
 			</div>
+			</div>
 			<div class="body-flex">
-				<MainGrid msg="Welcome to Your Vue.js App" />
-				<div id="sidebar-div" class="sidebar-hidden">fuck</div>
+				<MainGrid v-bind:songs="songs" msg="Welcome to Your Vue.js App" />
+				<div v-if="sidebarDisplayState === true" id="sidebar-div" class="sidebar-shown">fuck</div>
 			</div>
 		</div>
-
 		<div
 			class="hiddenMessage"
-			style="display: none; text-align: center; position: relative;"
+			v-if="headerDisplayState === false"
+			@click="toggleHeader"
+			style="text-align: center; position: relative;"
 		>Show Header</div>
 	</div>
 </template>
 
 <script>
-	import MainGrid from "./components/mainGrid.vue";
+	import MainGrid from "./components/MainGrid.vue";
 
 	export default {
 		name: "app",
@@ -52,18 +54,85 @@
 		props: {},
 		data() {
 			return {
-				headerDisplayState: true,
 				gridCell: {
 					id: null,
 					name: "",
 					content: "",
 					markup: ""
-				}
+				},
+				headerDisplayState: true,
+				submitDisplayState: true,
+				sidebarDisplayState: false,
+				userMessage: '',
+				CellData: [{
+					elementId: '',
+					title: '',
+					subject: '',
+					date: ''
+				}],
+				songs: [
+					{
+						"ID": "1",
+						"songTitle": "Battle Star",
+						"Plays": "12",
+						"likes": "4",
+						"genre": "Rock",
+						"Duration": "02:45",
+						"Published": "4 days ago",
+						"Comments": "3"
+					},
+					{
+						"ID": "3",
+						"songTitle": "The Gypsy",
+						"Plays": "12",
+						"likes": "5",
+						"genre": "Folk",
+						"Duration": "08:00",
+						"Published": "6 years ago",
+						"Comments": "0"
+					},
+					{
+						"ID": "4",
+						"songTitle": "A Moaner's Chain Gang",
+						"Plays": "51",
+						"likes": "2",
+						"genre": "Psychedlic",
+						"Duration": "02:18",
+						"Published": "18 days ago",
+						"Comments": "2"
+					},
+					{
+						"ID": "5",
+						"songTitle": "Lasers in the Jungle",
+						"Plays": "6",
+						"likes": "1",
+						"genre": "Folk",
+						"Duration": "02:32",
+						"Published": "18 days ago",
+						"Comments": "1"
+					},
+					{
+						"ID": "6",
+						"songTitle": "A Memory Remains(re - remastered)",
+						"Plays": "6",
+						"likes": "3",
+						"genre": "Ambient",
+						"Duration": "04:29",
+						"Published": "21 days ago",
+						"Comments": "1"
+					}
+				]
 			};
 		},
 		methods: {
 			toggleHeader() {
 				this.headerDisplayState = !this.headerDisplayState;
+			},
+			toggleSidebar() {
+				this.sidebarDisplayState = !this.sidebarDisplayState;
+			},
+			getUserInput() {
+
 			}
 		}
 	};
@@ -86,20 +155,25 @@
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
+		height: 100%;
 	}
 	body {
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
+		height: 100%;
+
 	}
 	#app {
+		box-sizing: content-box;
+		display: grid;
 		font-family: "Avenir", Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		text-align: center;
 		color: #2c3e50;
 		margin-top: 0px;
-		background: rgba(69, 46, 121, 0.835);
+		background: rgba(54, 46, 121, 0.849);
 		color: rgb(255, 255, 255);
 		font-family: "Montserrat", sans-serif;
 		font-size: 1rem;
@@ -107,33 +181,36 @@
 		line-height: 1.6;
 		height: 100%;
 		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.637);
+		padding: 0px 0px 0px 0px;
 		margin: 0;
 	}
-	.content-container {
+	.app-shell {
 		box-sizing: border-box;
 		max-width: 750px;
 		max-height: 100%;
 		margin-top: 0px;
-		padding: 2px 10px 25px 10px;
+		padding: 0px 10px 10px 10px;
 		border: 2px solid var(--transparentBlue);
 		border-radius: 7px;
 		background: var(--mainRed);
 		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
 		margin: auto;
+		width: 100%;
 	}
 
 	header {
+		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		padding: 5px 20px;
+		padding: 0px 20px;
 		border-radius: 8px;
 	}
 
 	i {
 		position: relative;
 		display: block;
-		margin-top: 75px;
+		margin-top: 0;
 		font-size: 1.1em;
 		height: fit-content;
 		width: fit-content;
@@ -155,12 +232,12 @@
 
 	header > h1 {
 		font-weight: 800;
-		font-size: 3em;
-		line-height: 1.1;
+		font-size: 2.5em;
+		line-height: 1;
 		letter-spacing: 0.05em;
 		margin: 5px 0px;
 		width: 100%;
-		text-align: center;
+		text-align: left;
 	}
 
 	h2,
@@ -179,17 +256,19 @@
 		display: flex;
 		flex-direction: column;
 		text-align: right;
-		justify-content: space-around;
+		justify-content: flex-end;
 		margin-right: 0;
 		z-index: 3;
-		padding: 0px;
+		padding: 5px;
 	}
 	.MainGrid {
 		box-sizing: border-box;
-		max-height: 625px;
+		max-height: 585px;
 		width: 100%;
 		margin: 0;
 		padding: 3px;
+		overflow: hidden;
+		z-index: 0;
 	}
 	.body-flex {
 		box-sizing: border-box;
@@ -202,15 +281,15 @@
 
 	.sidebar-shown {
 		box-sizing: border-box;
-		display: block;
-		z-index: 500;
-		width: 300px;
-		padding: 15px;
+		/* display: block; */
+		z-index: 1;
+		width: 175px;
+		padding: 5px;
 		margin: 0;
 		background: var(--mainRed);
 	}
 
-	.grid-head {
+	.shell-head {
 		box-sizing: border-box;
 		display: grid;
 		grid-template-columns: 6fr 9fr 1fr;
@@ -231,16 +310,24 @@
 	.header1 {
 		box-sizing: border-box;
 		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
+		flex-direction: row;
+		justify-content: flex-end;
+		text-align: left;
+		font-size: 1.2em;
 		font-weight: 800;
 		user-select: none;
+		width: fit-content;
+	}
+	.header1>h1 {
+		margin: 5px;
 	}
 
 	.header-button-container {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
+		height: fit-content;
+
 	}
 
 	.header-text-input {
@@ -257,36 +344,46 @@
 	.header2-label {
 		box-sizing: border-box;
 		margin-bottom: 3px;
-		margin: 10px auto 0px 0px;
+		margin: 10px auto ;
+		margin: 10auto;
+		text-align: center;
 		grid-area: hText;
+
 	}
 
 	.header-button {
+		box-sizing: border-box;
 		grid-area: button;
 		grid-column: span 2;
-		box-sizing: border-box;
-		height: 25px;
-		width: 20px;
-		color: var(--mainWhite);
-		border-radius: 5px;
+		/* height: 25px; */
+		/* width: 20px; */
+		padding: 5px;
+		font-size: 0.9em;
+		font-weight: 500;
 		margin-left: 10px;
+		background: #31588bbb;
 		outline: none;
-		opacity: 0;
+		border: 1px solid rgba(255, 255, 255, 0.24);
+		border-radius:3px;
+		color: white;
 		touch-action: manipulation;
 	}
 
 	.header2 {
 		box-sizing: border-box;
 		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
+		flex-direction: column;
+		text-align: center;
+		justify-content:center;
 
 		touch-action: manipulation;
 	}
 
 	.header-form {
 		display: flex;
+		justify-content: center;
 		touch-action: manipulation;
+		padding: 5px;
 	}
 
 	a {
@@ -307,24 +404,35 @@
 			display: none;
 		}
 
-		MainGrid {
+		.MainGrid {
 			height: 100%;
 			margin: auto;
-			margin-top: 10px;
-			padding: 2px 3px 15px 3px;
+
 		}
 
+
+
+.app-shell {
+		box-sizing: border-box;
+		max-width: 100vw;
+		max-height: 100%;
+		margin-top: 0px;
+		padding: 0px 3px 10px 3px;
+		border: 2px solid var(--transparentBlue);
+		border-radius: 7px;
+		background: var(--mainRed);
+		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
+		margin: auto;
+		overflow: auto;
+}
 		.sidebar-toggle {
-			color: white;
 			display: flex;
-			flex-direction: row;
-			text-align: left;
-			justify-content: left;
-			margin: 0;
+			flex-direction: column;
 			touch-action: manipulation;
+			padding: 0;
 		}
 
-		.grid-head {
+		.shell-head {
 			display: grid;
 			grid-template-columns: 4fr 8fr 10px;
 			font-size: 0.9em;
@@ -338,6 +446,7 @@
 
 		.header2 {
 			padding: 5px;
+			flex-direction: column;
 		}
 
 		.header2-label {
