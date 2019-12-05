@@ -17,7 +17,7 @@
 								<input type="text" v-model="userMessage"  name="header-text-input" class="header-text-input" />
 							</div>
 							<span>
-								<input type="submit" @click="getUserInput"  class="header-button"  />
+								<input type="submit"  class="header-button"  />
 							</span>
 						</span>
 						<p class="messageOut">{{userMessage}}</p>
@@ -30,8 +30,18 @@
 			</div>
 			</div>
 			<div class="body-flex">
-				<MainGrid v-bind:songs="songs" msg="Welcome to Your Vue.js App" />
-				<div v-if="sidebarDisplayState === true" id="sidebar-div" class="sidebar-shown">fuck</div>
+				<!-- <MainGrid v-bind:songs="songs" msg="Welcome to Your Vue.js App" /> -->
+				<router-view></router-view>
+				<div :class="{ sidebarShown: sidebarDisplayState} " id="sidebar-div" class="sidebarHidden">
+					<h4>Nav</h4>
+					<div class="links"
+					@click="initializeData" >
+						<div class="linkItem">
+						<router-link to="/">Main Grid</router-link>
+						</div>
+						<router-link to="/About">About</router-link>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div
@@ -44,12 +54,16 @@
 </template>
 
 <script>
-	import MainGrid from "./components/MainGrid.vue";
+	import EventBus from './components/eventBus.js'
+
+	import songList from '../data/SongData.js'
+
+
 
 	export default {
 		name: "app",
 		components: {
-			MainGrid
+			// MainGrid
 		},
 		props: {},
 		data() {
@@ -70,70 +84,26 @@
 					subject: '',
 					date: ''
 				}],
-				songs: [
-					{
-						"ID": "1",
-						"songTitle": "Battle Star",
-						"Plays": "12",
-						"likes": "4",
-						"genre": "Rock",
-						"Duration": "02:45",
-						"Published": "4 days ago",
-						"Comments": "3"
-					},
-					{
-						"ID": "3",
-						"songTitle": "The Gypsy",
-						"Plays": "12",
-						"likes": "5",
-						"genre": "Folk",
-						"Duration": "08:00",
-						"Published": "6 years ago",
-						"Comments": "0"
-					},
-					{
-						"ID": "4",
-						"songTitle": "A Moaner's Chain Gang",
-						"Plays": "51",
-						"likes": "2",
-						"genre": "Psychedlic",
-						"Duration": "02:18",
-						"Published": "18 days ago",
-						"Comments": "2"
-					},
-					{
-						"ID": "5",
-						"songTitle": "Lasers in the Jungle",
-						"Plays": "6",
-						"likes": "1",
-						"genre": "Folk",
-						"Duration": "02:32",
-						"Published": "18 days ago",
-						"Comments": "1"
-					},
-					{
-						"ID": "6",
-						"songTitle": "A Memory Remains(re - remastered)",
-						"Plays": "6",
-						"likes": "3",
-						"genre": "Ambient",
-						"Duration": "04:29",
-						"Published": "21 days ago",
-						"Comments": "1"
-					}
-				]
+				songs: songList
 			};
 		},
 		methods: {
+			initializeData() {
+				EventBus.$emit('dataLoad', this.songs);
+			},
 			toggleHeader() {
 				this.headerDisplayState = !this.headerDisplayState;
 			},
 			toggleSidebar() {
 				this.sidebarDisplayState = !this.sidebarDisplayState;
+				this.initializeData();
 			},
-			getUserInput() {
 
-			}
+			},
+
+
+		mounted() {
+			this.initializeData();
 		}
 	};
 </script>
@@ -183,6 +153,7 @@
 		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.637);
 		padding: 0px 0px 0px 0px;
 		margin: 0;
+		z-index: 0;
 	}
 	.app-shell {
 		box-sizing: border-box;
@@ -195,7 +166,8 @@
 		background: var(--mainRed);
 		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
 		margin: auto;
-		width: 100%;
+		width: 100%
+		z-index	0;
 	}
 
 	header {
@@ -275,11 +247,12 @@
 		display: flex;
 		justify-content: space-around;
 	}
-	.sidebar-hidden {
-		display: none;
+	.sidebarHidden {
+		width: 0px;
+		overflow: hidden;
 	}
 
-	.sidebar-shown {
+	.sidebarShown {
 		box-sizing: border-box;
 		/* display: block; */
 		z-index: 1;

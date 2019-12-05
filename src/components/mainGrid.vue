@@ -14,6 +14,9 @@
 
 <script>
 import WorkCell from './WorkCell.vue';
+
+import EventBus from './eventBus.js';
+
 	export default {
 		name: "MainGrid",
 		components: {
@@ -22,7 +25,17 @@ import WorkCell from './WorkCell.vue';
 		props: {
             msg: String,
            songs: Array
-		}
+		},
+		methods: {
+			listenForData() {
+			EventBus.$on('dataLoad', songData => {
+					this.songs = songData;
+				})
+			}
+		},
+		created() {
+			this.listenForData();
+		},
 	};
 </script>
 
