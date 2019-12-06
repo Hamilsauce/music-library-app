@@ -1,8 +1,8 @@
 <template>
         <div class="grid-cell">
             <p> {{ song.songTitle }} </p>
-            <p> {{ message }} </p>
-            <p> {{ message }} </p>
+            <p> {{ song.genre }} </p>
+
         </div>
 </template>
 
@@ -37,7 +37,10 @@
 
 
 	.grid-cell {
-        display: grid;
+        /* display: grid; */
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
         grid-template-columns: 1fr 1fr;
         min-height: 100px;
     min-width: 100px;
@@ -46,12 +49,12 @@
 		background: rgb(255, 255, 250);
 		border-radius: 3px;
 		border: 2px solid rgba(255, 255, 255, 0);
-		font-size: 1.2em;
-		font-weight: 600;
+		font-size: 1em;
+		font-weight: 500;
 		transition: 150ms box-shadow ease-in-out, 300ms background ease,
 			200ms border ease, 100ms font-weight ease;
         user-select: none;
-        overflow: auto;
+        /* overflow: auto; */
 	}
 
 	.grid-cell:hover {

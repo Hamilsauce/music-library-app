@@ -1,6 +1,8 @@
 <template>
         <div class="content">
             <h1> {{ message }} </h1>
+
+            <img src="../check.svg" class="check-image" alt="">
         </div>
 </template>
 
@@ -40,8 +42,14 @@
     .content {
         width: 100%;
         height: 125vw;
+        max-height: 585px;
         background: var(--mainBlue);
         border: 1px solid var(--lightPurple);
         border-radius: 5px;
+    }
+    .check-image {
+        background: white;
+        color: blue;
+        fill: #9c3a5f;
     }
 </style>
