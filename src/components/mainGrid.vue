@@ -5,7 +5,12 @@
 		</div>
 		<div class="grid-body">
 			<!-- <div class="grid-cell cell1">1</div>? -->
-			<work-cell v-for="(song) in songs" :key="song.id" :song="song"></work-cell>
+			<work-cell v-for="(song) in songs" :key="song.id" :song="song" @songCellActivated="handleActiveSong"></work-cell>
+		</div>
+		<div class="audio-container">
+			<audio id="audio-player">
+				<source  class="source" :src="audioSrc" type="audio/mpeg" />
+			</audio>
 		</div>
 	</div>
 </template>
@@ -22,8 +27,9 @@
 		},
 		data() {
 			return {
-				songList: this.songs
-			}
+				songList: this.songs,
+				audioSrc: ''
+			};
 		},
 		props: {
 			msg: String,
@@ -33,14 +39,30 @@
 			listenForData() {
 				EventBus.$on("dataLoad", data => {
 					this.songList = data;
-
 				});
+			},
+			handleActiveSong(songInfo) {
+
+				const audioPlayer = document.getElementById('audio-player')
+
+				let [urlOrError, songName] = songInfo;
+
+					console.log(songName, urlOrError);
+				if (urlOrError[0] === 'url') {
+					this.audioSrc = urlOrError[1];
+					audioPlayer.load();
+					audioPlayer.play();
+				}
+
+			EventBus.$emit('songActivated', songName);
+
+
 			}
 		},
 		computed: {
 			songs: function() {
 				return this.songList;
-	}
+			}
 		},
 		mounted() {
 			this.listenForData();
@@ -49,8 +71,6 @@
 </script>
 
 <style scoped>
-
-
 	:root {
 		--mainRed: #a04650;
 		--mainBlue: #284b78;
@@ -61,6 +81,10 @@
 		--mainWhite: #fffffa;
 	}
 
+
+	.audio-container {
+		display: none;
+	}
 	.grid-body {
 		box-sizing: border-box;
 		display: grid;
@@ -68,14 +92,13 @@
 		grid-template-columns: repeat(auto-fill, minmax(175px, 2fr));
 		/* grid-auto-rows: auto; */
 		grid-template-rows: auto;
-		/* max-height: fit-content; */
-		height: 115vw;
+		max-height: fit-content;
 		width: 100%;
 		margin: auto;
 		margin-top: 0px;
 		padding: 3px;
 		background: var(--mainBlue);
-		overflow-x: auto;
+		/* overflow-x: auto; */
 		border-radius: 0px 0px 5px5px;
 		border: 1px solid var(--lightPurple);
 	}
@@ -108,31 +131,30 @@
 		color: hsl(194, 60%, 43%);
 	}
 
-@media screen and (max-width: 450px) {
-	.grid-body {
-		height: 122vw;
-		max-height:122vw;
-		gap: 5px;
-		background: var(--mainBlue);
-		grid-template-columns: repeat(2, minmax(175px 1fr));
-		touch-action: manipulation;
-		overflow-x: auto;
+	@media screen and (max-width: 450px) {
+		.grid-body {
+			height: fit-content;
+			gap: 5px;
+			background: var(--mainBlue);
+			grid-template-columns: repeat(2, minmax(175px 1fr));
+			touch-action: manipulation;
+			/* overflow-x: auto; */
 			border-radius: 0px 0px 5px 5px;
 
-		/* border: 1px solid var(--lightPurple); */
-		border-top: 0px solid var(--lightPurple);
-		max-width: 100vw;
-		overflow-y: auto;
-	}
+			/* border: 1px solid var(--lightPurple); */
+			border-top: 0px solid var(--lightPurple);
+			max-width: 100vw;
+			/* overflow-y: auto; */
+		}
 
-	.grid-cell:nth-child(4n + 4) {
-		grid-column: span 2;
-	}
+		.grid-cell:nth-child(4n + 4) {
+			grid-column: span 2;
+		}
 
-	.cell2 {
-		grid-column: span 1;
+		.cell2 {
+			grid-column: span 1;
+		}
 	}
-}
 
 	@media screen and (max-width: 300px) {
 		.grid-body {

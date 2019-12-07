@@ -1,52 +1,55 @@
 <template>
 	<div id="app">
-		<header v-if="headerDisplayState === true" @click="toggleHeader">
-			<h1>Jake's Sweet Grid Interface</h1>
-			<h3>Such cool, very wow!</h3>
+		<header v-if="headerDisplayState === true">
+			<h4 class="seahag">SEAHAG enterprises</h4>
 		</header>
 		<div class="app-shell">
 			<div class="shell-head">
 				<div class="header header1">
-					<h1>music GUY </h1>
+					<h1>music GUY</h1>
 				</div>
 				<div class="header header2">
-						<label class="header2-label">inputs in here like a boss</label>
+					<label class="header2-label">inputs in here like a boss</label>
 					<div class="header-button-container">
 						<form class="header-form">
-								<input type="text"
-									v-model="userInput"
-									@input="toggleSubmit"
-									@click="userInput = ''"
-									name="header-text-input"
-									class="header-text-input" />
-								<i class="fas fa-check" v-show="submitDisplayState === true" @click="handleSubmit"></i>
+							<input
+								type="text"
+								v-model="userInput"
+								@change="handleClick()"
+								@focus="handleClick('focus')"
+								@blur="handleClick('blur')"
+								name="header-text-input"
+								class="header-text-input"
+							/>
+							<i class="fas fa-check" v-show="submitDisplayState === true" @click="handleSubmit"></i>
 						</form>
 					</div>
 				</div>
-			<div class="sidebar-toggle">
-				<span>
-					<i @click="toggleSidebar"  class="fas fa-angle-double-left sidebar-toggle"></i>
-
-
-				</span>
-			</div>
+				<div class="sidebar-toggle">
+					<span>
+						<i @click="toggleSidebar" class="fas fa-angle-double-left sidebar-toggle"></i>
+					</span>
+				</div>
 			</div>
 
-				<ToolBar :userInput="userInput"></ToolBar>
+			<ToolBar></ToolBar>
+			<div class="body-row">
 			<div class="body-flex">
 				<!-- <MainGrid v-bind:songData="songs" msg="Welcome to Your Vue.js App" /> -->
 
 				<router-view></router-view>
-				<div :class="{ sidebarShown: sidebarDisplayState} " id="sidebar-div" class="sidebarHidden">
-					<h4>Nav</h4>
-					<div class="links"
-					@click="initializeData" >
-						<div class="linkItem">
+			</div>
+			<div :class="{ sidebarShown: sidebarDisplayState} " id="sidebar-div" class="sidebarHidden">
+				<h4>Nav</h4>
+				<div class="links" @click="initializeData">
+					<div class="linkItem">
 						<router-link to="/" class="routerLink">Library</router-link>
-						</div>
+					</div>
+					<div class="linkItem">
 						<router-link to="/About" class="routerLink">About</router-link>
 					</div>
 				</div>
+			</div>
 			</div>
 		</div>
 		<div
@@ -59,11 +62,9 @@
 </template>
 
 <script>
-	import ToolBar from './components/ToolBar';
-	import EventBus from './components/eventBus.js';
-	import songList from '../data/SongData.js';
-
-
+	import ToolBar from "./components/ToolBar";
+	import EventBus from "./components/eventBus.js";
+	import songList from "../data/SongData.js";
 
 	export default {
 		name: "app",
@@ -82,19 +83,22 @@
 				headerDisplayState: true,
 				submitDisplayState: false,
 				sidebarDisplayState: false,
-				userInput: 'Message stuff',
-				CellData: [{
-					elementId: '',
-					title: '',
-					subject: '',
-					date: ''
-				}],
+				userInput: "Look a filter thing",
+				savedInput: "",
+				CellData: [
+					{
+						elementId: "",
+						title: "",
+						subject: "",
+						date: ""
+					}
+				],
 				songs: songList
 			};
 		},
 		methods: {
 			initializeData() {
-				EventBus.$emit('dataLoad', this.songs);
+				EventBus.$emit("dataLoad", this.songs);
 			},
 			toggleHeader() {
 				this.headerDisplayState = !this.headerDisplayState;
@@ -105,15 +109,35 @@
 			toggleSubmit() {
 				this.submitDisplayState = !this.submitDisplayState;
 			},
+			handleClick(event) {
+				console.log(event);
 
-			handleSubmit() {
-				EventBus.$emit('userInputSubmit', this.userInput);
-				this.userInput = '';
-				this.toggleSubmit();
-			}
+				if (event === "focus") {
+					this.submitDisplayState = true;
+					this.userInput = "";
+					return;
+				}
+				if (event === "blur") {
+					this.submitDisplayState = false;
+					return;
+				}
+				console.log(this.userInput.length);
 
+				if (this.userInput.length === 0) {
+					this.submitDisplayState = false;
+				} else {
+					this.submitDisplayState = true;
+				}
 			},
 
+			handleSubmit() {
+				// this.savedInput = this.userInput;
+				EventBus.$emit("userInputSubmit", this.userInput);
+
+				this.userInput = "";
+				this.toggleSubmit();
+			}
+		},
 
 		mounted() {
 			this.initializeData();
@@ -122,14 +146,13 @@
 </script>
 
 <style>
-
 	@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 
-.img {
-	background: black;
-	width: 100px;
-	height: 100px;
-}
+	.img {
+		background: black;
+		width: 100px;
+		height: 100px;
+	}
 	* {
 		--mainRed: #a04650;
 		--mainBlue: #284b78;
@@ -139,25 +162,23 @@
 		--fadedPurple: #bba4bb;
 		--mainWhite: #fffffa;
 		touch-action: manipulation;
-
 	}
 
 	html {
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
-		height: 100%;
+		height: fit-content;
 	}
 	body {
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
 		height: 100%;
-
 	}
 
 	.routerLink {
-		color:rgba(255, 255, 255, 0.842);
+		color: rgba(255, 255, 255, 0.842);
 		text-decoration: none;
 	}
 
@@ -176,25 +197,25 @@
 		font-size: 1rem;
 		font-weight: 500;
 		line-height: 1.6;
-	max-height: 120vw;
+		max-height: fit-content;
 		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.637);
-		padding: 0px 0px 0px 0px;
+		padding: 0px 0px 5px 0px;
 		margin: 0;
 		z-index: 0;
 	}
 	.app-shell {
 		box-sizing: border-box;
 		max-width: 750px;
-	/* height: 125vw; */
+		width: 100% z-index 0;
+		height: fit-content;
+		max-height: 125vw;
+		margin: auto;
+		padding: 0px 5px 15px 10px;
 		margin-top: 0px;
-		padding: 0px 5px 10px 10px;
 		border: 2px solid var(--transparentBlue);
 		border-radius: 7px;
 		background: var(--mainRed);
 		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
-		margin: auto;
-		width: 100%
-		z-index	0;
 	}
 
 	header {
@@ -205,14 +226,11 @@
 		padding: 0px 20px;
 		border-radius: 8px;
 	}
-
-
 	header > h1 {
 		font-weight: 800;
 		font-size: 2.3em;
 		line-height: 1;
 		letter-spacing: 0.05em;
-		margin: 5px 0px;
 		width: 100%;
 		text-align: center;
 	}
@@ -220,19 +238,20 @@
 	h2,
 	h3 {
 		padding: 0px 0px 0px 0px;
-		margin-top: 5px;
-		margin-bottom: 5px;
 	}
 
 	h3 {
 		padding-top: 5px;
 	}
-
-.toggleButton {
+	.seahag {
+		margin: 10px auto 5px auto;
+		padding: 0;
+	}
+	.toggleButton {
 		position: absolute;
 		display: block;
 		margin-top: 0;
-		font-size: 1.4em;
+		font-size:5em;
 		height: fit-content;
 		width: fit-content;
 		color: rgb(255, 255, 255);
@@ -251,11 +270,10 @@
 	}
 
 	.fa-check {
-	padding: 3px 5px;
-	font-size: 1.5em;
-	position: absolute;
-	color: #284b78c4;
-	right: 35px;
+		padding: 3px 5px;
+		font-size: 1.5em;
+		position: RELATIVE;
+		color: #284b78c4;
 	}
 	.sidebar-toggle {
 		color: white;
@@ -267,42 +285,45 @@
 		margin-right: 0;
 		z-index: 3;
 		padding: 5px;
-		font-size: 1.1em;
+		font-size: 1.3em;
 		margin-bottom: 6px;
 		margin-right: 3px;
 	}
 	.MainGrid {
 		box-sizing: border-box;
-		max-height: 560px;
+		max-height: 582px;
 		width: 100%;
 		margin: 0;
-		padding: 3px;
+		padding: 0px;
 		padding-top: 0px;
 
-		overflow: hidden;
+		overflow: auto;
 		z-index: 0;
 		touch-action: manipulation;
-
 	}
-
+	.body-row {
+		display: flex;
+	}
 	.body-flex {
 		box-sizing: border-box;
 		display: flex;
 		justify-content: space-around;
 		padding-top: 0px;
+		padding: 2px;
+		margin: 2px;
 		touch-action: manipulation;
-
+		/* max-height: 120vw; */
+		overflow: auto;
 	}
 	.sidebarHidden {
 		width: 0px;
 		overflow: hidden;
 		touch-action: manipulation;
-
 	}
 
 	.sidebarShown {
 		box-sizing: border-box;
-		/* display: block; */
+		display: sticky;
 		z-index: 1;
 		width: 200px;
 		padding: 10px;
@@ -310,17 +331,15 @@
 		margin: 3px;
 		margin-right: 3px;
 
-  background: rgba(143, 69, 77, 0.109);		/* box-shadow: 0px 0px 100px 25px inset #171c2a71; */
 		border-radius: 0px 0px 5px;
-		border: 2px solid rgba(119, 64, 76, 0.616);
-		border-top: 0px solid rgb(136, 56, 65);
-		border-bottom: 0px solid rgb(136, 56, 65);
-		border-right: 1px solid rgba(190, 138, 138, 0.479);
-		touch-action: manipulation;
 
-}
+		border-right: 1px solid rgba(190, 138, 138, 0.315);
+
+		touch-action: manipulation;
+	}
 
 	.shell-head {
+		max-height: 200px;
 		box-sizing: border-box;
 		display: grid;
 		grid-template-columns: 6fr 9fr 1fr;
@@ -331,18 +350,18 @@
 		padding-right: 0px;
 		z-index: 0;
 		touch-action: manipulation;
-
 	}
 	.header {
+		margin: 0;
 		box-sizing: border-box;
 		background: var(--mainRed);
 		padding: 1vw 2.5vw;
 		border-radius: 3px;
 		touch-action: manipulation;
-
 	}
 
 	.header1 {
+		margin: 0;
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: row;
@@ -354,17 +373,17 @@
 		user-select: none;
 		width: fit-content;
 	}
-	.header1>h1 {
-		margin: 5px;
-
+	.header1 > h1 {
+		margin: 0px;
 	}
 
 	.header-button-container {
 		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
+		flex-direction: row;
+		justify-content: center;
 		height: fit-content;
-
+		width: 100%;
+		margin: 0;
 	}
 
 	.header-text-input {
@@ -378,28 +397,26 @@
 		padding: 3px;
 		padding-left: 6px;
 		margin: auto;
-		margin-right:5px;
+		margin-right: 5px;
 		grid-area: input;
-		max-width: 150px
+		max-width: 150px;
 	}
 
 	.header2-label {
 		box-sizing: border-box;
 		margin-bottom: 3px;
-		margin: 10px auto ;
+		margin: 10px auto;
 		margin: 10auto;
 		text-align: center;
 		grid-area: hText;
-
 	}
-
 
 	.header2 {
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		text-align: center;
-		justify-content:center;
+		justify-content: space-around;
 		touch-action: manipulation;
 	}
 	.messageOut {
@@ -410,7 +427,7 @@
 		justify-content: space-between;
 		flex-direction: row;
 		touch-action: manipulation;
-		padding:0px 0px 10px 10px
+		padding: 0px 0px 10px 10px;
 	}
 
 	a {
@@ -419,11 +436,11 @@
 
 	@media screen and (max-width: 450px) {
 		header {
-			padding: 10px 0px 10px 0px;
+			padding: 0px 0px 10px 0px;
 			justify-content: space-around;
 		}
 
-		header>h1 {
+		header > h1 {
 			font-size: 1.4em;
 			line-height: 00.5;
 		}
@@ -433,32 +450,50 @@
 		}
 
 		.MainGrid {
-			height: 100%;
+			box-sizing: border-box;
+			/* height: 100vw; */
 			margin: auto;
-
+			overflow: auto;
+		}
+		.app {
+			padding: 0px;
+			margin: 0;
+			box-sizing: border-box;
+			height: 100%;
 		}
 
+		.app-shell {
+			box-sizing: border-box;
+			max-width: 100vw;
+			max-height: 100%;
+			margin: auto;
+			margin-top: 0px;
+			padding: 0px 3px 25px 3px;
+			border: 2px solid var(--transparentBlue);
+			border-radius: 7px;
+			background: var(--mainRed);
+			box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
+		}
 
-
-.app-shell {
-		box-sizing: border-box;
-		max-width: 100vw;
-		max-height: 100%;
-		margin-top: 0px;
-		padding: 0px 3px 10px 3px;
-		border: 2px solid var(--transparentBlue);
-		border-radius: 7px;
-		background: var(--mainRed);
-		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
-		margin: auto;
-}
+		.body-flex {
+			display: flex;
+			justify-content: space-around;
+			padding: 0px;
+			padding: 2px;
+			padding-top: 0px;
+			margin: 2px;
+			margin-top: 0px;
+			touch-action: manipulation;
+			max-height: 119vw;
+			overflow: auto;
+		}
 		.sidebar-toggle {
 			display: flex;
 			flex-direction: column;
-			justify-content:  flex-end;
+			justify-content: flex-end;
 			touch-action: manipulation;
 			padding-left: 0px;
-			margin-left: -2px;
+			margin-left: -5px;
 			margin-bottom: 0;
 		}
 
@@ -501,16 +536,8 @@
 			margin: auto;
 		}
 
-		.header-button-container {
-			display: grid;
-
-			justify-content: space-around;
-			touch-action: manipulation;
-		}
-
 		.header-text-input {
-			width: 90%;
-			margin-left: 15px;
+			margin: auto;
 			touch-action: manipulation;
 		}
 

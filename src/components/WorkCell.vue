@@ -1,5 +1,5 @@
 <template>
-        <div class="grid-cell">
+        <div  @click="cellActive"    class="grid-cell">
             <p> {{ song.songTitle }} </p>
             <p> {{ song.genre }} </p>
 
@@ -7,6 +7,9 @@
 </template>
 
 <script>
+
+// import EventBus from '@/components/eventBus.js';
+
     export default {
         name: 'WorkCell',
         components: {},
@@ -15,11 +18,30 @@
         },
         data() {
             return {
-                message: 'sup cunts'
+                activated: false,
+                audioUrl: '',
+                errorMsg: ''
             }
         },
 
-        methods: {},
+        methods: {
+            cellActive() {
+                let songInfo = [];
+                let urlOrError = [];
+
+                this.activated = true;
+                if (this.song.hasOwnProperty('audioUrl')) {
+                    urlOrError = ['url', this.song.audioUrl];
+                    songInfo.push(urlOrError);
+                } else {
+                  urlOrError = ['error', 'No url for playback.'];
+                  songInfo.push(urlOrError);
+                }
+                songInfo.push(this.song.songTitle);
+                this.$emit('songCellActivated',songInfo);
+
+            }
+        },
         computed: {},
         watch: {},
 
@@ -51,15 +73,15 @@
 		border: 2px solid rgba(255, 255, 255, 0);
 		font-size: 1em;
 		font-weight: 500;
-		transition: 150ms box-shadow ease-in-out, 300ms background ease,
+		transition: 150ms box-shadow ease-out, 200ms background ease,
 			200ms border ease, 100ms font-weight ease;
         user-select: none;
-        /* overflow: auto; */
+        overflow: hidden;
 	}
 
 	.grid-cell:hover {
-		box-shadow: 0px 0px 100px 30px inset var(--lightPurple);
-		background: rgba(255, 255, 255, 0.815);
+		box-shadow: 0px 0px 125px 50px inset rgba(216, 183, 216, 0.753);
+		background: rgba(176, 192, 197, 0.801);
 		border: 2px solid white;
 		font-weight: 600;
 		cursor: pointer;
@@ -67,8 +89,8 @@
 	}
 
 	.grid-cell:active {
-		box-shadow: 0px 0px 125px 40px inset rgba(216, 183, 216, 0.753);
-		background: rgba(201, 105, 180, 0.712);
+		box-shadow: 0px 0px 125px 50px inset rgba(216, 183, 216, 0.753);
+		background: rgba(153, 116, 145, 0.541);
 		border: 2px solid white;
 		font-weight: 600;
 		cursor: pointer;

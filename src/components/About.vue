@@ -1,8 +1,16 @@
 <template>
         <div class="content">
-            <h1> {{ message }} </h1>
+            <!-- <h1> {{ message }} </h1> -->
+            <iframe
+                class="soundcloud"
+                width="100%"
+                height="450px"
 
-            <img src="../check.svg" class="check-image" alt="">
+                scrolling="no"
+                frameborder="no"
+                allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/808675707&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+            ></iframe>
         </div>
 </template>
 
@@ -41,15 +49,21 @@
 	}
     .content {
         width: 100%;
-        height: 125vw;
-        max-height: 585px;
+        max-height: 100%;
         background: var(--mainBlue);
         border: 1px solid var(--lightPurple);
-        border-radius: 5px;
+        border-radius: 0px 0px 5px 5px;
+        margin: 2px;
+        margin-bottom: 0;
     }
     .check-image {
         background: white;
         color: blue;
         fill: #9c3a5f;
+    }
+
+
+    .soundcloud {
+        max-height:"600px";
     }
 </style>
