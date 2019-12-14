@@ -34,7 +34,7 @@
                     urlOrError = ['url', this.song.audioUrl];
                     songInfo.push(urlOrError);
                 } else {
-                    urlOrError = ['error', 'No url for playback.'];
+                    urlOrError = ['error', 'noUrl'];
                     songInfo.push(urlOrError);
                 }
                 songInfo.push(this.song.songTitle);
@@ -77,7 +77,7 @@
 	}
 
 	.grid-cell:hover {
-		box-shadow: 0px 0px 125px 50px inset rgba(216, 183, 216, 0.753);
+		box-shadow: 0px 0px 125px 50px inset rgba(173, 69, 173, 0.753);
 		background: rgba(176, 192, 197, 0.801);
 		border: 2px solid white;
 		font-weight: 600;

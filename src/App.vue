@@ -9,7 +9,7 @@
 					<h1>music GUY</h1>
 				</div>
 				<div class="header header2">
-					<label class="header2-label">inputs in here like a boss</label>
+					<label class="header2-label">Search for a tune</label>
 					<div class="header-button-container">
 						<form class="header-form">
 							<input
@@ -17,11 +17,10 @@
 								v-model="userInput"
 								@change="handleClick()"
 								@focus="handleClick('focus')"
-								@blur="handleClick('blur')"
+								@submit.prevent="handleSubmit"
 								name="filter-input"
 								class="filter-input"
 							/>
-							<i class="fas fa-check" v-show="submitDisplayState === true" @click="handleSubmit"></i>
 						</form>
 					</div>
 				</div>
@@ -31,23 +30,19 @@
 					</span>
 				</div>
 			</div>
-	<transition name="fade">
-			<ToolBar></ToolBar>
+			<transition name="fade">
+				<ToolBar></ToolBar>
 			</transition>
 			<div class="body-row">
-			<div class="body-flex">
-				<!-- <MainGrid v-bind:songData="songs" msg="Welcome to Your Vue.js App" /> -->
-
-				<router-view :userInput="userInput" ></router-view>
-			</div>
+				<div class="body-flex">
+					<router-view :userInput="userInput" :songs="songs" ></router-view>
+				</div>
 			<transition name="fade">
 			<div v-show="sidebarDisplayState === true" id="sidebar-div" class="sidebarShown">
-			<!-- <div :class="{ sidebarShown: sidebarDisplayState} " id="sidebar-div" class="sidebarHidden"> -->
 				<h4>Nav</h4>
 				<div class="links" @click="initializeData">
 					<div class="linkItem">
 						<router-link class="routerLink" to="/">Library</router-link>
-						<!-- <router-link to="/" class="routerLink" params { :userInput="userInput" }   >Library</router-link> -->
 					</div>
 					<div class="linkItem">
 						<router-link to="/About" class="routerLink">About</router-link>
@@ -55,7 +50,7 @@
 				</div>
 			</div>
 			</transition>
-				</div>
+			</div>
 		</div>
 		<div
 			class="hiddenMessage"
@@ -65,13 +60,12 @@
 		>Show Header</div>
 	</div>
 </template>
-
 <script>
 	import ToolBar from "./components/ToolBar";
 	import EventBus from "./components/eventBus.js";
 	import songList from "../data/SongData.js";
 
-	export default {
+export default {
 		name: "app",
 		components: {
 			ToolBar
@@ -122,19 +116,7 @@
 					this.userInput = "";
 					return;
 				}
-				if (event === "blur") {
-					this.submitDisplayState = false;
-					return;
-				}
-				console.log(this.userInput.length);
-
-				if (this.userInput.length === 0) {
-					this.submitDisplayState = false;
-				} else {
-					this.submitDisplayState = true;
-				}
 			},
-
 			handleSubmit() {
 				// this.savedInput = this.userInput;
 				EventBus.$emit("userInputSubmit", this.userInput);
@@ -143,7 +125,6 @@
 				this.toggleSubmit();
 			}
 		},
-
 		mounted() {
 			this.initializeData();
 		}
@@ -375,7 +356,7 @@
 		grid-template-columns: 6fr 9fr 1fr;
 		background: var(--mainRed);
 		grid-column: content-start / span 4;
-		min-height: 110px;
+		min-height: 100px;
 		border-radius: 5px;
 		padding-right: 0px;
 		z-index: 0;

@@ -82,10 +82,16 @@ import EventBus from './eventBus';
             playAudio() {
                 EventBus.$on('songActivated', playSong => {
                 const audioPlayer = document.getElementById('audio-player');
-                this.songName = playSong[0];
-                this.audioSrc = playSong[1];
-                audioPlayer.load();
-                audioPlayer.play();
+                if (playSong[1] === 'noUrl') {
+                    this.songName = playSong[0];
+                    return;
+                } else {
+                    console.log( playSong)
+                    this.songName = playSong[0];
+                    this.audioSrc = playSong[1];
+                    audioPlayer.load();
+                    audioPlayer.play();
+                }
                 })
             },
             resumeAudio() {
@@ -124,7 +130,7 @@ import EventBus from './eventBus';
     width: 97%;
     background: var(--mainRed);
     color: white;
-    font-size: 0.8em;
+    font-size: 0.9em;
     padding: 2px 0px;
     margin: 0px 5px;
     border: 1px solid rgba(190, 138, 138, 0.226);
@@ -170,6 +176,7 @@ import EventBus from './eventBus';
 }
 .title-container {
     grid-column: span 2;
+    font-size: 1.1em;
     text-align: left;
         box-sizing: border-box;
     padding: 4px 0px 4px 10px;
@@ -190,7 +197,7 @@ select>option {
     grid-template-rows: 1;
     padding: 2px 0px 2px 0px;
     margin: 0;
-    border-top: 1px solid rgba(90, 10, 10, 0.383);
+    border-top: 1px solid rgba(90, 10, 10, 0.212);
 
 }
 .pause-button {

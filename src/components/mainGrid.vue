@@ -27,7 +27,7 @@
 		},
 		props: {
 			msg: String,
-			songData: Array,
+			songs: Array,
             userInput: String
 
 		},
@@ -39,10 +39,14 @@
 			},
 			handleActiveSong(songInfo) {
 				let [urlOrError, songName] = songInfo;
-					console.log(songName, urlOrError);
+
 				if (urlOrError[0] === 'url') {
 					let songUrl = urlOrError[1];
 					let playSong = [songName, songUrl]
+					EventBus.$emit('songActivated', playSong);
+				} else {
+					let noUrl = urlOrError[1];
+					let playSong = [songName, noUrl]
 					EventBus.$emit('songActivated', playSong);
 				}
 			},
@@ -52,22 +56,26 @@
 				});
 			}
 
+			// filterSongs() {
+			// 	console.log(this.songList[4]);
 
+			// 	let newSongs = this.songList.Object.values(this.songList).filter(newSong => {
+			// 		return newSong.songTitle.toUpperCase().indexOf(this.userInput.toUpperCase()) >= 0;
+			// 	});
+			// 	return  newSongs;
+
+			// }
 		},
 		computed: {
-			songs: function() {
+			songs2: function() {
 				return this.songList;
 			},
 			filterSongs: function() {
-				console.log(this.songList);
-
-				let newSongs = this.songList.filter(newSong => {
-					return newSong.songTitle.toUpperCase().indexOf(this.userInput.toUpperCase()) >= 0;
+				let newSongs = this.songs.filter(song => {
+					return song.songTitle.toUpperCase().indexOf(this.userInput.toUpperCase()) >= 0;
 				});
 				return  newSongs;
-
 			}
-
 		},
 		mounted() {
 			this.listenForData();
@@ -115,9 +123,9 @@
 	}
 
 	.grid-cell:nth-child(6n + 2) {
-		background: rgba(224, 231, 247, 0.445);
+		background: rgba(224, 231, 247, 0.376);
 		color: var(--mainWhite);
-		border: 2px solid rgba(255, 255, 255, 0.705);
+		border: 2px solid rgba(255, 255, 255, 0.897);
 		grid-column: span 1;
 	}
 
