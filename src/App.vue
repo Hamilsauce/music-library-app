@@ -18,8 +18,8 @@
 								@change="handleClick()"
 								@focus="handleClick('focus')"
 								@blur="handleClick('blur')"
-								name="header-text-input"
-								class="header-text-input"
+								name="filter-input"
+								class="filter-input"
 							/>
 							<i class="fas fa-check" v-show="submitDisplayState === true" @click="handleSubmit"></i>
 						</form>
@@ -31,26 +31,31 @@
 					</span>
 				</div>
 			</div>
-
+	<transition name="fade">
 			<ToolBar></ToolBar>
+			</transition>
 			<div class="body-row">
 			<div class="body-flex">
 				<!-- <MainGrid v-bind:songData="songs" msg="Welcome to Your Vue.js App" /> -->
 
-				<router-view></router-view>
+				<router-view :userInput="userInput" ></router-view>
 			</div>
-			<div :class="{ sidebarShown: sidebarDisplayState} " id="sidebar-div" class="sidebarHidden">
+			<transition name="fade">
+			<div v-show="sidebarDisplayState === true" id="sidebar-div" class="sidebarShown">
+			<!-- <div :class="{ sidebarShown: sidebarDisplayState} " id="sidebar-div" class="sidebarHidden"> -->
 				<h4>Nav</h4>
 				<div class="links" @click="initializeData">
 					<div class="linkItem">
-						<router-link to="/" class="routerLink">Library</router-link>
+						<router-link class="routerLink" to="/">Library</router-link>
+						<!-- <router-link to="/" class="routerLink" params { :userInput="userInput" }   >Library</router-link> -->
 					</div>
 					<div class="linkItem">
 						<router-link to="/About" class="routerLink">About</router-link>
 					</div>
 				</div>
 			</div>
-			</div>
+			</transition>
+				</div>
 		</div>
 		<div
 			class="hiddenMessage"
@@ -83,7 +88,7 @@
 				headerDisplayState: true,
 				submitDisplayState: false,
 				sidebarDisplayState: false,
-				userInput: "Look a filter thing",
+				userInput: "",
 				savedInput: "",
 				CellData: [
 					{
@@ -148,6 +153,25 @@
 <style>
 	@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 
+
+
+
+	.fade-enter{
+        opacity: 0;
+		width: 0%;
+    }
+    .fade-enter-active{
+        transition: opacity 0.5s, width 0.5s;
+
+    }
+    .fade-leave{
+        /* opacity: 1; */
+		width: 0%;
+    }
+    .fade-leave-active{
+        transition: opacity 1s;
+        opacity: 0;
+	}
 	.img {
 		background: black;
 		width: 100px;
@@ -167,8 +191,11 @@
 	html {
 		box-sizing: border-box;
 		margin: 0;
-		padding: 0;
-		height: fit-content;
+		padding:25px;
+		height: 100%;
+		background: rgba(54, 46, 121, 0.849);
+		box-shadow: 0px 0px 50px 100px inset #2A4F7F;
+
 	}
 	body {
 		box-sizing: border-box;
@@ -191,14 +218,15 @@
 		text-align: center;
 		color: #2c3e50;
 		margin-top: 0px;
-		background: rgba(54, 46, 121, 0.849);
+		background: rgba(54, 46, 121, 0.705);
 		color: rgb(255, 255, 255);
 		font-family: "Montserrat", sans-serif;
 		font-size: 1rem;
 		font-weight: 500;
 		line-height: 1.6;
-		max-height: fit-content;
-		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.637);
+		max-height: 100%;
+		height: 100%;
+		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
 		padding: 0px 0px 5px 0px;
 		margin: 0;
 		z-index: 0;
@@ -207,8 +235,8 @@
 		box-sizing: border-box;
 		max-width: 750px;
 		width: 100% z-index 0;
-		height: fit-content;
-		max-height: 125vw;
+		height:  fit-content;
+		max-height: 100vw;
 		margin: auto;
 		padding: 0px 5px 15px 10px;
 		margin-top: 0px;
@@ -296,13 +324,14 @@
 		margin: 0;
 		padding: 0px;
 		padding-top: 0px;
-
+		background: var(--mainRed);
 		overflow: auto;
 		z-index: 0;
 		touch-action: manipulation;
 	}
 	.body-row {
 		display: flex;
+		/* background: var(--mainRed); */
 	}
 	.body-flex {
 		box-sizing: border-box;
@@ -312,8 +341,9 @@
 		padding: 2px;
 		margin: 2px;
 		touch-action: manipulation;
-		/* max-height: 120vw; */
+		background: var(--mainRed);
 		overflow: auto;
+		width: 100%;
 	}
 	.sidebarHidden {
 		width: 0px;
@@ -330,7 +360,7 @@
 		padding-top: 5px;
 		margin: 3px;
 		margin-right: 3px;
-
+		background: var(--mainRed);
 		border-radius: 0px 0px 5px;
 
 		border-right: 1px solid rgba(190, 138, 138, 0.315);
@@ -383,10 +413,10 @@
 		justify-content: center;
 		height: fit-content;
 		width: 100%;
-		margin: 0;
+		margin: 0px auto;
 	}
 
-	.header-text-input {
+	.filter-input {
 		box-sizing: border-box;
 		width: 100%;
 		height: 25px;
@@ -400,13 +430,13 @@
 		margin-right: 5px;
 		grid-area: input;
 		max-width: 150px;
+		font-size: 1em;
 	}
 
 	.header2-label {
 		box-sizing: border-box;
 		margin-bottom: 3px;
-		margin: 10px auto;
-		margin: 10auto;
+		margin: 10px auto 0px auto;
 		text-align: center;
 		grid-area: hText;
 	}
@@ -416,7 +446,7 @@
 		display: flex;
 		flex-direction: column;
 		text-align: center;
-		justify-content: space-around;
+		justify-content: center;
 		touch-action: manipulation;
 	}
 	.messageOut {
@@ -424,10 +454,10 @@
 	}
 	.header-form {
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		flex-direction: row;
 		touch-action: manipulation;
-		padding: 0px 0px 10px 10px;
+		padding: 0px 0px 10px 0px;
 	}
 
 	a {
@@ -435,6 +465,9 @@
 	}
 
 	@media screen and (max-width: 450px) {
+		html{
+			padding: 0px;
+		}
 		header {
 			padding: 0px 0px 10px 0px;
 			justify-content: space-around;
@@ -453,6 +486,7 @@
 			box-sizing: border-box;
 			/* height: 100vw; */
 			margin: auto;
+			background: var(--mainRed);
 			overflow: auto;
 		}
 		.app {
@@ -462,16 +496,18 @@
 			height: 100%;
 		}
 
+
 		.app-shell {
 			box-sizing: border-box;
 			max-width: 100vw;
-			max-height: 100%;
+			min-height: 120vw;
+			max-height: fit-content;
 			margin: auto;
 			margin-top: 0px;
-			padding: 0px 3px 25px 3px;
+			padding: 0px 3px 30px 3px;
 			border: 2px solid var(--transparentBlue);
 			border-radius: 7px;
-			background: var(--mainRed);
+			/* background: var(--mainRed); */
 			box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
 		}
 
@@ -485,6 +521,7 @@
 			margin-top: 0px;
 			touch-action: manipulation;
 			max-height: 119vw;
+			background: var(--mainRed);
 			overflow: auto;
 		}
 		.sidebar-toggle {
@@ -536,7 +573,7 @@
 			margin: auto;
 		}
 
-		.header-text-input {
+		.filter-input {
 			margin: auto;
 			touch-action: manipulation;
 		}

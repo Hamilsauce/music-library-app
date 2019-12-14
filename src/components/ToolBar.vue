@@ -1,23 +1,49 @@
 <template>
 	<section class="toolbar" >
 		<div class="top-bar"
-            @click="toggleBottomBar"
 
         >
+        <div class="expand-button" @click="toggleBottomBar"><i class="fas fa-caret-square-down"></i></div>
 			<div class="top-bar-div title-container">{{ songTitle }}</div>
 			<div>
-                <select name="" id="" class="select-top">
-                    <option value="">Open</option>
-                    <option value="">Share</option>
-                    <option value="">Save</option>
-                    <option value="">Delete</option>
+                <input
+                    v-if="audioPaused === false"
+                    class="pause-button"
+                    @click="pauseAudio"
+                    :disabled="songName === ''"
+                    type="button"
+                    name="pause-button"
+                    value="Pause"
+                >
+                <input
+                    class="play-button"
+                    v-if="audioPaused === true"
+                    @click="resumeAudio"
+                    type="button"
+                    name="play-button"
+                    value="Resume"
+                >
+            </div>
+		</div>
+        <transition name="fade">
+		<div class="bottom-bar" v-if="expandBottomBar === true">
+			<div>More stuff</div>
+
+			<div class="sort-cell">
+                <label for="select-sort">Sort By: </label>
+                <select name="" id="" class="select-sort">
+                    <option value="">Name</option>
+                    <option value="">Genre</option>
+                    <option value="">Likes</option>
+                    <option value="">Listens</option>
                 </select>
             </div>
 		</div>
-		<div class="bottom-bar" v-show="expandBottomBar < 2">
-			<div>More stuff</div>
-			<div> more stuff</div>
-			<div><input type="button" name="bottom-bar-button" class="bottom-bar-button" value="Upload"></div>
+        </transition>
+        <div class="audio-container">
+            <audio id="audio-player">
+                <source  class="source" :src="audioSrc" type="audio/mpeg" />
+            </audio>
 		</div>
 	</section>
 </template>
@@ -29,12 +55,14 @@ import EventBus from './eventBus';
 		components: {},
 		props: {
             inputData: String,
-
-    }    ,
+            songUrl: String
+        }    ,
 		data() {
 			return {
-                expandBottomBar: 2,
-				songName: '',
+                expandBottomBar: false,
+                audioPaused: false,
+                songName: '',
+                audioSrc: '',
                 notification2: "Details...",
                 eventInput: this.userInput
 			};
@@ -42,27 +70,33 @@ import EventBus from './eventBus';
 
 		methods: {
             toggleBottomBar() {
-                    //this is a hacky dblClick workaround since dblclick isnt working...uses a counter to show or hide toolbar at 2 click
-                    //intervals, starting at 2 and resetting at 4.
-                this.expandBottomBar++;
-                if (this.expandBottomBar == 4) {
-                    this.expandBottomBar = 0;
-                }
+                this.expandBottomBar = !this.expandBottomBar;
             },
             receiveUserInput() {
                 EventBus.$on('userInputSubmit', data => {
                     console.log(data[0]);
-
                     this.inputData = data;
                     console.log(this.inputData[0]);
-
                 })
             },
-            updateSongTitle() {
-                EventBus.$on('songActivated', songName => {
-                    this.songName = songName;
-
+            playAudio() {
+                EventBus.$on('songActivated', playSong => {
+                const audioPlayer = document.getElementById('audio-player');
+                this.songName = playSong[0];
+                this.audioSrc = playSong[1];
+                audioPlayer.load();
+                audioPlayer.play();
                 })
+            },
+            resumeAudio() {
+                const audioPlayer = document.getElementById('audio-player');
+                audioPlayer.play();
+                this.audioPaused = false;
+            },
+            pauseAudio() {
+                const audioPlayer = document.getElementById('audio-player');
+                audioPlayer.pause();
+                this.audioPaused = true;
             }
         },
 		computed: {
@@ -72,13 +106,10 @@ import EventBus from './eventBus';
             songTitle: function() {
                 return this.songName;
             }
-
         },
 		watch: {},
-
-		/* Vue lifecycle hooks (Ref: https://vuejs.org/v2/guide/instance.html#Instance-Lifecycle-Hooks) */
 		created() {
-            this.updateSongTitle();
+            this.playAudio();
         },
 		mounted() {},
 		updated() {},
@@ -91,58 +122,60 @@ import EventBus from './eventBus';
     display: grid;
     grid-template-rows: 2;
     width: 97%;
-    /* background: rgba(119, 52, 60, 0.561); */
+    background: var(--mainRed);
     color: white;
     font-size: 0.8em;
     padding: 2px 0px;
-    /* padding-bottom: 0px; */
     margin: 0px 5px;
     border: 1px solid rgba(190, 138, 138, 0.226);
     border-right: 1px solid  rgba(141, 60, 60, 0.219);
     border-left: 1px solid  rgba(141, 60, 60, 0.219);
-		border-bottom: 1px solid var(--mainRed);
-    /* border-bottom: 2px solid #93414A; */
+    border-bottom: 1px solid var(--mainRed);
     border-radius: 5px 5px 0px 0px;
-       box-shadow:0px 0px 20px 10px inset rgba(136, 61, 61, 0.219);
-
+    box-shadow:0px 0px 20px 10px inset rgba(136, 61, 61, 0.219);
 }
 
 
 .top-bar {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 30px 1fr 1fr 80px;
     grid-template-rows: 1;
-    padding: 2px 8px 0px 0px;
-     font-size: 1em;
-     border-radius: 5px 5px 0px 0px;
+    padding: 2px 0px 0px 0px;
+    font-size: 1em;
+    border-radius: 5px 5px 0px 0px;
 }
-.top-bar-div{
-    box-sizing: border-box;
-    padding: 4px;
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-    justify-content: space-around;
-    /* border-top: 1px solid rgba(121, 54, 54, 0.287); */
+.expand-button {
+    padding-left: 3px;
+    font-size: 1.5em;
 }
-
-.title-container {
-    grid-column: span 2;
+.sort-cell>label {
+    font-size: 1em;
+    font-weight: 400;
+    padding:2px 0px 2px 0px;
 }
-.select-top {
-   min-width: 80px;
+.select-sort {
+    min-width: 80px;
     max-width: fit-content;
-    text-align: center;
-height: 100%;
+    /* text-align: center; */
+    height: 100%;
     color: rgb(250, 236, 238);
-    padding: 3px 0px 3px 0px;
-    margin: 0;
+    padding: 2px 0px 2px 0px;
+    margin: 0px 0px 0px 6px;
     box-sizing: border-box;
     background: var(--mainRed);
-    background: rgba(184, 52, 52, 0);
-        border: 1px solid var(--mainRed);
-    /* border-top: 1px solid rgba(70, 29, 29, 0.287); */
-    /* border-bottom: 1px solid rgba(70, 29, 29, 0.287); */
+    background:solid rgba(139, 39, 39, 0.856);
+    font-size: 1.1em;
+    border: 1px solid rgba(139, 39, 39, 0);
+    border-bottom: 1px solid rgba(139, 39, 39, 0.856);
+}
+.title-container {
+    grid-column: span 2;
+    text-align: left;
+        box-sizing: border-box;
+    padding: 4px 0px 4px 10px;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
 
 }
 
@@ -155,18 +188,50 @@ select>option {
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: 1;
-    /* background: rgba(172, 85, 93, 0.712); */
-        /* border-top: 1px solid rgba(70, 29, 29, 0.287); */
     padding: 2px 0px 2px 0px;
     margin: 0;
+    border-top: 1px solid rgba(90, 10, 10, 0.383);
+
 }
-.bottom-bar-button {
+.pause-button {
+    background: rgb(47, 83, 149);
+    font-size: 1em;
+    border: 1px solid rgb(112, 124, 148);
+    color: rgb(240, 240, 240);
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin: 3px;
+}
+.pause-button:disabled {
+    background: rgba(37, 89, 131, 0);
+    border: 1px solid rgba(189, 189, 189, 0);
+    color: rgb(184, 146, 146);
+}
+.play-button {
     background: rgb(47, 83, 149);
     font-size: 1em;
     border: 1px solid rgb(67, 87, 126);
-    color: white;
+        border: 1px solid rgb(112, 124, 148);
+    color: rgb(240, 240, 240);
+    padding: 5px 5px;
+    border-radius: 3px;
+    margin: 3px;
+}
+.play-button:disabled {
+    background: rgba(37, 89, 131, 0);
+    border: 1px solid rgba(189, 189, 189, 0);
+    color: rgb(184, 146, 146);
+}
+.sort-cell {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 0px;
+    padding-right: 10px;
+    background:solid rgba(139, 39, 39, 0.856);
 
-    padding: 3px 5px;
+
 }
 
 </style>

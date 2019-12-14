@@ -14,7 +14,7 @@
         name: 'WorkCell',
         components: {},
         props: {
-            song: Object
+            song: Object,
         },
         data() {
             return {
@@ -34,8 +34,8 @@
                     urlOrError = ['url', this.song.audioUrl];
                     songInfo.push(urlOrError);
                 } else {
-                  urlOrError = ['error', 'No url for playback.'];
-                  songInfo.push(urlOrError);
+                    urlOrError = ['error', 'No url for playback.'];
+                    songInfo.push(urlOrError);
                 }
                 songInfo.push(this.song.songTitle);
                 this.$emit('songCellActivated',songInfo);
@@ -54,9 +54,6 @@
 </script>
 
 <style scoped>
-
-
-
 
 	.grid-cell {
         /* display: grid; */

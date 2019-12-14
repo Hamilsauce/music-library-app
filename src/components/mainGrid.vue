@@ -1,39 +1,35 @@
 <template>
 	<div class="MainGrid">
 		<div class="grid-view-header">
-			<h3></h3>
+
 		</div>
 		<div class="grid-body">
 			<!-- <div class="grid-cell cell1">1</div>? -->
-			<work-cell v-for="(song) in songs" :key="song.id" :song="song" @songCellActivated="handleActiveSong"></work-cell>
-		</div>
-		<div class="audio-container">
-			<audio id="audio-player">
-				<source  class="source" :src="audioSrc" type="audio/mpeg" />
-			</audio>
+			<work-cell v-for="song in filterSongs" :key="song.id" :song="song" @songCellActivated="handleActiveSong"></work-cell>
 		</div>
 	</div>
 </template>
 
 <script>
 	import WorkCell from "./WorkCell.vue";
-
 	import EventBus from "./eventBus.js";
 
 	export default {
 		name: "MainGrid",
 		components: {
-			WorkCell
+			WorkCell,
 		},
 		data() {
 			return {
 				songList: this.songs,
-				audioSrc: ''
-			};
+				songsFiltered:''
+			}
 		},
 		props: {
 			msg: String,
-			songData: Array
+			songData: Array,
+            userInput: String
+
 		},
 		methods: {
 			listenForData() {
@@ -42,27 +38,36 @@
 				});
 			},
 			handleActiveSong(songInfo) {
-
-				const audioPlayer = document.getElementById('audio-player')
-
 				let [urlOrError, songName] = songInfo;
-
 					console.log(songName, urlOrError);
 				if (urlOrError[0] === 'url') {
-					this.audioSrc = urlOrError[1];
-					audioPlayer.load();
-					audioPlayer.play();
+					let songUrl = urlOrError[1];
+					let playSong = [songName, songUrl]
+					EventBus.$emit('songActivated', playSong);
 				}
-
-			EventBus.$emit('songActivated', songName);
-
-
+			},
+				getFilter() {
+				EventBus.$on('userInputSubmit', input => {
+					this.userInput = input;
+				});
 			}
+
+
 		},
 		computed: {
 			songs: function() {
 				return this.songList;
+			},
+			filterSongs: function() {
+				console.log(this.songList);
+
+				let newSongs = this.songList.filter(newSong => {
+					return newSong.songTitle.toUpperCase().indexOf(this.userInput.toUpperCase()) >= 0;
+				});
+				return  newSongs;
+
 			}
+
 		},
 		mounted() {
 			this.listenForData();
@@ -81,7 +86,6 @@
 		--mainWhite: #fffffa;
 	}
 
-
 	.audio-container {
 		display: none;
 	}
@@ -90,7 +94,6 @@
 		display: grid;
 		gap: 5px;
 		grid-template-columns: repeat(auto-fill, minmax(175px, 2fr));
-		/* grid-auto-rows: auto; */
 		grid-template-rows: auto;
 		max-height: fit-content;
 		width: 100%;
@@ -98,7 +101,6 @@
 		margin-top: 0px;
 		padding: 3px;
 		background: var(--mainBlue);
-		/* overflow-x: auto; */
 		border-radius: 0px 0px 5px5px;
 		border: 1px solid var(--lightPurple);
 	}
@@ -138,24 +140,17 @@
 			background: var(--mainBlue);
 			grid-template-columns: repeat(2, minmax(175px 1fr));
 			touch-action: manipulation;
-			/* overflow-x: auto; */
 			border-radius: 0px 0px 5px 5px;
-
-			/* border: 1px solid var(--lightPurple); */
 			border-top: 0px solid var(--lightPurple);
 			max-width: 100vw;
-			/* overflow-y: auto; */
 		}
-
 		.grid-cell:nth-child(4n + 4) {
 			grid-column: span 2;
 		}
-
 		.cell2 {
 			grid-column: span 1;
 		}
 	}
-
 	@media screen and (max-width: 300px) {
 		.grid-body {
 			grid-template-columns: 1fr;
