@@ -67,13 +67,13 @@
 			// }
 		},
 		computed: {
-			songs2: function() {
-				return this.songList;
-			},
+
 			filterSongs: function() {
 				let newSongs = this.songs.filter(song => {
 					return song.songTitle.toUpperCase().indexOf(this.userInput.toUpperCase()) >= 0;
 				});
+				console.log(newSongs);
+				
 				return  newSongs;
 			}
 		},

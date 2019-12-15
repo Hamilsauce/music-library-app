@@ -6,7 +6,9 @@ let songList = () => {
             "likes": "4",
             "genre": "Rock",
             "duration": "02:45",
-            "comments": "3"
+            "comments": "3",
+            "audioUrl": "https://hamilsauce.github.io/audio/Battle%20Star.mp3"
+
         },
         {
             "id": "2",
@@ -25,29 +27,32 @@ let songList = () => {
             "likes": "5",
             "genre": "Folk",
             "duration": "08:00",
-            "comments": "0"
+            "comments": "0",
+            "audioUrl": "https://hamilsauce.github.io/audio/The%20Gypsy.mp3"
         },
         {
             "id": "4",
-            "songTitle": "A Moaner's Chain Gang",
+            "songTitle": "Voyage into Sample",
             "plays": "51",
             "likes": "2",
             "genre": "Psychedlic",
             "duration": "02:18",
-            "comments": "2"
+            "comments": "2",
+            "audioUrl": "https://hamilsauce.github.io/audio/The%20Gypsy.mp3"
         },
         {
             "id": "5",
-            "songTitle": "Lasers in the Jungle",
+            "songTitle": "The Wild Onion",
             "plays": "6",
             "likes": "1",
             "genre": "Folk",
             "duration": "02:32",
-            "comments": "1"
+            "comments": "1",
+            "audioUrl": "https://hamilsauce.github.io/audio/Wild%20Onion.mp3"
         },
         {
             "id": "6",
-            "songTitle": "A Memory Remains(re - remastered)",
+            "songTitle": "A Memory Remains",
             "plays": "6",
             "likes": "3",
             "genre": "Ambient",
@@ -55,13 +60,24 @@ let songList = () => {
             "comments": "1"
         },
         {
+            "id": "44",
+            "songTitle": "Offworld",
+            "plays": "0",
+            "likes": "0",
+            "genre": "Rock",
+            "duration": "02:05",
+            "comments": "0",
+            "audioUrl": "https://hamilsauce.github.io/audio/Offworld%20(up).mp3"
+        },
+        {
             "id": "7",
-            "songTitle": "We're All In It Together",
+            "songTitle": "Procession",
             "plays": "7",
             "likes": "2",
             "genre": "Electronic",
             "duration": "02:29",
-            "comments": "0"
+            "comments": "0",
+            "audioUrl": "https://hamilsauce.github.io/audio/procession(revise1).mp3"
         },
         {
             "id": "8",
@@ -74,12 +90,13 @@ let songList = () => {
         },
         {
             "id": "9",
-            "songTitle": "It Walks Among Us",
+            "songTitle": "Chasing Bengals",
             "plays": "4",
             "likes": "2",
             "genre": "Ballad",
             "duration": "03:20",
-            "comments": "0"
+            "comments": "0",
+            "audioUrl": "https://hamilsauce.github.io/audio/Chasing%20Bengals.mp3"
         },
         {
             "id": "10",
@@ -88,7 +105,8 @@ let songList = () => {
             "likes": "1",
             "genre": "Zappa",
             "duration": "04:09",
-            "comments": "0"
+            "comments": "0",
+            "audioUrl": "https://hamilsauce.github.io/audio/Ink%20Erodes%20Slowly2.mp3"
         },
         {
             "id": "11",
@@ -280,15 +298,6 @@ let songList = () => {
             "comments": "0"
         },
         {
-            "id": "32",
-            "songTitle": "A Memory Remains",
-            "plays": "78",
-            "likes": "0",
-            "genre": "",
-            "duration": "04:03",
-            "comments": "0"
-        },
-        {
             "id": "33",
             "songTitle": "What Do You Know ?",
             "plays": "0",
@@ -386,16 +395,6 @@ let songList = () => {
             "genre": "1",
             "duration": "",
             "comments": "7 years ago"
-        },
-        {
-            "id": "44",
-            "songTitle": "Offworld",
-            "plays": "0",
-            "likes": "0",
-            "genre": "Rock",
-            "duration": "02:05",
-            "comments": "0",
-            "audioUrl": "https://hamilsauce.github.io/audio/Offworld%20(up).mp3"
         }
     ]
     return songs;
