@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<header v-if="headerDisplayState === true">
-			<h4 class="seahag">SEAHAG enterprises</h4>
+			<h5 class="seahag">Select a tile to listen.</h5>
 		</header>
 		<div class="app-shell">
 			<div class="shell-head">
@@ -11,45 +11,38 @@
 				<div class="header header2">
 					<label class="header2-label">Search for a tune</label>
 					<div class="header-button-container">
-						<form class="header-form">
+						<form class="header-form" @submit.prevent="handleSubmit">
 							<input
 								type="text"
 								v-model="userInput"
-								@change="handleClick()"
-								@focus="handleClick('focus')"
-								@submit.prevent="handleSubmit"
+								@click="handleClick()"
 								name="filter-input"
 								class="filter-input"
 							/>
 						</form>
 					</div>
 				</div>
-				<div class="sidebar-toggle">
-					<span>
+				<!-- <div class="sidebar-toggle">
 						<i @click="toggleSidebar" class="fas fa-angle-double-left sidebar-toggle"></i>
-					</span>
-				</div>
+				</div> -->
 			</div>
-			<transition name="fade">
-				<ToolBar></ToolBar>
-			</transition>
-			<div class="body-row">
-				<div class="body-flex">
-					<router-view :userInput="userInput" :songs="songs" ></router-view>
-				</div>
-			<transition name="fade">
-			<div v-show="sidebarDisplayState === true" id="sidebar-div" class="sidebarShown">
-				<h4>Nav</h4>
-				<div class="links" @click="initializeData">
-					<div class="linkItem">
-						<router-link class="routerLink" to="/">Library</router-link>
+
+			<div class="shell-body">
+				<transition name="fade">
+					<ToolBar class="toolbar"></ToolBar>
+				</transition>
+				<div class="body-row">
+					<div class="body-flex">
+						<router-view :userInput="userInput" :songs="songs"></router-view>
 					</div>
-					<div class="linkItem">
-						<router-link to="/About" class="routerLink">About</router-link>
-					</div>
+						<transition name="fade">
+						<div @click="toggleSidebar" class="sidebar-container" title="Click to expand navigation!">
+							<i v-show="sidebarDisplayState === false" class="fas fa-angle-double-left sidebar-toggle2"></i>
+							<i v-show="sidebarDisplayState === true"  class="fas fa-angle-double-right sidebar-toggle3"></i>
+						</div>
+							</transition>
+					<Sidebar :sidebarDisplayState="sidebarDisplayState"></Sidebar>
 				</div>
-			</div>
-			</transition>
 			</div>
 		</div>
 		<div
@@ -62,13 +55,15 @@
 </template>
 <script>
 	import ToolBar from "./components/ToolBar";
+	import Sidebar from "./components/Sidebar";
 	import EventBus from "./components/eventBus.js";
 	import songList from "../data/SongData.js";
 
-export default {
+	export default {
 		name: "app",
 		components: {
-			ToolBar
+			ToolBar,
+			Sidebar
 		},
 		props: {},
 		data() {
@@ -80,7 +75,7 @@ export default {
 					markup: ""
 				},
 				headerDisplayState: true,
-				submitDisplayState: false,
+				filterClickCount: 0,
 				sidebarDisplayState: false,
 				userInput: "",
 				savedInput: "",
@@ -111,11 +106,16 @@ export default {
 			handleClick(event) {
 				console.log(event);
 
-				if (event === "focus") {
-					this.submitDisplayState = true;
-					this.userInput = "";
+				this.filterClickCount < 2 ? this.filterClickCount = this.filterClickCount + 1 : this.filterClickCount = this.filterClickCount;
+				console.log(this.filterClickCount);
+
+				if (this.filterClickCount > 1) {
+					this.userInput = '';
+					this.filterClickCount = 0;
 					return;
 				}
+
+
 			},
 			handleSubmit() {
 				// this.savedInput = this.userInput;
@@ -133,25 +133,21 @@ export default {
 
 <style>
 	@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
-
-
-
-
-	.fade-enter{
-        opacity: 0;
-		width: 0%;
-    }
-    .fade-enter-active{
-        transition: opacity 0.5s, width 0.5s;
-
-    }
-    .fade-leave{
-        /* opacity: 1; */
-		width: 0%;
-    }
-    .fade-leave-active{
-        transition: opacity 1s;
-        opacity: 0;
+	.fade-enter {
+		opacity: 0;
+		width: 0;
+	}
+	.fade-enter-active {
+		transition: opacity 0.5s, width 0.5s;
+	}
+	.fade-leave {
+		opacity: 1;
+		width: 100%;
+	}
+	.fade-leave-active {
+		transition: opacity 1s, width 1s;
+		opacity: 0;
+		width: 0;
 	}
 	.img {
 		background: black;
@@ -172,11 +168,10 @@ export default {
 	html {
 		box-sizing: border-box;
 		margin: 0;
-		padding:25px;
+		padding: 25px;
 		height: 100%;
 		background: rgba(54, 46, 121, 0.849);
-		box-shadow: 0px 0px 50px 100px inset #2A4F7F;
-
+		box-shadow: 0px 0px 50px 100px inset #2a4f7f;
 	}
 	body {
 		box-sizing: border-box;
@@ -185,47 +180,45 @@ export default {
 		height: 100%;
 	}
 
-	.routerLink {
-		color: rgba(255, 255, 255, 0.842);
-		text-decoration: none;
-	}
-
 	#app {
 		box-sizing: content-box;
-		/* display: grid; */
 		font-family: "Avenir", Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		text-align: center;
-		color: #2c3e50;
-		margin-top: 0px;
 		background: rgba(54, 46, 121, 0.705);
 		color: rgb(255, 255, 255);
 		font-family: "Montserrat", sans-serif;
 		font-size: 1rem;
-		font-weight: 500;
 		line-height: 1.6;
-		max-height: 100%;
+		font-weight: 500;
+		text-align: center;
+		padding: 0px 0px 2px 0px;
 		height: 100%;
-		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
-		padding: 0px 0px 5px 0px;
 		margin: 0;
-		z-index: 0;
+		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
+		/* overflow: auto; */
 	}
 	.app-shell {
 		box-sizing: border-box;
 		max-width: 750px;
-		width: 100% z-index 0;
-		height:  fit-content;
-		max-height: 100vw;
+		width: 100%;
+		height: fit-content;
+		/* height: 100%; */
 		margin: auto;
-		padding: 0px 5px 15px 10px;
 		margin-top: 0px;
+		padding: 0px 5px 30px 10px;
 		border: 2px solid var(--transparentBlue);
 		border-radius: 7px;
 		background: var(--mainRed);
 		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
+		/* overflow: auto; */
 	}
+.shell-body {
+	box-sizing: border-box;
+	height: 100%;
+	max-height: 620px;
+	overflow: hidden;
+}
 
 	header {
 		box-sizing: border-box;
@@ -244,23 +237,17 @@ export default {
 		text-align: center;
 	}
 
-	h2,
-	h3 {
-		padding: 0px 0px 0px 0px;
-	}
-
-	h3 {
-		padding-top: 5px;
-	}
 	.seahag {
 		margin: 10px auto 5px auto;
 		padding: 0;
+		color: rgba(255, 255, 255, 0.822);
 	}
+
 	.toggleButton {
 		position: absolute;
 		display: block;
 		margin-top: 0;
-		font-size:5em;
+		font-size: 5em;
 		height: fit-content;
 		width: fit-content;
 		color: rgb(255, 255, 255);
@@ -278,18 +265,12 @@ export default {
 		color: var(--mainRed);
 	}
 
-	.fa-check {
-		padding: 3px 5px;
-		font-size: 1.5em;
-		position: RELATIVE;
-		color: #284b78c4;
-	}
-	.sidebar-toggle {
+	/* .sidebar-toggle {
 		color: white;
 
 		display: flex;
 		flex-direction: row;
-		/* text-align: left; */
+		text-align: left;
 		justify-content: flex-end;
 		margin-right: 0;
 		z-index: 3;
@@ -297,6 +278,63 @@ export default {
 		font-size: 1.3em;
 		margin-bottom: 6px;
 		margin-right: 3px;
+	} */
+	.sidebar-container {
+		color: white;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: left;
+		z-index: 3;
+		padding: 0;
+		margin: 0px;
+		/* margin-bottom: 15px; */
+		opacity: 1;
+		transition: 0.3s;
+		background-image: linear-gradient(to right, #833c467c , #a04650);
+		/* box-shadow: 0px 0px 5px 1px inset rgba(45, 45, 46, 0.164)	; */
+	}
+	.sidebar-toggle2 {
+		color: white;
+
+		display: flex;
+		flex-direction: row;
+		text-align: left;
+		justify-content: center;
+		margin-left: 0;
+		z-index: 3;
+		margin-bottom: 15px;
+		padding: 1px;
+		font-size: 1em;
+		/* margin-bottom: 6px; */
+		margin-right: 0px;
+		opacity: 1;
+		transition: 0.5s;
+	}
+	.sidebar-toggle3 {
+		color: white;
+
+		display: flex;
+		flex-direction: row;
+		text-align: left;
+		justify-content: center;
+		margin-left: 0;
+		z-index: 2;
+		margin-bottom: 15px;
+		padding: 1px;
+		font-size: 1em;
+		/* margin-bottom: 6px; */
+		margin-right: 0px;
+		opacity: 1;
+		transition: 0.5s;
+	}
+	.sidebar-toggle2:active {
+		opacity: 00.3;
+
+	}
+	.sidebar-toggle3:hover {
+		opacity: 0.3;
+
 	}
 	.MainGrid {
 		box-sizing: border-box;
@@ -310,6 +348,7 @@ export default {
 		z-index: 0;
 		touch-action: manipulation;
 	}
+
 	.body-row {
 		display: flex;
 		/* background: var(--mainRed); */
@@ -319,38 +358,16 @@ export default {
 		display: flex;
 		justify-content: space-around;
 		padding-top: 0px;
-		padding: 2px;
-		margin: 2px;
+		/* padding: 2px; */
+		/* margin: 2px; */
 		touch-action: manipulation;
 		background: var(--mainRed);
 		overflow: auto;
 		width: 100%;
 	}
-	.sidebarHidden {
-		width: 0px;
-		overflow: hidden;
-		touch-action: manipulation;
-	}
-
-	.sidebarShown {
-		box-sizing: border-box;
-		display: sticky;
-		z-index: 1;
-		width: 200px;
-		padding: 10px;
-		padding-top: 5px;
-		margin: 3px;
-		margin-right: 3px;
-		background: var(--mainRed);
-		border-radius: 0px 0px 5px;
-
-		border-right: 1px solid rgba(190, 138, 138, 0.315);
-
-		touch-action: manipulation;
-	}
 
 	.shell-head {
-		max-height: 200px;
+		max-height: 175px;
 		box-sizing: border-box;
 		display: grid;
 		grid-template-columns: 6fr 9fr 1fr;
@@ -386,6 +403,7 @@ export default {
 	}
 	.header1 > h1 {
 		margin: 0px;
+		color: rgba(255, 255, 255, 0.863);
 	}
 
 	.header-button-container {
@@ -403,23 +421,24 @@ export default {
 		height: 25px;
 		border-radius: 5px;
 		border: 0px;
-		touch-action: manipulation;
-		outline: none;
 		padding: 3px;
 		padding-left: 6px;
 		margin: auto;
 		margin-right: 5px;
 		grid-area: input;
-		max-width: 150px;
+		max-width: 200px;
 		font-size: 1em;
+		touch-action: manipulation;
+		outline: none;
 	}
 
 	.header2-label {
 		box-sizing: border-box;
+		grid-area: hText;
 		margin-bottom: 3px;
+		padding-bottom: 5px;
 		margin: 10px auto 0px auto;
 		text-align: center;
-		grid-area: hText;
 	}
 
 	.header2 {
@@ -446,7 +465,7 @@ export default {
 	}
 
 	@media screen and (max-width: 450px) {
-		html{
+		html {
 			padding: 0px;
 		}
 		header {
@@ -456,49 +475,44 @@ export default {
 
 		header > h1 {
 			font-size: 1.4em;
-			line-height: 00.5;
-		}
-
-		header > h3 {
-			display: none;
+			line-height: 0.5;
 		}
 
 		.MainGrid {
 			box-sizing: border-box;
-			/* height: 100vw; */
 			margin: auto;
 			background: var(--mainRed);
 			overflow: auto;
 		}
-		.app {
-			padding: 0px;
-			margin: 0;
-			box-sizing: border-box;
-			height: 100%;
-		}
-
-
 		.app-shell {
 			box-sizing: border-box;
 			max-width: 100vw;
-			min-height: 120vw;
-			max-height: fit-content;
+			max-height: 165vw;
+			min-height: 165vw;
+			/* max-height: fit-content; */
 			margin: auto;
 			margin-top: 0px;
-			padding: 0px 3px 30px 3px;
+			padding: 0px 3px 20px 3px;
 			border: 2px solid var(--transparentBlue);
 			border-radius: 7px;
 			/* background: var(--mainRed); */
 			box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
 		}
+		.filter-input {
+			max-width: 150px;
+		}
+.shell-body {
+	max-height: 130vw;
+	overflow: hidden;
+}
 
 		.body-flex {
 			display: flex;
 			justify-content: space-around;
 			padding: 0px;
-			padding: 2px;
+			/* padding: 2px; */
 			padding-top: 0px;
-			margin: 2px;
+			/* margin: 2px; */
 			margin-top: 0px;
 			touch-action: manipulation;
 			max-height: 119vw;

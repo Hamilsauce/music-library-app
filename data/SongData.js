@@ -1,5 +1,15 @@
 let songList = () => {
     const songs = [{
+            "id": "20",
+            "songTitle": "Jerry's Mecha Breakdown",
+            "plays": "0",
+            "likes": "0",
+            "genre": "Space Country",
+            "duration": "02:40",
+            "comments": "0",
+            "audioUrl": "https://hamilsauce.github.io/audio/jerrys_mecha-breakdown.mp3"
+        },
+        {
             "id": "1",
             "songTitle": "Battle Star",
             "plays": "12",
@@ -9,6 +19,16 @@ let songList = () => {
             "comments": "3",
             "audioUrl": "https://hamilsauce.github.io/audio/Battle%20Star.mp3"
 
+        },
+        {
+            "id": "7",
+            "songTitle": "Procession",
+            "plays": "7",
+            "likes": "2",
+            "genre": "Electronic",
+            "duration": "02:29",
+            "comments": "0",
+            "audioUrl": "https://hamilsauce.github.io/audio/procession(revise1).mp3"
         },
         {
             "id": "2",
@@ -38,7 +58,7 @@ let songList = () => {
             "genre": "Psychedlic",
             "duration": "02:18",
             "comments": "2",
-            "audioUrl": "https://hamilsauce.github.io/audio/The%20Gypsy.mp3"
+            "audioUrl": "https://hamilsauce.github.io/audio/Voyage%20into%20Sample.mp3"
         },
         {
             "id": "5",
@@ -49,44 +69,6 @@ let songList = () => {
             "duration": "02:32",
             "comments": "1",
             "audioUrl": "https://hamilsauce.github.io/audio/Wild%20Onion.mp3"
-        },
-        {
-            "id": "6",
-            "songTitle": "A Memory Remains",
-            "plays": "6",
-            "likes": "3",
-            "genre": "Ambient",
-            "duration": "04:29",
-            "comments": "1"
-        },
-        {
-            "id": "44",
-            "songTitle": "Offworld",
-            "plays": "0",
-            "likes": "0",
-            "genre": "Rock",
-            "duration": "02:05",
-            "comments": "0",
-            "audioUrl": "https://hamilsauce.github.io/audio/Offworld%20(up).mp3"
-        },
-        {
-            "id": "7",
-            "songTitle": "Procession",
-            "plays": "7",
-            "likes": "2",
-            "genre": "Electronic",
-            "duration": "02:29",
-            "comments": "0",
-            "audioUrl": "https://hamilsauce.github.io/audio/procession(revise1).mp3"
-        },
-        {
-            "id": "8",
-            "songTitle": "Uncle Frog's Deep Space Chorus",
-            "plays": "11",
-            "likes": "1",
-            "genre": "Rock",
-            "duration": "04:08",
-            "comments": "0"
         },
         {
             "id": "9",
@@ -107,6 +89,34 @@ let songList = () => {
             "duration": "04:09",
             "comments": "0",
             "audioUrl": "https://hamilsauce.github.io/audio/Ink%20Erodes%20Slowly2.mp3"
+        },
+        {
+            "id": "44",
+            "songTitle": "Offworld",
+            "plays": "0",
+            "likes": "0",
+            "genre": "Rock",
+            "duration": "02:05",
+            "comments": "0",
+            "audioUrl": "https://hamilsauce.github.io/audio/Offworld%20(up).mp3"
+        },
+        {
+            "id": "6",
+            "songTitle": "A Memory Remains",
+            "plays": "6",
+            "likes": "3",
+            "genre": "Ambient",
+            "duration": "04:29",
+            "comments": "1"
+        },
+        {
+            "id": "8",
+            "songTitle": "Uncle Frog's Deep Space Chorus",
+            "plays": "11",
+            "likes": "1",
+            "genre": "Rock",
+            "duration": "04:08",
+            "comments": "0"
         },
         {
             "id": "11",
@@ -187,15 +197,6 @@ let songList = () => {
             "likes": "5",
             "genre": "",
             "duration": "03:05",
-            "comments": "0"
-        },
-        {
-            "id": "20",
-            "songTitle": "Remix of Royals - Lorde",
-            "plays": "13",
-            "likes": "1",
-            "genre": "",
-            "duration": "03:20",
             "comments": "0"
         },
         {

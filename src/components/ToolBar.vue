@@ -3,7 +3,7 @@
 		<div class="top-bar"
 
         >
-        <div class="expand-button" @click="toggleBottomBar"><i class="fas fa-caret-square-down"></i></div>
+        <div class="expand-button" @click="toggleBottomBar" title="Click here to show more options!"><i class="fas fa-caret-square-down"></i></div>
 			<div class="top-bar-div title-container">{{ songTitle }}</div>
 			<div>
                 <input
@@ -26,16 +26,17 @@
             </div>
 		</div>
         <transition name="fade">
-		<div class="bottom-bar" v-if="expandBottomBar === true">
-			<div>More stuff</div>
+		<div class="bottom-bar"
+        :style="{height: expandBottomBar === true ? '25px' : '0px' }">
+			<div class="misc-cell" v-if="expandBottomBar === true">More stuff</div>
 
-			<div class="sort-cell">
+			<div class="sort-cell" v-if="expandBottomBar === true">
                 <label for="select-sort">Sort By: </label>
-                <select name="" id="" class="select-sort">
-                    <option value="">Name</option>
-                    <option value="">Genre</option>
-                    <option value="">Likes</option>
-                    <option value="">Listens</option>
+                <select v-model="sortCriteria" class="select-sort">
+                    <option value="songTitle">songTitle</option>
+                    <option value="Genre">Genre</option>
+                    <option value="Likes">Likes</option>
+                    <option value="Plays">Plays</option>
                 </select>
             </div>
 		</div>
@@ -56,13 +57,15 @@ import EventBus from './eventBus';
 		props: {
             inputData: String,
             songUrl: String
-        }    ,
+        },
+
 		data() {
 			return {
                 expandBottomBar: false,
                 audioPaused: false,
                 songName: '',
                 audioSrc: '',
+                sortCriteria: '',
                 notification2: "Details...",
                 eventInput: this.userInput
 			};
@@ -105,6 +108,7 @@ import EventBus from './eventBus';
                 this.audioPaused = true;
             }
         },
+
 		computed: {
             userInput: function() {
                 return this.inputData;
@@ -113,7 +117,13 @@ import EventBus from './eventBus';
                 return this.songName;
             }
         },
-		watch: {},
+
+		watch: {
+            sortCriteria: function() {
+                EventBus.$emit('sortChange', this.sortCriteria);
+            }
+        },
+
 		created() {
             this.playAudio();
         },
@@ -124,6 +134,23 @@ import EventBus from './eventBus';
 </script>
 
 <style scoped>
+	.fade-enter{
+        opacity: 0;
+		width: 0;
+    }
+    .fade-enter-active{
+        transition: opacity 0.5s, width 0.5s;
+
+    }
+    .fade-leave{
+        opacity: 1;
+		width: 100%;
+    }
+    .fade-leave-active{
+        transition: opacity 1s, width 1s;
+        opacity: 0;
+		width: 0;
+	}
 .toolbar {
     display: grid;
     grid-template-rows: 2;
@@ -131,14 +158,13 @@ import EventBus from './eventBus';
     background: var(--mainRed);
     color: white;
     font-size: 0.9em;
-    padding: 2px 0px;
+    padding: 2px 0px 0px 0px;
     margin: 0px 5px;
-    border: 1px solid rgba(190, 138, 138, 0.226);
-    border-right: 1px solid  rgba(141, 60, 60, 0.219);
-    border-left: 1px solid  rgba(141, 60, 60, 0.219);
-    border-bottom: 1px solid var(--mainRed);
+    border: 1px solid rgba(190, 138, 138, 0.021);
+    border-right: 2px solid  rgba(141, 60, 60, 0.219);
+    border-left: 2px solid  rgba(141, 60, 60, 0.219);
     border-radius: 5px 5px 0px 0px;
-    box-shadow:0px 0px 20px 10px inset rgba(136, 61, 61, 0.219);
+    box-shadow:0px 0px 20px 5px inset rgba(136, 61, 61, 0.267);
 }
 
 
@@ -157,7 +183,7 @@ import EventBus from './eventBus';
 .sort-cell>label {
     font-size: 1em;
     font-weight: 400;
-    padding:2px 0px 2px 0px;
+    padding:2px 0px 0px 0px;
 }
 .select-sort {
     min-width: 80px;
@@ -169,10 +195,10 @@ import EventBus from './eventBus';
     margin: 0px 0px 0px 6px;
     box-sizing: border-box;
     background: var(--mainRed);
-    background:solid rgba(139, 39, 39, 0.856);
+    background:solid rgba(170, 78, 78, 0.856);
     font-size: 1.1em;
     border: 1px solid rgba(139, 39, 39, 0);
-    border-bottom: 1px solid rgba(139, 39, 39, 0.856);
+    /* border-bottom: 1px solid rgba(139, 39, 39, 0.856); */
 }
 .title-container {
     grid-column: span 2;
@@ -190,15 +216,25 @@ select>option {
     text-align: center;
 }
 .bottom-bar {
+    box-sizing: border-box;
     width: 100%;
     min-width: fit-content;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: 1;
-    padding: 2px 0px 2px 0px;
+    padding: 2px 0px 0px 0px;
     margin: 0;
-    border-top: 1px solid rgba(90, 10, 10, 0.212);
+    /* border-top: 1px solid rgba(29, 6, 6, 0.096); */
+    transition: 0.5s;
 
+}
+.misc-cell {
+      display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 0px;
+    padding-right: 10px;
+    font-size: 1.1em;
 }
 .pause-button {
     background: rgb(47, 83, 149);

@@ -1,5 +1,5 @@
 class Comp {
-    constructor(title, description, author, type, genre, dateCreated, status) {
+    constructor(title, description, author, type, genre){
         this.title = title,
             this.description = description,
             this.author = author,
@@ -17,7 +17,7 @@ class Comp {
     dateCreated = new Date()
     status = ''
     notes = ''
-    compFamily = '' //groups of comps that are related (rewrites, expansions, follow ups, etc)
+    relatedComps = '' //groups of comps that are related (rewrites, expansions, follow ups, etc)
     audioFiles = [{
         filename: '',
         fileType: '',
