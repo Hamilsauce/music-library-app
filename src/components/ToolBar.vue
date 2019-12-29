@@ -77,9 +77,8 @@ import EventBus from './eventBus';
             },
             receiveUserInput() {
                 EventBus.$on('userInputSubmit', data => {
-                    console.log(data[0]);
                     this.inputData = data;
-                    console.log(this.inputData[0]);
+                    this.inputData[0];
                 })
             },
             playAudio() {
@@ -92,6 +91,7 @@ import EventBus from './eventBus';
                     console.log( playSong)
                     this.songName = playSong[0];
                     this.audioSrc = playSong[1];
+                    audioPlayer.pause();
                     audioPlayer.load();
                     audioPlayer.play();
                 }
@@ -172,7 +172,7 @@ import EventBus from './eventBus';
     display: grid;
     grid-template-columns: 30px 1fr 1fr 80px;
     grid-template-rows: 1;
-    padding: 2px 0px 0px 0px;
+    padding: 2px 5px 0px 0px;
     font-size: 1em;
     border-radius: 5px 5px 0px 0px;
 }

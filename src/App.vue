@@ -24,7 +24,7 @@
 				</div>
 				<!-- <div class="sidebar-toggle">
 						<i @click="toggleSidebar" class="fas fa-angle-double-left sidebar-toggle"></i>
-				</div> -->
+				</div>-->
 			</div>
 
 			<div class="shell-body">
@@ -32,15 +32,17 @@
 					<ToolBar class="toolbar"></ToolBar>
 				</transition>
 				<div class="body-row">
-					<div class="body-flex">
-						<router-view :userInput="userInput" :songs="songs"></router-view>
-					</div>
-						<transition name="fade">
+					<transition name="fade">
+						<div class="body-flex">
+							<router-view :userInput="userInput" :songs="songs"></router-view>
+						</div>
+					</transition>
+					<transition name="fade">
 						<div @click="toggleSidebar" class="sidebar-container" title="Click to expand navigation!">
 							<i v-show="sidebarDisplayState === false" class="fas fa-angle-double-left sidebar-toggle2"></i>
-							<i v-show="sidebarDisplayState === true"  class="fas fa-angle-double-right sidebar-toggle3"></i>
+							<i v-show="sidebarDisplayState === true" class="fas fa-angle-double-right sidebar-toggle3"></i>
 						</div>
-							</transition>
+					</transition>
 					<Sidebar :sidebarDisplayState="sidebarDisplayState"></Sidebar>
 				</div>
 			</div>
@@ -57,7 +59,6 @@
 	import ToolBar from "./components/ToolBar";
 	import Sidebar from "./components/Sidebar";
 	import EventBus from "./components/eventBus.js";
-	import songList from "../data/SongData.js";
 
 	export default {
 		name: "app",
@@ -87,11 +88,16 @@
 						date: ""
 					}
 				],
-				songs: songList
+				songs: [],
 			};
 		},
 		methods: {
 			initializeData() {
+				fetch("https://hamilsauce.github.io/audio/SongData.json")
+					.then(response => response.json())
+					.then(data => {
+						this.songs = data.songs;
+					});
 				EventBus.$emit("dataLoad", this.songs);
 			},
 			toggleHeader() {
@@ -106,19 +112,18 @@
 			handleClick(event) {
 				console.log(event);
 
-				this.filterClickCount < 2 ? this.filterClickCount = this.filterClickCount + 1 : this.filterClickCount = this.filterClickCount;
+				this.filterClickCount < 2
+					? (this.filterClickCount = this.filterClickCount + 1)
+					: (this.filterClickCount = this.filterClickCount);
 				console.log(this.filterClickCount);
 
 				if (this.filterClickCount > 1) {
-					this.userInput = '';
+					this.userInput = "";
 					this.filterClickCount = 0;
 					return;
 				}
-
-
 			},
 			handleSubmit() {
-				// this.savedInput = this.userInput;
 				EventBus.$emit("userInputSubmit", this.userInput);
 
 				this.userInput = "";
@@ -136,18 +141,21 @@
 	.fade-enter {
 		opacity: 0;
 		width: 0;
+		height: 0;
 	}
 	.fade-enter-active {
-		transition: opacity 0.5s, width 0.5s;
+		transition: opacity 0.5s, width 0.5s, hieght 0.5s;
 	}
 	.fade-leave {
 		opacity: 1;
 		width: 100%;
+		height: 100%;
 	}
 	.fade-leave-active {
 		transition: opacity 1s, width 1s;
 		opacity: 0;
 		width: 0;
+		height: 0;
 	}
 	.img {
 		background: black;
@@ -206,19 +214,19 @@
 		/* height: 100%; */
 		margin: auto;
 		margin-top: 0px;
-		padding: 0px 5px 30px 10px;
+		padding: 0px 0px 30px 10px;
 		border: 2px solid var(--transparentBlue);
 		border-radius: 7px;
 		background: var(--mainRed);
 		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
 		/* overflow: auto; */
 	}
-.shell-body {
-	box-sizing: border-box;
-	height: 100%;
-	max-height: 620px;
-	overflow: hidden;
-}
+	.shell-body {
+		box-sizing: border-box;
+		height: 100%;
+		max-height: 620px;
+		overflow: hidden;
+	}
 
 	header {
 		box-sizing: border-box;
@@ -266,19 +274,19 @@
 	}
 
 	/* .sidebar-toggle {
-		color: white;
+			color: white;
 
-		display: flex;
-		flex-direction: row;
-		text-align: left;
-		justify-content: flex-end;
-		margin-right: 0;
-		z-index: 3;
-		padding: 5px;
-		font-size: 1.3em;
-		margin-bottom: 6px;
-		margin-right: 3px;
-	} */
+			display: flex;
+			flex-direction: row;
+			text-align: left;
+			justify-content: flex-end;
+			margin-right: 0;
+			z-index: 3;
+			padding: 5px;
+			font-size: 1.3em;
+			margin-bottom: 6px;
+			margin-right: 3px;
+		} */
 	.sidebar-container {
 		color: white;
 		display: flex;
@@ -291,7 +299,7 @@
 		/* margin-bottom: 15px; */
 		opacity: 1;
 		transition: 0.3s;
-		background-image: linear-gradient(to right, #833c467c , #a04650);
+		background-image: linear-gradient(to right, #833c467c, #a04650);
 		/* box-shadow: 0px 0px 5px 1px inset rgba(45, 45, 46, 0.164)	; */
 	}
 	.sidebar-toggle2 {
@@ -305,7 +313,8 @@
 		z-index: 3;
 		margin-bottom: 15px;
 		padding: 1px;
-		font-size: 1em;
+		padding-left: 2px;
+		font-size: 1.1em;
 		/* margin-bottom: 6px; */
 		margin-right: 0px;
 		opacity: 1;
@@ -330,11 +339,9 @@
 	}
 	.sidebar-toggle2:active {
 		opacity: 00.3;
-
 	}
 	.sidebar-toggle3:hover {
 		opacity: 0.3;
-
 	}
 	.MainGrid {
 		box-sizing: border-box;
@@ -487,12 +494,12 @@
 		.app-shell {
 			box-sizing: border-box;
 			max-width: 100vw;
-			max-height: 165vw;
-			min-height: 165vw;
+			max-height: 175vw;
+			min-height: 170vw;
 			/* max-height: fit-content; */
 			margin: auto;
 			margin-top: 0px;
-			padding: 0px 3px 20px 3px;
+			padding: 0px 0px 20px 5px;
 			border: 2px solid var(--transparentBlue);
 			border-radius: 7px;
 			/* background: var(--mainRed); */
@@ -501,10 +508,10 @@
 		.filter-input {
 			max-width: 150px;
 		}
-.shell-body {
-	max-height: 130vw;
-	overflow: hidden;
-}
+		.shell-body {
+			max-height: 133vw;
+			overflow: hidden;
+		}
 
 		.body-flex {
 			display: flex;
@@ -515,6 +522,7 @@
 			/* margin: 2px; */
 			margin-top: 0px;
 			touch-action: manipulation;
+			min-height: 500px;
 			max-height: 119vw;
 			background: var(--mainRed);
 			overflow: auto;

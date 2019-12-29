@@ -176,7 +176,9 @@
 			touch-action: manipulation;
 			border-radius: 0px 0px 5px 5px;
 			border-top: 0px solid var(--lightPurple);
-			max-width: 100vw;
+			border-radius: 5px;
+			max-width: 110vw;
+			min-height: 540px;
 		}
 		.grid-cell:nth-child(4n + 4) {
 			grid-column: span 2;

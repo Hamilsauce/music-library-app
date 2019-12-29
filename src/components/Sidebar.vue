@@ -15,6 +15,9 @@
 					<router-link class="routerLink" to="/">Library</router-link>
 				</div>
 				<div class="linkItem">
+					<router-link to="/newsong" class="routerLink">New Song</router-link>
+				</div>
+				<div class="linkItem">
 					<router-link to="/About" class="routerLink">About</router-link>
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-let songList = () => {
+export let songList = () => {
     const songs = [{
             "id": "20",
             "songTitle": "Jerry's Mecha Breakdown",
@@ -402,4 +402,15 @@ let songList = () => {
 }
 
 
-export default songList();
+export const fetchSongList = () => {
+    fetch("https://hamilsauce.github.io/audio/SongData.json")
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            
+        })
+
+}
+
+{songList, fetchSongList}
+// export default songList();
