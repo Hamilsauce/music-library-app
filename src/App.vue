@@ -298,7 +298,8 @@
 		padding: 0;
 		margin: 0px;
 		margin-bottom: 15px;
-		opacity: 1;
+		opacity: 1;		cursor: pointer;
+
 		transition: 0.3s;
 		background-image: linear-gradient(to right, #833c467c, #a04650);
 		/* box-shadow: 0px 0px 5px 1px inset rgba(45, 45, 46, 0.164)	; */
@@ -337,6 +338,10 @@
 		margin-right: 0px;
 		opacity: 1;
 		transition: 0.5s;
+	}
+	.sidebar-container:hover {
+		background-image: linear-gradient(to right, #9b4f597c, #ac3643);
+
 	}
 	.sidebar-toggle2:active {
 		opacity: 00.3;
