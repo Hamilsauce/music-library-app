@@ -119,7 +119,9 @@
 		--fadedPurple: #bba4bb;
 		--mainWhite: #fffffa;
 	}
-
+	work-cell {
+		cursor: pointer;
+	}
 	.audio-container {
 		display: none;
 	}
@@ -127,7 +129,7 @@
 		box-sizing: border-box;
 		display: grid;
 		gap: 5px;
-		grid-template-columns: repeat(auto-fill, minmax(175px, 2fr));
+		grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
 		grid-template-rows: auto;
 		max-height: fit-content;
 		width: 100%;

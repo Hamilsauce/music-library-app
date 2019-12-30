@@ -1,8 +1,19 @@
 <template>
         <div  @click="cellActive"    class="grid-cell">
-            <p> {{ song.songTitle }} </p>
-            <p> {{ song.genre }} </p>
-
+            <div class="internal-grid">
+            <div class="cell-head">
+                <div class="checkbox-container">
+                    <img v-if="activated === true && checkedSong === song.id"  src="@/assets/checked-box.svg" width="20px" height="20px" alt="checkbox">
+                    <img v-else src="@/assets/unchecked-box.svg" width="20px" height="20px" alt="checkbox">
+                </div>
+            </div>
+            <div class="cell-body">
+                <p> {{ song.songTitle }} </p>
+            </div>
+            <div class="cell-foot">
+                <p> {{ song.genre }} </p>
+                </div>
+            </div>
         </div>
 </template>
 
@@ -19,6 +30,7 @@
         data() {
             return {
                 activated: false,
+                checkedSong: '',
                 audioUrl: '',
                 errorMsg: ''
             }
@@ -29,7 +41,13 @@
                 let songInfo = [];
                 let urlOrError = [];
 
-                this.activated = true;
+                this.activated = !this.activated;
+                this.checkedSong = this.song.id;
+                if (this.activated === false) {
+                    return
+
+                }
+
                 if (this.song.hasOwnProperty('audioUrl')) {
                     urlOrError = ['url', this.song.audioUrl];
                     songInfo.push(urlOrError);
@@ -42,7 +60,8 @@
 
             }
         },
-        computed: {},
+        computed: {
+        },
         watch: {},
 
         /* Vue lifecycle hooks (Ref: https://vuejs.org/v2/guide/instance.html#Instance-Lifecycle-Hooks) */
@@ -58,11 +77,11 @@
 	.grid-cell {
         /* display: grid; */
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         flex-direction: column;
         grid-template-columns: 1fr 1fr;
-        min-height: 100px;
-    min-width: 100px;
+        min-height: 75px;
+    min-width: 75px;
 		padding: 1vw 2vw;
 		color: rgb(106, 107, 114);
 		background: rgb(255, 255, 250);
@@ -93,6 +112,23 @@
 		cursor: pointer;
 		color: white;
     }
+    .internal-grid {
+        display: grid;
+    }
+    .cell-head {
+        display: grid;
+        justify-content: end;
+        margin: auto;
+        height: fit-content;
+        width: 100%;
+    }
+    .checkbox-container {
+        justify-content: right;
+        margin: auto;
+        width: fit-content;
+    }
 
-
+p {
+    margin:  5px;
+}
     </style>

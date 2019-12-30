@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<header v-if="headerDisplayState === true">
-			<h5 class="seahag">Select a tile to listen.</h5>
+			<h7 class="seahag">Select a tile to listen.</h7>
 		</header>
 		<div class="app-shell">
 			<div class="shell-head">
@@ -177,6 +177,7 @@
 		box-sizing: border-box;
 		margin: 0;
 		padding: 25px;
+		padding-top: 0px;
 		height: 100%;
 		background: rgba(54, 46, 121, 0.849);
 		box-shadow: 0px 0px 50px 100px inset #2a4f7f;
@@ -201,7 +202,7 @@
 		font-weight: 500;
 		text-align: center;
 		padding: 0px 0px 2px 0px;
-		height: 100%;
+		/* height: 100%; */
 		margin: 0;
 		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
 		/* overflow: auto; */
@@ -224,7 +225,7 @@
 	.shell-body {
 		box-sizing: border-box;
 		height: 100%;
-		max-height: 620px;
+		max-height: 580px;
 		overflow: hidden;
 	}
 
@@ -246,7 +247,7 @@
 	}
 
 	.seahag {
-		margin: 10px auto 5px auto;
+		margin: 5px auto 0px auto;
 		padding: 0;
 		color: rgba(255, 255, 255, 0.822);
 	}
@@ -296,7 +297,7 @@
 		z-index: 3;
 		padding: 0;
 		margin: 0px;
-		/* margin-bottom: 15px; */
+		margin-bottom: 15px;
 		opacity: 1;
 		transition: 0.3s;
 		background-image: linear-gradient(to right, #833c467c, #a04650);
@@ -345,7 +346,7 @@
 	}
 	.MainGrid {
 		box-sizing: border-box;
-		max-height: 582px;
+		max-height: 575px;
 		width: 100%;
 		margin: 0;
 		padding: 0px;
@@ -494,12 +495,12 @@
 		.app-shell {
 			box-sizing: border-box;
 			max-width: 100vw;
-			max-height: 175vw;
-			min-height: 170vw;
+			max-height: 165vw;
+			min-height: 165vw;
 			/* max-height: fit-content; */
 			margin: auto;
 			margin-top: 0px;
-			padding: 0px 0px 20px 5px;
+			padding: 0px 0px 15px 5px;
 			border: 2px solid var(--transparentBlue);
 			border-radius: 7px;
 			/* background: var(--mainRed); */
@@ -509,7 +510,7 @@
 			max-width: 150px;
 		}
 		.shell-body {
-			max-height: 133vw;
+			max-height: 130vw;
 			overflow: hidden;
 		}
 
