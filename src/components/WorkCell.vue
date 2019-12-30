@@ -3,8 +3,8 @@
             <div class="internal-grid">
             <div class="cell-head">
                 <div class="checkbox-container">
-                    <img v-if="activated === true && checkedSong === song.id"  src="https://hamilsauce.github.io/music-library-app/img/checked-box.585f1ff0.svg" width="20px" height="20px" alt="checkbox">
-                    <img v-else src="https://hamilsauce.github.io/music-library-app/img/unchecked-box.0aa4ce2c.svg" width="20px" height="20px" alt="checkbox">
+                    <img v-if="activated === true && checkedSong === song.id"  src="https://hamilsauce.github.io/music-library-app/src/assets/checked-box.svg" width="20px" height="20px" alt="checkbox">
+                    <img v-else src="https://hamilsauce.github.io/music-library-app/src/assets/unchecked-box.svg" width="20px" height="20px" alt="checkbox">
                 </div>
             </div>
             <div class="cell-body">
