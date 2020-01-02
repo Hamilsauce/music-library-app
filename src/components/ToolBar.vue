@@ -84,13 +84,19 @@ import EventBus from './eventBus';
             playAudio() {
                 EventBus.$on('songActivated', playSong => {
                 const audioPlayer = document.getElementById('audio-player');
-                if (playSong[1] === 'noUrl') {
+                if (this.songTitle == playSong[0]) {
+                    console.log('read you');
+
+                    return;
+                } else if (playSong[1] === 'noUrl') {
                     this.songName = playSong[0];
                     return;
                 } else {
                     console.log( playSong)
                     this.songName = playSong[0];
                     this.audioSrc = playSong[1];
+                    this.audioPaused = false;
+
                     audioPlayer.pause();
                     audioPlayer.load();
                     audioPlayer.play();
@@ -159,7 +165,7 @@ import EventBus from './eventBus';
     color: white;
     font-size: 0.9em;
     padding: 2px 0px 0px 0px;
-    margin: 0px 5px;
+    margin: 0px 5px 0px 0px;
     border: 1px solid rgba(190, 138, 138, 0.021);
     border-right: 2px solid  rgba(141, 60, 60, 0.219);
     border-left: 2px solid  rgba(141, 60, 60, 0.219);

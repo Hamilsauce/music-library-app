@@ -3,7 +3,7 @@
             <div class="internal-grid">
             <div class="cell-head">
                 <div class="checkbox-container">
-                    <img v-if="activated === true && checkedSong === song.id"  src="https://hamilsauce.github.io/music-library-app/src/assets/checked-box.svg" width="20px" height="20px" alt="checkbox">
+                    <img v-if="activated === true"  src="https://hamilsauce.github.io/music-library-app/src/assets/checked-box.svg" width="20px" height="20px" alt="checkbox">
                     <img v-else src="https://hamilsauce.github.io/music-library-app/src/assets/unchecked-box.svg" width="20px" height="20px" alt="checkbox">
                 </div>
             </div>
@@ -26,10 +26,10 @@
         components: {},
         props: {
             song: Object,
+            selectedSong: String
         },
         data() {
             return {
-                activated: false,
                 checkedSong: '',
                 audioUrl: '',
                 errorMsg: ''
@@ -40,13 +40,6 @@
             cellActive() {
                 let songInfo = [];
                 let urlOrError = [];
-
-                this.activated = !this.activated;
-                this.checkedSong = this.song.id;
-                if (this.activated === false) {
-                    return
-
-                }
 
                 if (this.song.hasOwnProperty('audioUrl')) {
                     urlOrError = ['url', this.song.audioUrl];
@@ -61,6 +54,9 @@
             }
         },
         computed: {
+            activated: function() {
+                return this.selectedSong === this.song.songTitle;
+            }
         },
         watch: {},
 
@@ -80,8 +76,8 @@
         justify-content: flex-start;
         flex-direction: column;
         grid-template-columns: 1fr 1fr;
-        min-height: 75px;
-    min-width: 75px;
+        min-height: 80px;
+        min-width: 75px;
 		padding: 1vw 2vw;
 		color: rgb(106, 107, 114);
 		background: rgb(255, 255, 250);
@@ -125,10 +121,14 @@
     .checkbox-container {
         justify-content: right;
         margin: auto;
-        width: fit-content;
+        height: fit-content;
+        width: 100%;
+    }
+    .cell-foot {
+        font-size: 0.8em
     }
 
 p {
-    margin:  5px;
+    margin:  0px 5px;
 }
     </style>

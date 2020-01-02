@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<header v-if="headerDisplayState === true">
-			<h7 class="seahag">Select a tile to listen.</h7>
+			<h6 class="assistant">{{ assistantMessage }}</h6>
 		</header>
 		<div class="app-shell">
 			<div class="shell-head">
@@ -69,17 +69,11 @@
 		props: {},
 		data() {
 			return {
-				gridCell: {
-					id: null,
-					name: "",
-					content: "",
-					markup: ""
-				},
 				headerDisplayState: true,
 				filterClickCount: 0,
 				sidebarDisplayState: false,
+				assistantMessage: 'Select a tile to listen.',
 				userInput: "",
-				savedInput: "",
 				CellData: [
 					{
 						elementId: "",
@@ -88,6 +82,12 @@
 						date: ""
 					}
 				],
+				gridCell: {
+					id: null,
+					name: "",
+					content: "",
+					markup: ""
+				},
 				songs: [],
 			};
 		},
@@ -109,13 +109,10 @@
 			toggleSubmit() {
 				this.submitDisplayState = !this.submitDisplayState;
 			},
-			handleClick(event) {
-				console.log(event);
-
+			handleClick() {
 				this.filterClickCount < 2
 					? (this.filterClickCount = this.filterClickCount + 1)
 					: (this.filterClickCount = this.filterClickCount);
-				console.log(this.filterClickCount);
 
 				if (this.filterClickCount > 1) {
 					this.userInput = "";
@@ -125,13 +122,25 @@
 			},
 			handleSubmit() {
 				EventBus.$emit("userInputSubmit", this.userInput);
-
 				this.userInput = "";
 				this.toggleSubmit();
+			},
+
+			listenForActiveSong() {
+				EventBus.$on('songActivated', () => {
+					setTimeout(() => {
+						this.assistantMessage = 'Press again to open song page';
+					}, 1000);
+
+					setTimeout(() => {
+						this.assistantMessage = 'Select a tile to listen.';
+					}, 7000);
+				});
 			}
 		},
 		mounted() {
 			this.initializeData();
+			this.listenForActiveSong();
 		}
 	};
 </script>
@@ -202,17 +211,15 @@
 		font-weight: 500;
 		text-align: center;
 		padding: 0px 0px 2px 0px;
-		/* height: 100%; */
 		margin: 0;
 		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
-		/* overflow: auto; */
 	}
 	.app-shell {
 		box-sizing: border-box;
 		max-width: 750px;
 		width: 100%;
-		height: fit-content;
-		/* height: 100%; */
+		/* height: fit-content; */
+		height: 100%;
 		margin: auto;
 		margin-top: 0px;
 		padding: 0px 0px 30px 10px;
@@ -246,7 +253,7 @@
 		text-align: center;
 	}
 
-	.seahag {
+	.assistant {
 		margin: 5px auto 0px auto;
 		padding: 0;
 		color: rgba(255, 255, 255, 0.822);
@@ -274,20 +281,6 @@
 		color: var(--mainRed);
 	}
 
-	/* .sidebar-toggle {
-			color: white;
-
-			display: flex;
-			flex-direction: row;
-			text-align: left;
-			justify-content: flex-end;
-			margin-right: 0;
-			z-index: 3;
-			padding: 5px;
-			font-size: 1.3em;
-			margin-bottom: 6px;
-			margin-right: 3px;
-		} */
 	.sidebar-container {
 		color: white;
 		display: flex;
@@ -299,10 +292,8 @@
 		margin: 0px;
 		margin-bottom: 15px;
 		opacity: 1;		cursor: pointer;
-
 		transition: 0.3s;
 		background-image: linear-gradient(to right, #833c467c, #a04650);
-		/* box-shadow: 0px 0px 5px 1px inset rgba(45, 45, 46, 0.164)	; */
 	}
 	.sidebar-toggle2 {
 		color: white;
@@ -324,7 +315,6 @@
 	}
 	.sidebar-toggle3 {
 		color: white;
-
 		display: flex;
 		flex-direction: row;
 		text-align: left;
@@ -334,14 +324,12 @@
 		margin-bottom: 15px;
 		padding: 1px;
 		font-size: 1em;
-		/* margin-bottom: 6px; */
 		margin-right: 0px;
 		opacity: 1;
 		transition: 0.5s;
 	}
 	.sidebar-container:hover {
 		background-image: linear-gradient(to right, #9b4f597c, #ac3643);
-
 	}
 	.sidebar-toggle2:active {
 		opacity: 00.3;
@@ -364,15 +352,12 @@
 
 	.body-row {
 		display: flex;
-		/* background: var(--mainRed); */
 	}
 	.body-flex {
 		box-sizing: border-box;
 		display: flex;
 		justify-content: space-around;
 		padding-top: 0px;
-		/* padding: 2px; */
-		/* margin: 2px; */
 		touch-action: manipulation;
 		background: var(--mainRed);
 		overflow: auto;
@@ -500,32 +485,26 @@
 		.app-shell {
 			box-sizing: border-box;
 			max-width: 100vw;
-			max-height: 165vw;
-			min-height: 165vw;
-			/* max-height: fit-content; */
+			max-height: 170vw;
+			min-height: 170vw;
 			margin: auto;
 			margin-top: 0px;
 			padding: 0px 0px 15px 5px;
 			border: 2px solid var(--transparentBlue);
 			border-radius: 7px;
-			/* background: var(--mainRed); */
 			box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
 		}
 		.filter-input {
 			max-width: 150px;
 		}
 		.shell-body {
-			max-height: 130vw;
-			overflow: hidden;
+			max-height: 135vw;
 		}
 
 		.body-flex {
 			display: flex;
 			justify-content: space-around;
 			padding: 0px;
-			/* padding: 2px; */
-			padding-top: 0px;
-			/* margin: 2px; */
 			margin-top: 0px;
 			touch-action: manipulation;
 			min-height: 500px;

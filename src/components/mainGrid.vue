@@ -5,7 +5,13 @@
 		</div>
 		<div class="grid-body">
 			<!-- <div class="grid-cell cell1">1</div>? -->
-			<work-cell v-for="song in refinedSongList" :key="song.id" :song="song" @songCellActivated="handleActiveSong"></work-cell>
+			<work-cell
+				v-for="song in refinedSongList"
+				:key="song.id"
+				:song="song"
+				:selectedSong="selectedSong"
+				@songCellActivated="handleActiveSong"
+			></work-cell>
 		</div>
 	</div>
 </template>
@@ -23,7 +29,8 @@
 			return {
 				songList: this.songs,
 				songsFiltered:'',
-				sortCriteria: String
+				sortCriteria: String,
+				selectedSong: null //log gets its value from workcell click event, used by all workcells as reference
 			}
 		},
 		props: {
@@ -41,28 +48,27 @@
 			handleActiveSong(songInfo) {
 				let [urlOrError, songName] = songInfo;
 
-				if (urlOrError[0] === 'url') {
-					let songUrl = urlOrError[1];
-					let playSong = [songName, songUrl]
-					EventBus.$emit('songActivated', playSong);
-				} else {
-					let noUrl = urlOrError[1];
-					let playSong = [songName, noUrl]
-					EventBus.$emit('songActivated', playSong);
+				if(this.selectedSong != songName) {
+					if (urlOrError[0] === 'url') {
+						let songUrl = urlOrError[1];
+						let playSong = [songName, songUrl]
+						EventBus.$emit('songActivated', playSong);
+					} else {
+						let noUrl = urlOrError[1];
+						let playSong = [songName, noUrl]
+						EventBus.$emit('songActivated', playSong);
+					}
 				}
+				this.selectedSong = songName;
 			},
-			handleSortChange() {
+			handleSortChange() { //* Not currently used
 				let sortedSongs = [];
 				EventBus.$on('sortChange', criteria => {
 					this.sortCriteria = criteria;
 				})
-
-				console.log(sortedSongs);
-
 				return sortedSongs;
-
 			},
-				getFilter() {
+			getFilter() { //* Not sure if this is even used
 				EventBus.$on('userInputSubmit', input => {
 					this.userInput = input;
 				});
@@ -71,34 +77,28 @@
 				let newSongs = this.songs.filter(song => {
 					return song.songTitle.toUpperCase().indexOf(this.userInput.toUpperCase()) >= 0;
 				});
-				console.log(newSongs);
 				return  newSongs;
 			}
-
+				//TODO below commented code useful for sorting reference
 				// filtered.sort((a, b) => {
 				// 	let first = a[criteria].toUpperCase();
 				// 	let second = b[criteria].toUpperCase();
 				// 	let compare = 0;
 				// 	if (first > second) {
 				// 		compare = 1;
-
 				// 	} else if (first < second) {
 				// 		compare = -1;
 				// 	}
 				// 	return compare;
 				// });
 				// console.log('after sort');
-
 				// filtered.forEach(song => console.log(song[criteria]))
 				// return filtered;
 		},
 		computed: {
-
 			refinedSongList: function() {
 				let filtered = this.filterSongs();
 				return filtered;
-
-
 				// return this.handleSortChange(filtered, this.sortCriteria)
 			}
 		},
@@ -146,7 +146,7 @@
 		z-index: 10;
 	}
 
-	.grid-cell:nth-child(2n + 2) {
+	.grid-cell:nth-child(2n + 4) {
 		grid-row: span 2;
 	}
 
@@ -193,5 +193,8 @@
 		.grid-body {
 			grid-template-columns: 1fr;
 		}
+	}
+	.grid-cell:first-child {
+		grid-column: span 2;
 	}
 </style>
