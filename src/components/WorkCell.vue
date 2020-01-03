@@ -1,10 +1,13 @@
 <template>
-        <div  @click="cellActive"    class="grid-cell">
+        <div  @click="cellActive" :class="{ activeCell: activated   }"   class="grid-cell">
             <div class="internal-grid">
             <div class="cell-head">
+                <div class="button-container" :class="{ buttonContainerHidden: !activated   }" >
+                    <button @click="showSongDetails">Song Details</button>
+                </div>
                 <div class="checkbox-container">
-                    <img v-if="activated === true"  src="https://hamilsauce.github.io/music-library-app/src/assets/checked-box.svg" width="20px" height="20px" alt="checkbox">
-                    <img v-else src="https://hamilsauce.github.io/music-library-app/src/assets/unchecked-box.svg" width="20px" height="20px" alt="checkbox">
+                    <img class="checkboxSvg" v-if="activated === true"  src="https://hamilsauce.github.io/music-library-app/src/assets/checked-box.svg" width="20px" height="20px" alt="checkbox">
+                    <img class="checkboxSvg" v-else src="https://hamilsauce.github.io/music-library-app/src/assets/unchecked-box.svg" width="20px" height="20px" alt="checkbox">
                 </div>
             </div>
             <div class="cell-body">
@@ -51,6 +54,9 @@
                 songInfo.push(this.song.songTitle);
                 this.$emit('songCellActivated',songInfo);
 
+            },
+            showSongDetails() {
+                this.$emit('showSongDetails', this.song.songTitle);
             }
         },
         computed: {
@@ -70,15 +76,25 @@
 
 <style scoped>
 
+	* {
+		--mainRed: #a04650;
+		--mainBlue: #284b78;
+		--transparentBlue: #e0e7f771;
+		--mainPurple: #9c3a5f;
+		--lightPurple: #ac73ac;
+		--fadedPurple: #bba4bb;
+		--mainWhite: #fffffa;
+		touch-action: manipulation;
+	}
 	.grid-cell {
-        /* display: grid; */
-        display: flex;
+        display: grid;
+        /* display: flex; */
         justify-content: flex-start;
         flex-direction: column;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         min-height: 80px;
         min-width: 75px;
-		padding: 1vw 2vw;
+		padding: 0vw 0vw 1vw 0vw;
 		color: rgb(106, 107, 114);
 		background: rgb(255, 255, 250);
 		border-radius: 3px;
@@ -90,6 +106,10 @@
         user-select: none;
         overflow: hidden;
 	}
+        .activeCell {
+        /* transform: scale(1.3);
+        z-index: 3; */
+    }
 
 	.grid-cell:hover {
 		box-shadow: 0px 0px 125px 50px inset rgba(173, 69, 173, 0.753);
@@ -113,16 +133,39 @@
     }
     .cell-head {
         display: grid;
-        justify-content: end;
-        margin: auto;
+        grid-template-columns: 90% 10%;
+        justify-content: space-between;
+        margin: 0;
         height: fit-content;
         width: 100%;
+        padding-bottom: 5px;
+        background: rgb(241, 241, 241);
+    }
+    .button-container {
+        text-align: left;
+    }
+    .button-container>button {
+        font-size: 0.8em;
+        background: transparent;
+        border: 0px;
+        color:var(--mainBlue);
+        cursor: pointer;
+    }
+    .buttonContainerHidden {
+       opacity: 0;
     }
     .checkbox-container {
-        justify-content: right;
+        text-align: right;
         margin: auto;
-        height: fit-content;
-        width: 100%;
+        height: 20px;
+        width: 25px;
+        padding-right: 5px;
+    }
+    .checkboxSvg {
+        width: 15px;
+        height: 15px;
+        opacity: 0.9;
+        padding-right: 10px
     }
     .cell-foot {
         font-size: 0.8em

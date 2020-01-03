@@ -8,7 +8,7 @@
 			<div>
                 <input
                     v-if="audioPaused === false"
-                    class="pause-button"
+                    class="pause-button tool-button"
                     @click="pauseAudio"
                     :disabled="songName === ''"
                     type="button"
@@ -16,7 +16,7 @@
                     value="Pause"
                 >
                 <input
-                    class="play-button"
+                    class="play-button tool-button"
                     v-if="audioPaused === true"
                     @click="resumeAudio"
                     type="button"
@@ -26,9 +26,15 @@
             </div>
 		</div>
         <transition name="fade">
-		<div class="bottom-bar"
-        :style="{height: expandBottomBar === true ? '25px' : '0px' }">
-			<div class="misc-cell" v-if="expandBottomBar === true">More stuff</div>
+		<div class="bottom-bar" :style="{height: expandBottomBar === true ? '35px' : '0px' }">
+			<div class="misc-cell" v-if="expandBottomBar === true">
+                   <input
+                    class="tool-button details-button"
+                    type="button"
+                    name="details-button"
+                    value="Song Details"
+                >
+            </div>
 
 			<div class="sort-cell" v-if="expandBottomBar === true">
                 <label for="select-sort">Sort By: </label>
@@ -242,7 +248,7 @@ select>option {
     padding-right: 10px;
     font-size: 1.1em;
 }
-.pause-button {
+.tool-button {
     background: rgb(47, 83, 149);
     font-size: 1em;
     border: 1px solid rgb(112, 124, 148);
@@ -256,15 +262,19 @@ select>option {
     border: 1px solid rgba(189, 189, 189, 0);
     color: rgb(184, 146, 146);
 }
-.play-button {
+.tool-button {
     background: rgb(47, 83, 149);
     font-size: 1em;
     border: 1px solid rgb(67, 87, 126);
-        border: 1px solid rgb(112, 124, 148);
+    border: 1px solid rgb(112, 124, 148);
     color: rgb(240, 240, 240);
     padding: 5px 5px;
     border-radius: 3px;
     margin: 3px;
+}
+.details-button {
+    padding: 3px;
+    font-size: 0.9em;
 }
 .play-button:disabled {
     background: rgba(37, 89, 131, 0);

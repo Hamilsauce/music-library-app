@@ -2,7 +2,9 @@
 	<transition name="fade">
 		<div
 			:style="{width: sidebarDisplayState === true ? '200px' : '0px' }"
+			:class="{ sideBarDisable: disableState   }"
 			id="sidebar-div"
+			vue disable element
 			class="sidebarShown"
 		>
 			<div
@@ -20,28 +22,41 @@
 				<div class="linkItem">
 					<router-link to="/About" class="routerLink">About</router-link>
 				</div>
+			<div class="profile-link linkItem">
+				<a href="https://github.com/Hamilsauce">github</a>
+			</div>
 			</div>
 		</div>
 	</transition>
 </template>
 
 <script>
+	import EventBus from './eventBus';
 	export default {
-		name: "Sidebar",
 		components: {},
 		props: {
 			sidebarDisplayState: Boolean
 		},
 		data() {
-			return {};
+			return {
+				disableState: false
+			};
 		},
 
-		methods: {},
+		methods: {
+			disableForDimmer() {
+				EventBus.$on('dimmerActive',() => {
+					this.disableState = true;
+				})
+			}
+		},
 		computed: {},
 		watch: {},
 
 		created() {},
-		mounted() {},
+		mounted() {
+			this.disableForDimmer();
+		},
 		updated() {},
 		destroyed() {}
 	};
@@ -89,29 +104,36 @@
 		overflow: hidden;
 		transition: 0.5s;
 		touch-action: manipulation;
+		z-index: 3;
 	}
-	h3 {
-		color: rgba(255, 255, 255, 0.712);
-		padding: 5px 0px 3px 0px;
-		margin: 5px auto 10px auto;
-		border-bottom: 1px solid rgba(185, 136, 136, 0.527);
+	.disableState {
+		width: 0px;
 	}
 
 	.routerLink {
-		color: rgba(255, 255, 255, 0.637);
+		color: rgba(255, 255, 255, 0.692);
 		text-decoration: none;
 	}
 
 	.links {
-		padding: 3px 15px 3px 0px;
-		font-size: 1.2em;
+		padding: 5px 15px 5px 0px;
+		font-size: 1em;
 		letter-spacing: 0.1em;
 		width: 0px;
-		text-align: center;
+		height: fit-content;
+		text-align: right;
 	}
+	h3 {
+		color: rgba(255, 255, 255, 0.568);
+		padding: 5px 0px 0px 5px;
+		margin: 5px auto 10px auto;
+		border-bottom: 1px solid rgba(185, 136, 136, 0.527);
+		font-size: 0.9em;
+		text-align: left;
 
+	}
 	.linkItem {
-		padding: 0px 5px;
+		padding: 2px 5px 5px 5px;
 		width: 100%;
 		margin: 5px 0px;
 		border-radius: 15px;
@@ -120,8 +142,17 @@
 
 	.linkItem:hover {
 		color: var(--mainRed);
-		background: rgba(255, 255, 255, 0.657);
+		background: rgba(255, 255, 255, 0.425);
 		border-radius: 15px;
+	}
+	.profile-link {
+		margin-top: 30px;
+			color: rgba(255, 255, 255, 0.637);
+		text-decoration: none;
+	}
+	.profile-link>a {
+		color: rgba(255, 255, 255, 0.637);
+		text-decoration: none;
 	}
 
 	.linkItem:active {

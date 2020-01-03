@@ -33,20 +33,5 @@
 				"label": ""
 			}
 		]
-	},
-	{
-		"path": "$ROOTPATH$\\src\\components\\MainGrid.vue",
-		"bookmarks": [
-			{
-				"line": 61,
-				"column": 50,
-				"label": ""
-			},
-			{
-				"line": 69,
-				"column": 37,
-				"label": ""
-			}
-		]
 	}
 ]

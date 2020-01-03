@@ -234,6 +234,8 @@
 		height: 100%;
 		max-height: 580px;
 		overflow: hidden;
+		/* margin-bottom: 2px; */
+
 	}
 
 	header {
@@ -293,7 +295,7 @@
 		margin-bottom: 15px;
 		opacity: 1;		cursor: pointer;
 		transition: 0.3s;
-		background-image: linear-gradient(to right, #833c467c, #a04650);
+		background-image: linear-gradient(to right, #833c464f, #a04650);
 	}
 	.sidebar-toggle2 {
 		color: white;
@@ -329,7 +331,7 @@
 		transition: 0.5s;
 	}
 	.sidebar-container:hover {
-		background-image: linear-gradient(to right, #9b4f597c, #ac3643);
+		/* background-image: linear-gradient(to right, #b3435265, #a74e5800); */
 	}
 	.sidebar-toggle2:active {
 		opacity: 00.3;
@@ -348,10 +350,15 @@
 		overflow: auto;
 		z-index: 0;
 		touch-action: manipulation;
+		border-radius: 5px;
+		border-top: 1px solid var(--mainBlue);
+		border-bottom: 1px solid var(--mainBlue);
+
 	}
 
 	.body-row {
 		display: flex;
+		border-radius: 5px;
 	}
 	.body-flex {
 		box-sizing: border-box;
@@ -362,6 +369,8 @@
 		background: var(--mainRed);
 		overflow: auto;
 		width: 100%;
+		border-radius: 5px;
+		border-top: 1px solid var(--mainBlue);
 	}
 
 	.shell-head {
@@ -418,7 +427,7 @@
 		width: 100%;
 		height: 25px;
 		border-radius: 5px;
-		border: 0px;
+		border: 1px solid var(--transparentBlue);
 		padding: 3px;
 		padding-left: 6px;
 		margin: auto;
@@ -478,18 +487,18 @@
 
 		.MainGrid {
 			box-sizing: border-box;
-			margin: auto;
+			max-height: 435px;
 			background: var(--mainRed);
 			overflow: auto;
 		}
 		.app-shell {
 			box-sizing: border-box;
 			max-width: 100vw;
-			max-height: 170vw;
-			min-height: 170vw;
+			max-height: 168vw;
+			min-height: 168vw;
 			margin: auto;
 			margin-top: 0px;
-			padding: 0px 0px 15px 5px;
+			padding: 0px 0px 15px 8px;
 			border: 2px solid var(--transparentBlue);
 			border-radius: 7px;
 			box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
@@ -507,8 +516,9 @@
 			padding: 0px;
 			margin-top: 0px;
 			touch-action: manipulation;
-			min-height: 500px;
-			max-height: 119vw;
+			min-height: 130vw;
+			max-height: 110vw;
+			width: 330px;
 			background: var(--mainRed);
 			overflow: auto;
 		}

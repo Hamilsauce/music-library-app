@@ -1,7 +1,7 @@
 <template>
 	<div class="MainGrid" >
+		<div class="dimmer" v-if="displayDimmer === true" @click="displayDimmer = false"></div>
 		<div class="grid-view-header">
-
 		</div>
 		<div class="grid-body">
 			<!-- <div class="grid-cell cell1">1</div>? -->
@@ -11,6 +11,7 @@
 				:song="song"
 				:selectedSong="selectedSong"
 				@songCellActivated="handleActiveSong"
+				@showSongDetails="showSongDetails"
 			></work-cell>
 		</div>
 	</div>
@@ -30,6 +31,7 @@
 				songList: this.songs,
 				songsFiltered:'',
 				sortCriteria: String,
+				displayDimmer: false,
 				selectedSong: null //log gets its value from workcell click event, used by all workcells as reference
 			}
 		},
@@ -60,6 +62,12 @@
 					}
 				}
 				this.selectedSong = songName;
+			},
+			showSongDetails(songTitle) {
+				this.displayDimmer = true;
+				console.log(songTitle);
+				EventBus.$emit('dimmerActive');
+
 			},
 			handleSortChange() { //* Not currently used
 				let sortedSongs = [];
@@ -125,6 +133,15 @@
 	.audio-container {
 		display: none;
 	}
+
+	.dimmer {
+		box-sizing:  border-box;
+		position: absolute;
+		width: 718px;
+		height: 540px;
+background: #dbdbd567;
+		border-radius: 5px;
+	}
 	.grid-body {
 		box-sizing: border-box;
 		display: grid;
@@ -135,10 +152,10 @@
 		width: 100%;
 		margin: auto;
 		margin-top: 0px;
-		padding: 3px;
+		padding: 2px;
 		background: var(--mainBlue);
 		border-radius: 0px 0px 5px5px;
-		border: 1px solid var(--lightPurple);
+		/* border: 1px solid var(--lightPurple); */
 	}
 	.grid-view-header {
 		color: rgba(175, 65, 89, 0.685);
@@ -170,6 +187,15 @@
 	}
 
 	@media screen and (max-width: 450px) {
+			.dimmer {
+		box-sizing:  border-box;
+		position: absolute;
+		width: 90vw;
+		height: 433px;
+		background: #dbdbd567;
+		border-radius: 5px;
+	}
+
 		.grid-body {
 			height: fit-content;
 			gap: 5px;
@@ -190,6 +216,14 @@
 		}
 	}
 	@media screen and (max-width: 300px) {
+		.dimmer {
+		box-sizing:  border-box;
+		position: absolute;
+		width: 350px;
+		height: 400px;
+	background: #dbdbd567;
+		border-radius: 5px;
+	}
 		.grid-body {
 			grid-template-columns: 1fr;
 		}
