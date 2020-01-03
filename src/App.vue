@@ -32,18 +32,14 @@
 					<ToolBar class="toolbar"></ToolBar>
 				</transition>
 				<div class="body-row">
-					<transition name="fade">
-						<div class="body-flex">
 							<router-view :userInput="userInput" :songs="songs"></router-view>
-						</div>
-					</transition>
-					<transition name="fade">
 						<div @click="toggleSidebar" class="sidebar-container" title="Click to expand navigation!">
 							<i v-show="sidebarDisplayState === false" class="fas fa-angle-double-left sidebar-toggle2"></i>
 							<i v-show="sidebarDisplayState === true" class="fas fa-angle-double-right sidebar-toggle3"></i>
 						</div>
-					</transition>
+					<transition name="fade">
 					<Sidebar :sidebarDisplayState="sidebarDisplayState"></Sidebar>
+					</transition>
 				</div>
 			</div>
 		</div>
@@ -187,7 +183,7 @@
 		margin: 0;
 		padding: 25px;
 		padding-top: 0px;
-		height: 100%;
+		height: fit-content;
 		background: rgba(54, 46, 121, 0.849);
 		box-shadow: 0px 0px 50px 100px inset #2a4f7f;
 	}
@@ -195,7 +191,7 @@
 		box-sizing: border-box;
 		margin: 0;
 		padding: 0;
-		height: 100%;
+		height: fit-content;
 	}
 
 	#app {
@@ -210,7 +206,7 @@
 		line-height: 1.6;
 		font-weight: 500;
 		text-align: center;
-		padding: 0px 0px 2px 0px;
+		padding: 0px 0px 0px 0px;
 		margin: 0;
 		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
 	}
@@ -222,7 +218,7 @@
 		height: 100%;
 		margin: auto;
 		margin-top: 0px;
-		padding: 0px 0px 30px 10px;
+		padding: 0px 0px 15px 10px;
 		border: 2px solid var(--transparentBlue);
 		border-radius: 7px;
 		background: var(--mainRed);
@@ -232,10 +228,8 @@
 	.shell-body {
 		box-sizing: border-box;
 		height: 100%;
-		max-height: 580px;
+		max-height: 590px;
 		overflow: hidden;
-		/* margin-bottom: 2px; */
-
 	}
 
 	header {
@@ -293,85 +287,43 @@
 		padding: 0;
 		margin: 0px;
 		margin-bottom: 15px;
-		opacity: 1;		cursor: pointer;
+		opacity: 1;
+		cursor: pointer;
 		transition: 0.3s;
 		background-image: linear-gradient(to right, #833c464f, #a04650);
 	}
 	.sidebar-toggle2 {
 		color: white;
-
 		display: flex;
 		flex-direction: row;
-		text-align: left;
 		justify-content: center;
-		margin-left: 0;
-		z-index: 3;
 		margin-bottom: 15px;
 		padding: 1px;
-		padding-left: 2px;
 		font-size: 1.1em;
-		/* margin-bottom: 6px; */
-		margin-right: 0px;
-		opacity: 1;
-		transition: 0.5s;
 	}
 	.sidebar-toggle3 {
 		color: white;
 		display: flex;
 		flex-direction: row;
-		text-align: left;
 		justify-content: center;
-		margin-left: 0;
-		z-index: 2;
 		margin-bottom: 15px;
 		padding: 1px;
-		font-size: 1em;
-		margin-right: 0px;
-		opacity: 1;
-		transition: 0.5s;
+		font-size: 1.1em;
 	}
-	.sidebar-container:hover {
-		/* background-image: linear-gradient(to right, #b3435265, #a74e5800); */
-	}
-	.sidebar-toggle2:active {
-		opacity: 00.3;
-	}
-	.sidebar-toggle3:hover {
-		opacity: 0.3;
-	}
+
 	.MainGrid {
 		box-sizing: border-box;
 		max-height: 575px;
 		width: 100%;
-		margin: 0;
-		padding: 0px;
-		padding-top: 0px;
-		background: var(--mainRed);
-		overflow: auto;
-		z-index: 0;
 		touch-action: manipulation;
-		border-radius: 5px;
-		border-top: 1px solid var(--mainBlue);
-		border-bottom: 1px solid var(--mainBlue);
-
 	}
 
-	.body-row {
+	.body-row { /*wrangles sidebar and toolbar together to keeep them on screen */
 		display: flex;
 		border-radius: 5px;
+		height:	460px;
 	}
-	.body-flex {
-		box-sizing: border-box;
-		display: flex;
-		justify-content: space-around;
-		padding-top: 0px;
-		touch-action: manipulation;
-		background: var(--mainRed);
-		overflow: auto;
-		width: 100%;
-		border-radius: 5px;
-		border-top: 1px solid var(--mainBlue);
-	}
+
 
 	.shell-head {
 		max-height: 175px;
@@ -487,41 +439,23 @@
 
 		.MainGrid {
 			box-sizing: border-box;
-			max-height: 435px;
-			background: var(--mainRed);
+			max-height: 460px;
+			/* background: var(--mainRed); */
 			overflow: auto;
+			border-radius: 5px;
 		}
 		.app-shell {
-			box-sizing: border-box;
 			max-width: 100vw;
-			max-height: 168vw;
-			min-height: 168vw;
-			margin: auto;
-			margin-top: 0px;
-			padding: 0px 0px 15px 8px;
-			border: 2px solid var(--transparentBlue);
-			border-radius: 7px;
-			box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
+			height: 175vw;
+			padding: 0px 0px 0px 8px;
 		}
 		.filter-input {
 			max-width: 150px;
 		}
 		.shell-body {
-			max-height: 135vw;
+			max-height: 140vw;
 		}
 
-		.body-flex {
-			display: flex;
-			justify-content: space-around;
-			padding: 0px;
-			margin-top: 0px;
-			touch-action: manipulation;
-			min-height: 130vw;
-			max-height: 110vw;
-			width: 330px;
-			background: var(--mainRed);
-			overflow: auto;
-		}
 		.sidebar-toggle {
 			display: flex;
 			flex-direction: column;

@@ -28,12 +28,12 @@
         <transition name="fade">
 		<div class="bottom-bar" :style="{height: expandBottomBar === true ? '35px' : '0px' }">
 			<div class="misc-cell" v-if="expandBottomBar === true">
-                   <input
+                   <!-- <input
                     class="tool-button details-button"
                     type="button"
                     name="details-button"
                     value="Song Details"
-                >
+                > -->
             </div>
 
 			<div class="sort-cell" v-if="expandBottomBar === true">

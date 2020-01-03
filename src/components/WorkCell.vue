@@ -88,9 +88,6 @@
 	}
 	.grid-cell {
         display: grid;
-        /* display: flex; */
-        justify-content: flex-start;
-        flex-direction: column;
         grid-template-columns: 1fr;
         min-height: 80px;
         min-width: 75px;
@@ -101,7 +98,7 @@
 		border: 2px solid rgba(255, 255, 255, 0);
 		font-size: 1em;
 		font-weight: 500;
-		transition: 150ms box-shadow ease-out, 200ms background ease,
+		transition: 200ms box-shadow ease-out, 225ms background ease,
 			200ms border ease, 100ms font-weight ease;
         user-select: none;
         overflow: hidden;
@@ -112,22 +109,14 @@
     }
 
 	.grid-cell:hover {
-		box-shadow: 0px 0px 125px 50px inset rgba(173, 69, 173, 0.753);
-		background: rgba(176, 192, 197, 0.801);
+		box-shadow: 0px 0px 125px 25px inset rgba(173, 69, 173, 0.753);
+		background: rgba(207, 148, 219, 0.589);
 		border: 2px solid white;
 		font-weight: 600;
 		cursor: pointer;
 		color: white;
+        transition: 0.3s;
 	}
-
-	.grid-cell:active {
-		box-shadow: 0px 0px 125px 50px inset rgba(216, 183, 216, 0.753);
-		background: rgba(153, 116, 145, 0.541);
-		border: 2px solid white;
-		font-weight: 600;
-		cursor: pointer;
-		color: white;
-    }
     .internal-grid {
         display: grid;
     }

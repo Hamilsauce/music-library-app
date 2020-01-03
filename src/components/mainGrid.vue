@@ -1,6 +1,6 @@
 <template>
 	<div class="MainGrid" >
-		<div class="dimmer" v-if="displayDimmer === true" @click="displayDimmer = false"></div>
+		<!-- <div class="dimmer" v-if="displayDimmer === true" @click="displayDimmer = false"></div> -->
 		<div class="grid-view-header">
 		</div>
 		<div class="grid-body">
@@ -187,14 +187,14 @@ background: #dbdbd567;
 	}
 
 	@media screen and (max-width: 450px) {
-			.dimmer {
+			/* .dimmer {
 		box-sizing:  border-box;
 		position: absolute;
 		width: 90vw;
 		height: 433px;
 		background: #dbdbd567;
 		border-radius: 5px;
-	}
+	} */
 
 		.grid-body {
 			height: fit-content;
@@ -216,14 +216,7 @@ background: #dbdbd567;
 		}
 	}
 	@media screen and (max-width: 300px) {
-		.dimmer {
-		box-sizing:  border-box;
-		position: absolute;
-		width: 350px;
-		height: 400px;
-	background: #dbdbd567;
-		border-radius: 5px;
-	}
+
 		.grid-body {
 			grid-template-columns: 1fr;
 		}
