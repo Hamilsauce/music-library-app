@@ -35,21 +35,26 @@
 		]
 	},
 	{
-		"path": "$ROOTPATH$\\src\\components\\WorkCell.vue",
+		"path": "$ROOTPATH$\\src\\components\\MainGrid.vue",
 		"bookmarks": [
 			{
-				"line": 54,
-				"column": 10,
+				"line": 41,
+				"column": 4,
+				"label": ""
+			},
+			{
+				"line": 88,
+				"column": 6,
 				"label": ""
 			}
 		]
 	},
 	{
-		"path": "$ROOTPATH$\\src\\components\\Sidebar.vue",
+		"path": "$ROOTPATH$\\src\\components\\WorkCell.vue",
 		"bookmarks": [
 			{
-				"line": 130,
-				"column": 3,
+				"line": 54,
+				"column": 10,
 				"label": ""
 			}
 		]

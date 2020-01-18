@@ -228,7 +228,7 @@
 		margin-top: 0px;
 		padding: 0px 0px 30px 10px;
 		border: 2px solid var(--transparentBlue);
-		border-radius: 7px;
+		border-radius: 15px ;
 		background: var(--mainRed);
 		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
 		overflow: hidden;
@@ -236,7 +236,8 @@
 	.shell-body {
 		box-sizing: border-box;
 		height: 100%;
-		max-height: 590px;
+		border-radius: 15px 15px;
+
 	}
 
 	header {
@@ -262,73 +263,24 @@
 		color: rgba(255, 255, 255, 0.822);
 	}
 
-	.toggleButton {
-		position: absolute;
-		display: block;
-		margin-top: 0;
-		font-size: 5em;
-		height: fit-content;
-		width: fit-content;
-		color: rgb(255, 255, 255);
-		border-radius: 50%;
-		text-align: center;
-		padding-left: 0px;
-		box-shadow: 0px 0px 1px 1px var(--mainRed);
-		transition: 200ms box-shadow ease-in-out, 100ms background ease-in-out,
-			200ms border ease, 150ms color ease;
-	}
-
 	i:active {
 		box-shadow: 0px 0px 3px 2px rgba(76, 76, 77, 0.164);
 		background: rgba(255, 255, 255, 0.466);
 		color: var(--mainRed);
 	}
-/*
-	.sidebar-container {
-		color: white;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		text-align: left;
-		z-index: 3;
-		padding: 0;
-		margin: 0px;
-		margin-bottom: 15px;
-		opacity: 1;
-		cursor: pointer;
-		transition: 0.3s;
-		background-image: linear-gradient(to right, #833c464f, #a04650);
-	}
-	.sidebar-toggle2 {
-		color: white;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		margin-bottom: 15px;
-		padding: 1px;
-		font-size: 1.1em;
-	}
-	.sidebar-toggle3 {
-		color: white;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		margin-bottom: 15px;
-		padding: 1px;
-		font-size: 1.1em; */
-	/* } */
 
 	.MainGrid {
 		box-sizing: border-box;
-		max-height: 575px;
+		max-height: 560px;
 		width: 100%;
-		touch-action: manipulation;
+		border-radius: 15px 15px;
 		overflow: auto;
+		touch-action: manipulation;
 	}
 
 	.body-row { /*wrangles sidebar and toolbar together to keeep them on screen */
 		display: flex;
-		border-radius: 5px;
+		border-radius: 15px 15px;
 		height:	460px;
 	}
 
@@ -446,35 +398,31 @@
 		}
 
 		#app {
-padding: 0px 0px 0px 0px;
+			padding: 0px 0px 0px 0px;
 		}
 		.MainGrid {
 			box-sizing: border-box;
-			max-height: 460px;
-			/* background: var(--mainRed); */
 			overflow: auto;
 			border-radius: 5px;
+			height: 128vw;
+			border-radius: 5px 5px;
+
 		}
 		.app-shell {
 			max-width: 100vw;
 			height: 175vw;
-		padding: 0px 0px 15px 10px;
+			padding: 0px 0px 25px 8px;
+			border-radius: 5px 5px 15px 15px;
 		}
 		.filter-input {
 			max-width: 150px;
 		}
 		.shell-body {
-			max-height: 140vw;
+			overflow: hidden;
+			height: 145vw;
 		}
-
-		.sidebar-toggle {
-			display: flex;
-			flex-direction: column;
-			justify-content: flex-end;
-			touch-action: manipulation;
-			padding-left: 0px;
-			margin-left: -5px;
-			margin-bottom: 0;
+		.body-row {
+			overflow: hidden;
 		}
 
 		.shell-head {

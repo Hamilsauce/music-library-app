@@ -41,8 +41,8 @@
     .main {
         background: var(--mainBlue);
         width: 100%;
-        margin: auto;
-        height: 580px;
+        margin: 0px auto;
+        height: 130vw;
         border-radius: 5px;
         border: 1px solid var(--lightPurple);
     }

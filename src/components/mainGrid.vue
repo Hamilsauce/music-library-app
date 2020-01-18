@@ -4,7 +4,6 @@
 		<div class="grid-view-header">
 		</div>
 		<div class="grid-body">
-			<!-- <div class="grid-cell cell1">1</div>? -->
 			<work-cell
 				v-for="song in refinedSongList"
 				:key="song.id"
@@ -32,14 +31,13 @@
 				songsFiltered:'',
 				sortCriteria: String,
 				displayDimmer: false,
-				selectedSong: null //log gets its value from workcell click event, used by all workcells as reference
+				selectedSong: null //* gets its value from workcell click event, used by all workcells as reference
 			}
 		},
 		props: {
 			msg: String,
 			songs: Array,
 			userInput: String,
-
 		},
 		methods: {
 			listenForData() {
@@ -69,14 +67,14 @@
 				EventBus.$emit('dimmerActive');
 
 			},
-			handleSortChange() { //* Not currently used
+			handleSortChange() { //! Not currently used
 				let sortedSongs = [];
 				EventBus.$on('sortChange', criteria => {
 					this.sortCriteria = criteria;
 				})
 				return sortedSongs;
 			},
-			getFilter() { //* Not sure if this is even used
+			getFilter() { //! Not sure if this is even used
 				EventBus.$on('userInputSubmit', input => {
 					this.userInput = input;
 				});
@@ -85,9 +83,10 @@
 				let newSongs = this.songs.filter(song => {
 					return song.songTitle.toUpperCase().indexOf(this.userInput.toUpperCase()) >= 0;
 				});
-				return  newSongs;
+				return newSongs;
 			}
-				//TODO below commented code useful for sorting reference
+
+			//TODO below commented code useful for sorting reference
 				// filtered.sort((a, b) => {
 				// 	let first = a[criteria].toUpperCase();
 				// 	let second = b[criteria].toUpperCase();
@@ -102,14 +101,17 @@
 				// console.log('after sort');
 				// filtered.forEach(song => console.log(song[criteria]))
 				// return filtered;
+
+
 		},
+
 		computed: {
 			refinedSongList: function() {
 				let filtered = this.filterSongs();
 				return filtered;
-				// return this.handleSortChange(filtered, this.sortCriteria)
 			}
 		},
+		
 		mounted() {
 			this.listenForData();
 			this.handleSortChange();
@@ -141,7 +143,9 @@
 		height: 540px;
 		background: #dbdbd567;
 		border-radius: 5px;
-	} */
+	}
+*/
+
 	.grid-body {
 		box-sizing: border-box;
 		display: grid;
@@ -156,7 +160,6 @@
 		padding: 2px;
 		background: var(--mainBlue);
 		border-radius: 0px 0px 5px5px;
-		/* border: 1px solid var(--lightPurple); */
 	}
 	.grid-view-header {
 		color: rgba(175, 65, 89, 0.685);
@@ -188,26 +191,26 @@
 	}
 
 	@media screen and (max-width: 450px) {
-			/* .dimmer {
-		box-sizing:  border-box;
-		position: absolute;
-		width: 90vw;
-		height: 433px;
-		background: #dbdbd567;
-		border-radius: 5px;
-	} */
-
+		/* .dimmer {
+			box-sizing:  border-box;
+			position: absolute;
+			width: 90vw;
+			height: 433px;
+			background: #dbdbd567;
+			border-radius: 5px;
+		} */
 		.grid-body {
+			max-width: 110vw;
 			height: fit-content;
+			min-height: 185vw;
+			grid-template-columns: repeat(2, minmax(175px 1fr));
 			gap: 5px;
 			background: var(--mainBlue);
-			grid-template-columns: repeat(2, minmax(175px 1fr));
-			touch-action: manipulation;
 			border-radius: 0px 0px 5px 5px;
-			border-top: 0px solid var(--lightPurple);
+			border: 1px solid var(--lightPurple);
 			border-radius: 5px;
-			max-width: 110vw;
-			min-height: 540px;
+			touch-action: manipulation;
+
 		}
 		.grid-cell:nth-child(4n + 4) {
 			grid-column: span 2;
@@ -217,12 +220,12 @@
 		}
 	}
 	@media screen and (max-width: 300px) {
-
 		.grid-body {
-			grid-template-columns: 1fr;
+				grid-template-columns: 1fr;
+			}
 		}
-	}
-	.grid-cell:first-child {
+
+	.grid-cell:first-child { 	/* Random grid-cell style (necessary) */
 		grid-column: span 2;
 	}
 </style>
