@@ -15,7 +15,7 @@
 							<input
 								type="text"
 								v-model="userInput"
-								@click="handleClick()"
+								@click="handleClick"
 								name="filter-input"
 								class="filter-input"
 							/>
@@ -32,11 +32,11 @@
 					<ToolBar class="toolbar"></ToolBar>
 				</transition>
 				<div class="body-row">
-							<router-view :userInput="userInput" :songs="songs"></router-view>
-						<div @click="toggleSidebar" class="sidebar-container" title="Click to expand navigation!">
+						<router-view :userInput="userInput" :songs="songs"></router-view>
+						<!-- <div @click="toggleSidebar" class="sidebar-container" title="Click to expand navigation!">
 							<i v-show="sidebarDisplayState === false" class="fas fa-angle-double-left sidebar-toggle2"></i>
 							<i v-show="sidebarDisplayState === true" class="fas fa-angle-double-right sidebar-toggle3"></i>
-						</div>
+						</div> -->
 					<transition name="fade">
 					<Sidebar :sidebarDisplayState="sidebarDisplayState"></Sidebar>
 					</transition>
@@ -99,9 +99,9 @@
 			toggleHeader() {
 				this.headerDisplayState = !this.headerDisplayState;
 			},
-			toggleSidebar() {
-				this.sidebarDisplayState = !this.sidebarDisplayState;
-			},
+			// toggleSidebar() {
+			// 	this.sidebarDisplayState = !this.sidebarDisplayState;
+			// },
 			toggleSubmit() {
 				this.submitDisplayState = !this.submitDisplayState;
 			},
@@ -181,34 +181,42 @@
 	html {
 		box-sizing: border-box;
 		margin: 0;
-		padding: 25px;
+		/* padding: 25px; */
 		padding-top: 0px;
-		height: fit-content;
+		/* height: fit-content; */
+		height: 100%;
 		background: rgba(54, 46, 121, 0.849);
-		box-shadow: 0px 0px 50px 100px inset #2a4f7f;
+		/* box-shadow: 0px 0px 50px 100px inset #2a4f7f; */
+		background: rgba(54, 46, 121, 0.705);
+		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
 	}
 	body {
 		box-sizing: border-box;
 		margin: 0;
+		height: 100%;
+		/* height: fit-content; */
+		height: 100%;
 		padding: 0;
-		height: fit-content;
+		background: rgba(54, 46, 121, 0.705);
+		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
 	}
 
 	#app {
 		box-sizing: content-box;
-		font-family: "Avenir", Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		background: rgba(54, 46, 121, 0.705);
-		color: rgb(255, 255, 255);
+		height: fit-content;
+		padding: 0px 0px 30px 0px;
+		margin: 0;
+		line-height: 1.6;
+		text-align: center;
 		font-family: "Montserrat", sans-serif;
 		font-size: 1rem;
-		line-height: 1.6;
 		font-weight: 500;
-		text-align: center;
-		padding: 0px 0px 0px 0px;
-		margin: 0;
-		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
+		color: rgb(255, 255, 255);
+		overflow: hidden;
+		/* background: rgba(54, 46, 121, 0.705);
+		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664); */
 	}
 	.app-shell {
 		box-sizing: border-box;
@@ -218,18 +226,17 @@
 		height: 100%;
 		margin: auto;
 		margin-top: 0px;
-		padding: 0px 0px 15px 10px;
+		padding: 0px 0px 30px 10px;
 		border: 2px solid var(--transparentBlue);
 		border-radius: 7px;
 		background: var(--mainRed);
 		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
-		/* overflow: auto; */
+		overflow: hidden;
 	}
 	.shell-body {
 		box-sizing: border-box;
 		height: 100%;
 		max-height: 590px;
-		overflow: hidden;
 	}
 
 	header {
@@ -276,7 +283,7 @@
 		background: rgba(255, 255, 255, 0.466);
 		color: var(--mainRed);
 	}
-
+/*
 	.sidebar-container {
 		color: white;
 		display: flex;
@@ -308,14 +315,15 @@
 		justify-content: center;
 		margin-bottom: 15px;
 		padding: 1px;
-		font-size: 1.1em;
-	}
+		font-size: 1.1em; */
+	/* } */
 
 	.MainGrid {
 		box-sizing: border-box;
 		max-height: 575px;
 		width: 100%;
 		touch-action: manipulation;
+		overflow: auto;
 	}
 
 	.body-row { /*wrangles sidebar and toolbar together to keeep them on screen */
@@ -437,6 +445,9 @@
 			line-height: 0.5;
 		}
 
+		#app {
+padding: 0px 0px 0px 0px;
+		}
 		.MainGrid {
 			box-sizing: border-box;
 			max-height: 460px;
@@ -447,7 +458,7 @@
 		.app-shell {
 			max-width: 100vw;
 			height: 175vw;
-			padding: 0px 0px 0px 8px;
+		padding: 0px 0px 15px 10px;
 		}
 		.filter-input {
 			max-width: 150px;

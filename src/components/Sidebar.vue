@@ -1,33 +1,40 @@
 <template>
-	<transition name="fade">
-		<div
-			:style="{width: sidebarDisplayState === true ? '200px' : '0px' }"
-			:class="{ sideBarDisable: disableState   }"
-			id="sidebar-div"
-			vue disable element
-			class="sidebarShown"
-		>
+	<div class="main">
+
+
+		<transition name="fade">
 			<div
-				:style="{width: sidebarDisplayState === true ? '200px' : '0px' }"
-				v-show="sidebarDisplayState === true"
-				class="links"
+				:style="{ width: sidebarDisplayState === true ? '150px' : '0px' }"
+				:class="{ sideBarDisable: disableState }"
+				id="sidebar-div"
+				vue disable element
+				class="sidebarShown"
 			>
-				<h3>Nav</h3>
-				<div class="linkItem">
-					<router-link class="routerLink" to="/">Library</router-link>
+				<div
+					:style="{ width: sidebarDisplayState === true ? '150px' : '0px' }"
+					class="links"
+				>
+					<h3>Nav</h3>
+					<div class="linkItem">
+						<router-link class="routerLink" to="/">Library</router-link>
+					</div>
+					<div class="linkItem">
+						<router-link to="/newsong" class="routerLink">New Song</router-link>
+					</div>
+					<div class="linkItem">
+						<router-link to="/About" class="routerLink">About</router-link>
+					</div>
+				<div class="profile-link linkItem">
+					<a href="https://github.com/Hamilsauce">github</a>
 				</div>
-				<div class="linkItem">
-					<router-link to="/newsong" class="routerLink">New Song</router-link>
 				</div>
-				<div class="linkItem">
-					<router-link to="/About" class="routerLink">About</router-link>
-				</div>
-			<div class="profile-link linkItem">
-				<a href="https://github.com/Hamilsauce">github</a>
 			</div>
+		</transition>
+		<div @click="toggleSidebar" class="sidebar-container" title="Click to expand navigation!">
+				<i v-show="sidebarDisplayState === false" class="fas fa-angle-double-left sidebar-toggle2"></i>
+				<i v-show="sidebarDisplayState === true" class="fas fa-angle-double-right sidebar-toggle3"></i>
 			</div>
-		</div>
-	</transition>
+	</div>
 </template>
 
 <script>
@@ -35,11 +42,11 @@
 	export default {
 		components: {},
 		props: {
-			sidebarDisplayState: Boolean
-		},
+			},
 		data() {
 			return {
-				disableState: false
+				disableState: false,
+				sidebarDisplayState: false
 			};
 		},
 
@@ -48,7 +55,10 @@
 				EventBus.$on('dimmerActive',() => {
 					this.disableState = true;
 				})
-			}
+			},
+			toggleSidebar() {
+				this.sidebarDisplayState = !this.sidebarDisplayState;
+			},
 		},
 		computed: {},
 		watch: {},
@@ -63,6 +73,7 @@
 </script>
 
 <style scoped>
+
 	.fade-enter {
 		opacity: 0;
 		width: 0;
@@ -90,8 +101,17 @@
 		touch-action: manipulation;
 	}
 
+	.main {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+
 	.sidebarShown {
 		box-sizing: border-box;
+		position: absolute;
+		right: 19px;
+		height: 460px;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -106,8 +126,54 @@
 		touch-action: manipulation;
 		z-index: 3;
 	}
+	/* .sidebarShown: {
+
+	} */
+
+
+
+
+
+.sidebar-container {
+		color: white;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: left;
+		z-index: 3;
+		padding: 0;
+		margin: 0px;
+		margin-bottom: 15px;
+		opacity: 1;
+		cursor: pointer;
+		transition: 0.3s;
+		/* background-image: linear-gradient(to right, #833c464f, #a04650); */
+	}
+	.sidebar-toggle2 {
+		/* position: absolute; */
+		/* right: 0; */
+		color: white;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		margin-bottom: 15px;
+		padding: 1px;
+		cursor: pointer;
+		font-size: 1.1em;
+	}
+	.sidebar-toggle3 {
+		cursor: pointer;
+		color: white;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		margin-bottom: 15px;
+		padding: 1px;
+		font-size: 1.1em;
+	}
 	.disableState {
-		width: 0px;
+		transition: 0.5s;
+		/* width: 0px; */
 	}
 
 	.routerLink {
@@ -134,7 +200,7 @@
 	}
 	.linkItem {
 		padding: 2px 5px 5px 5px;
-		width: 100%;
+		/* width: 100%; */
 		margin: 5px 0px;
 		border-radius: 15px;
 		transition: 0.4s;

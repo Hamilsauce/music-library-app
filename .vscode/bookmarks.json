@@ -33,5 +33,35 @@
 				"label": ""
 			}
 		]
+	},
+	{
+		"path": "$ROOTPATH$\\src\\components\\WorkCell.vue",
+		"bookmarks": [
+			{
+				"line": 54,
+				"column": 10,
+				"label": ""
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$\\src\\components\\Sidebar.vue",
+		"bookmarks": [
+			{
+				"line": 130,
+				"column": 3,
+				"label": ""
+			}
+		]
+	},
+	{
+		"path": "c:\\Users\\jacob\\AppData\\Roaming\\Code\\User\\settings.json",
+		"bookmarks": [
+			{
+				"line": 78,
+				"column": 6,
+				"label": ""
+			}
+		]
 	}
 ]

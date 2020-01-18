@@ -133,22 +133,23 @@
 	.audio-container {
 		display: none;
 	}
-
+/*
 	.dimmer {
 		box-sizing:  border-box;
 		position: absolute;
 		width: 718px;
 		height: 540px;
-background: #dbdbd567;
+		background: #dbdbd567;
 		border-radius: 5px;
-	}
+	} */
 	.grid-body {
 		box-sizing: border-box;
 		display: grid;
 		gap: 5px;
-		grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
+		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
 		grid-template-rows: auto;
 		max-height: fit-content;
+		min-height: 100%;
 		width: 100%;
 		margin: auto;
 		margin-top: 0px;
