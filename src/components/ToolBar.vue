@@ -164,19 +164,20 @@ import EventBus from './eventBus';
 		width: 0;
 	}
 .toolbar {
+    box-sizing: border-box;
     display: grid;
     grid-template-rows: 2;
-    width: 97%;
+    width: 95%;
     background: var(--mainRed);
     color: white;
     font-size: 0.9em;
     padding: 2px 0px 0px 0px;
     margin: 0px 5px 0px 0px;
     border: 1px solid rgba(190, 138, 138, 0.021);
-    border-right: 2px solid  rgba(141, 60, 60, 0.219);
-    border-left: 2px solid  rgba(141, 60, 60, 0.219);
+    /* border-right: 2px solid  rgba(141, 60, 60, 0.219);
+    border-left: 2px solid  rgba(141, 60, 60, 0.219); */
     border-radius: 5px 5px 0px 0px;
-    box-shadow:0px 0px 20px 5px inset rgba(136, 61, 61, 0.267);
+    /* box-shadow:0px 0px 20px 5px inset rgba(151, 56, 56, 0.267); */
 }
 
 
@@ -241,7 +242,7 @@ select>option {
 
 }
 .misc-cell {
-      display: flex;
+    display: flex;
     flex-direction: row;
     justify-content: center;
     margin-top: 0px;

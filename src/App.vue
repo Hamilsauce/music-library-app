@@ -168,7 +168,7 @@
 		height: 100px;
 	}
 	* {
-		--mainRed: #a04650;
+		--mainRed: #bc484e;
 		--mainBlue: #284b78;
 		--transparentBlue: #e0e7f771;
 		--mainPurple: #9c3a5f;

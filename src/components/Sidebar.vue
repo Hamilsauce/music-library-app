@@ -126,7 +126,7 @@
 		width: 0;
 	}
 	* {
-		--mainRed: #a04650;
+		--mainRed: #bc484e;
 		--mainBlue: #284b78;
 		--transparentBlue: #e0e7f771;
 		--mainPurple: #9c3a5f;
@@ -163,12 +163,13 @@
 		width: 0px;
 		padding-top: 5px;
 		margin: 0px;
-		border-radius: 5px 0px 0px 75%;
+		border-radius: 5px 0px 0px 25px;
+		/* border-radius: 5px 0px 0px 75%; */
 		background: var(--mainRed);
 		touch-action: manipulation;
 		overflow: hidden;
 		transition: 0.5s;
-		box-shadow: -6px 3px 5px 1px rgba(0, 0, 0, 0.226);
+		box-shadow: -6px 3px 5px 1px rgba(41, 22, 73, 0.226);
 	}
 	.sidebar-toggle {
 		display: flex;
@@ -182,7 +183,7 @@
 		border-left: 2px solid #eef0f363;
 		border-right: 1px solid #284b785d;
 		background: rgba(255, 255, 255, 0.3);
-		transition: 0.5s;
+		transition: 0.3s;
 	}
 	.sidebar-container {
 		z-index: 3;
@@ -190,26 +191,27 @@
 		flex-direction: column;
 		justify-content: center;
 		padding: 0;
+
 		margin: 0px;
 		margin-bottom: 40px;
 		text-align: left;
 		color: #9c2d3a;
-		font-size: 1.25em;
+		font-size: 1.2em;
 		cursor: pointer;
 		border-radius: 75% 0px 0px 75%;
-		transition: 0.5s;
+		transition: 0.7s;
 		-webkit-tap-highlight-color: transparent;
 	}
 	.toggleClicked {
 		opacity: 1;
 		background: rgba(255, 255, 255, 0.7);
 		color: #1e3c64a2;
-		font-size: 1.3em;
+		font-size: 1.2em;
 		margin: 0px 0px 50px 0px;
 		padding: 10px 0px 10px 0px;
 		border-right: 0px solid #284b7800;
 		border-left: 1px solid #eef0f35e;
-		border-radius: 75% 0px 0px 75%;
+		border-radius: 65% 0px 0px 65%;
 		-webkit-tap-highlight-color: transparent;
 	}
 	.disableState {
