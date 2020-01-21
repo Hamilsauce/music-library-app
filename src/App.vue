@@ -6,7 +6,7 @@
 		<div class="app-shell">
 			<div class="shell-head">
 				<div class="header header1">
-					<h1>music GUY</h1>
+					<h1><span class="logo1">ham</span> <span class="logo2">RADIO</span></h1>
 				</div>
 				<div class="header header2">
 					<label class="header2-label">Search for a tune</label>
@@ -14,17 +14,28 @@
 						<form class="header-form" @submit.prevent="handleSubmit">
 							<input
 								type="text"
-								v-model="userInput"
+								v-model="filterInput"
 								@click="handleClick"
 								name="filter-input"
 								class="filter-input"
 							/>
+									<div
+					class="sort-cell"
+				>
+					<label for="select-sort">Sort By:</label>
+					<select
+						v-model="sortCriteria"
+						class="select-sort"
+					>
+						<option value="songTitle">songTitle</option>
+						<option value="Genre">Genre</option>
+						<option value="Likes">Likes</option>
+						<option value="Plays">Plays</option>
+					</select>
+				</div>
 						</form>
 					</div>
 				</div>
-				<!-- <div class="sidebar-toggle">
-						<i @click="toggleSidebar" class="fas fa-angle-double-left sidebar-toggle"></i>
-				</div>-->
 			</div>
 
 			<div class="shell-body">
@@ -32,13 +43,9 @@
 					<ToolBar class="toolbar"></ToolBar>
 				</transition>
 				<div class="body-row">
-						<router-view :userInput="userInput" :songs="songs"></router-view>
-						<!-- <div @click="toggleSidebar" class="sidebar-container" title="Click to expand navigation!">
-							<i v-show="sidebarDisplayState === false" class="fas fa-angle-double-left sidebar-toggle2"></i>
-							<i v-show="sidebarDisplayState === true" class="fas fa-angle-double-right sidebar-toggle3"></i>
-						</div> -->
+					<router-view :filterInput="filterInput" :songs="songs"></router-view>
 					<transition name="fade">
-					<Sidebar :sidebarDisplayState="sidebarDisplayState"></Sidebar>
+						<Sidebar :sidebarDisplayState="sidebarDisplayState"></Sidebar>
 					</transition>
 				</div>
 			</div>
@@ -69,7 +76,8 @@
 				filterClickCount: 0,
 				sidebarDisplayState: false,
 				assistantMessage: 'Select a tile to listen.',
-				userInput: "",
+				sortCriteria: "",
+				filterInput: "",
 				CellData: [
 					{
 						elementId: "",
@@ -99,9 +107,7 @@
 			toggleHeader() {
 				this.headerDisplayState = !this.headerDisplayState;
 			},
-			// toggleSidebar() {
-			// 	this.sidebarDisplayState = !this.sidebarDisplayState;
-			// },
+
 			toggleSubmit() {
 				this.submitDisplayState = !this.submitDisplayState;
 			},
@@ -111,14 +117,14 @@
 					: (this.filterClickCount = this.filterClickCount);
 
 				if (this.filterClickCount > 1) {
-					this.userInput = "";
+					this.filterInput = "";
 					this.filterClickCount = 0;
 					return;
 				}
 			},
 			handleSubmit() {
-				EventBus.$emit("userInputSubmit", this.userInput);
-				this.userInput = "";
+				EventBus.$emit("userInputSubmit", this.filterInput);
+				this.filterInput = "";
 				this.toggleSubmit();
 			},
 
@@ -137,11 +143,66 @@
 		mounted() {
 			this.initializeData();
 			this.listenForActiveSong();
-		}
+		},
+
+
 	};
 </script>
 
 <style>
+	.sort-cell {
+		grid-column: span 1;
+		display: flex;
+		flex-direction: row;
+		justify-content: end;
+		font-size:0.9em;
+		width: fit-content;
+		margin-top: 4px;
+		padding-right: 5px;
+		padding-left: 5px;
+		padding-top: 1px;
+		padding-bottom: 2px;
+		background: solid rgba(139, 39, 39, 0.856);
+	/* background: rgb(179, 63, 69); */
+		color: rgba(250, 236, 238, 0.85);
+		border-bottom: 1px solid rgba(199, 176, 176, 0.356);
+		box-shadow: 0px 0px 5px 1px inset rgba(144, 70, 73, 0.548);
+	}
+	.select-sort {
+		min-width: 80px;
+		max-width: fit-content;
+		text-align: center;
+		/* height: fit-content; */
+		padding-bottom: 1px;
+		padding: left	5px;
+		margin: 0px 0px 0px 6px;
+		box-sizing: border-box;
+			color: rgba(250, 236, 238, 1);
+		background: rgba(179, 63, 69, 0.733);
+		font-size: 1em;
+		border: 1px solid rgba(139, 39, 39, 0);
+		opacity: 0.85;
+		border-radius: 3px;
+	}
+	.header1 {
+		margin: 0px;
+	}
+	h1 {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		height: fit-content;
+	}
+	.logo1 {
+		text-align: right;
+		padding-left: 50px;
+		color: rgba(32, 32, 32, 0.678);
+		font-size: 0.9em;
+	}
+	.logo2 {
+		color: rgb(216, 216, 216);
+		margin-top: 0px;
+	}
 	@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 	.fade-enter {
 		opacity: 0;
@@ -327,11 +388,12 @@
 
 	.header-button-container {
 		display: flex;
-		flex-direction: row;
-		justify-content: center;
+		flex-direction: column;
+		justify-content: space-between;
 		height: fit-content;
-		width: 100%;
+		width: fit-content;
 		margin: 0px auto;
+		text-align: center;
 	}
 
 	.filter-input {
@@ -349,6 +411,7 @@
 		font-size: 1em;
 		touch-action: manipulation;
 		outline: none;
+		opacity: 0.85;
 	}
 
 	.header2-label {
@@ -357,6 +420,7 @@
 		margin-bottom: 3px;
 		padding-bottom: 5px;
 		margin: 10px auto 0px auto;
+		opacity: 0.85;
 		text-align: center;
 	}
 
@@ -374,9 +438,9 @@
 	.header-form {
 		display: flex;
 		justify-content: center;
-		flex-direction: row;
+		flex-direction: column;
 		touch-action: manipulation;
-		padding: 0px 0px 10px 0px;
+		padding: 0px 0px 0px 0px;
 	}
 
 	a {

@@ -37,7 +37,7 @@
 		props: {
 			msg: String,
 			songs: Array,
-			userInput: String,
+			filterInput: String,
 		},
 		methods: {
 			listenForData() {
@@ -75,13 +75,13 @@
 				return sortedSongs;
 			},
 			getFilter() { //! Not sure if this is even used
-				EventBus.$on('userInputSubmit', input => {
-					this.userInput = input;
+				EventBus.$on('filterInputSubmit', input => {
+					this.filterInput = input;
 				});
 			},
 			filterSongs() {
 				let newSongs = this.songs.filter(song => {
-					return song.songTitle.toUpperCase().indexOf(this.userInput.toUpperCase()) >= 0;
+					return song.songTitle.toUpperCase().indexOf(this.filterInput.toUpperCase()) >= 0;
 				});
 				return newSongs;
 			}
@@ -111,7 +111,7 @@
 				return filtered;
 			}
 		},
-		
+
 		mounted() {
 			this.listenForData();
 			this.handleSortChange();
