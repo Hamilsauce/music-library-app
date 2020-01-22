@@ -39,7 +39,8 @@
 }
 
     .main {
-        background: var(--mainBlue);
+        background: blue;
+        /* background: var(--mainBlue); */
         width: 100%;
         margin: 0px auto;
         height: 130vw;

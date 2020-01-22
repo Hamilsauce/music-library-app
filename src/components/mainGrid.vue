@@ -164,7 +164,7 @@
 	.grid-view-header {
 		color: rgba(175, 65, 89, 0.685);
 		position: absolute;
-		z-index: 10;
+	
 	}
 
 	.grid-cell:nth-child(2n + 4) {

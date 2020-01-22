@@ -7,29 +7,31 @@
 				title="Click here to show more options!"
 			><i class="fas fa-caret-square-down"></i></div>
 			<div class="top-bar-div title-container">
-                <transition name="fade">
+				<transition name="fade">
+					<span
+						class="song-title"
+						v-show="safeReveal === true"
+						:class="{ fadeTitle: displayPlayingMessage }"
+					>{{ songTitle }}</span>
+				</transition>
 				<span
-					class="song-title"
-					v-show="safeReveal === true"
-                    :class="{ fadeTitle: displayPlayingMessage }"
-				>{{ songTitle }}</span>
-                </transition>
-                <span
 					class="now-playing-message"
 					v-show="displayPlayingMessage === true"
 				>Now Playing</span>
-            </div>
+			</div>
 			<div>
-                <input class="pause-button tool-button"
-                        v-if="audioPaused === false"
-                        @click="pauseAudio"
-                        :disabled="songName === ''"
-                        type="button"
-                        name="pause-button"
-                        value="Pause"
-                    >
+				<input
+					class="pause-button tool-button"
+					v-if="audioPaused === false"
+					@click="pauseAudio"
+					:disabled="songName === ''"
+					type="button"
+					name="pause-button"
+					value="Pause"
+				>
 
-                <input class="play-button tool-button"
+				<input
+					class="play-button tool-button"
 					v-if="audioPaused === true"
 					@click="resumeAudio"
 					type="button"
@@ -37,28 +39,55 @@
 					value="Resume"
 				>
 			</div>
-        </div>
+		</div>
 		<transition name="fade">
 			<div
 				class="bottom-bar"
 				:style="{height: expandBottomBar === true ? '30px' : '0px' }"
 			>
 
-            <div>
-                <input class="share-button"
-                        type="button"
-                        name="share-button"
-                        value="Share"
-                    >
-			</div>
+				<div class="grid-cell">
+					<div class="tooltip">
+						<input
+							class="share-button"
+							@click="shareActiveSong"
+							type="button"
+							name="share-button"
+							value="Share"
+						>
+					</div>
+					<input
+						class="download-button"
+						type="button"
+						name="download-button"
+						value="download"
+					>
+				</div>
 
-            <div>
-                <input class="download-button"
-                        type="button"
-                        name="download-button"
-                        value="download"
-				>
-            </div>
+				<div class="grid-cell">
+					<input
+						type="text"
+						v-model="audioSrc"
+						value="no active song"
+						class="songUrlText"
+					>
+				</div>
+				<div class="grid-cell">
+					<div class="tooltip">
+						<input
+							class="share-button"
+							@click="shareActiveSong"
+							type="button"
+							name="share-button"
+							value="Share"
+						>
+						<span
+							class="tooltiptext"
+							id="myTooltip"
+						>Copy to clipboard</span>
+						Copy text
+					</div>
+				</div>
 			</div>
 		</transition>
 		<div class="audio-container">
@@ -69,6 +98,7 @@
 					type="audio/mpeg"
 				/>
 			</audio>
+
 		</div>
 	</section>
 </template>
@@ -83,8 +113,8 @@
 		},
 		data() {
 			return {
-                displayPlayingMessage: false,
-                safeReveal: false,
+				displayPlayingMessage: false,
+				safeReveal: false,
 				expandBottomBar: false,
 				audioPaused: false,
 				songName: "",
@@ -94,11 +124,11 @@
 			};
 		},
 		methods: {
-            toggleNowPlaying() {
-                this.displayPlayingMessage = true;
+			toggleNowPlaying() {
+				this.displayPlayingMessage = true;
 				setTimeout(() => {
-                    console.log("now playin");
-                    this.displayPlayingMessage = false;
+					console.log("now playin");
+					this.displayPlayingMessage = false;
 				}, 1500);
 			},
 			toggleBottomBar() {
@@ -111,11 +141,12 @@
 				});
 			},
 			playAudio() {
-                this.safeReveal = false;
+				this.safeReveal = false;
 				EventBus.$on("songActivated", playSong => {
 					const audioPlayer = document.getElementById("audio-player");
 
-                    if (this.songTitle == playSong[0]){ //! checks newly selected song is already selected, ends execution if so
+					if (this.songTitle == playSong[0]) {
+						//! checks newly selected song is already selected, ends execution if so
 						return;
 					} else if (playSong[1] === "noUrl") {
 						this.songName = `No audio for ${playSong[0]}`;
@@ -130,8 +161,8 @@
 						audioPlayer.pause();
 						audioPlayer.load();
 						audioPlayer.play();
-                    }
-                    this.safeReveal = true;  //!use this put some time between the now playing and song title
+					}
+					this.safeReveal = true; //!use this put some time between the now playing and song title
 				});
 			},
 			resumeAudio() {
@@ -143,7 +174,22 @@
 				const audioPlayer = document.getElementById("audio-player");
 				audioPlayer.pause();
 				this.audioPaused = true;
+			},
+			shareActiveSong() {
+				const urlTextContiner = document.querySelector(".songUrlText");
+				urlTextContiner.select();
+				urlTextContiner.setSelectionRange(0, 99999);
+				document.execCommand("copy");
+
+				let shareMsg = '';
+				if (!this.songTitle) {
+					shareMsg = 'Select a song to share it!'
+				} else {
+					shareMsg = `The link for '${this.songTitle}' has been copied to your clipboard!`;
+				}
+				alert(shareMsg);
 			}
+
 		},
 
 		computed: {
@@ -165,10 +211,9 @@
 </script>
 
 <style scoped>
-
-    i{
-        opacity: 0.8;
-    }
+	i {
+		opacity: 0.8;
+	}
 	.fade-enter {
 		opacity: 0;
 		width: 0;
@@ -206,8 +251,8 @@
 		grid-template-rows: 1;
 		/* padding: 2px 5px 0px 0px; */
 		font-size: 1em;
-    height: 30px;
-        margin-top: 4px;
+		height: 30px;
+		margin-top: 4px;
 		border-radius: 5px 5px 0px 0px;
 	}
 	.expand-button {
@@ -222,7 +267,7 @@
 
 	.title-container {
 		box-sizing: border-box;
-        max-height: 35px;
+		max-height: 35px;
 		grid-column: span 2;
 		font-size: 1em;
 		text-align: left;
@@ -233,19 +278,19 @@
 		overflow: hidden;
 	}
 	.now-playing-message {
-        opacity: 0.7;
-        transition: 0.25s ease-out;
-        z-index: 3;
+		opacity: 0.7;
+		transition: 0.25s ease-out;
+		z-index: 3;
 	}
-    .song-title {
-        z-index: 2;
-        opacity: 0.8;
-        transition: 0.5s ease-out;
-    }
-    .fadeTitle {
-        opacity: 0;
-        transition: 0.5s ease-out;
-    }
+	.song-title {
+		z-index: 2;
+		opacity: 0.8;
+		transition: 0.5s ease-out;
+	}
+	.fadeTitle {
+		opacity: 0;
+		transition: 0.5s ease-out;
+	}
 
 	select > option {
 		text-align: center;
@@ -257,10 +302,74 @@
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: 1;
-		padding: 2px 0px 0px 0px;
-		margin: 0;
+		padding: 2px 5px 0px 0px;
+		margin: auto;
 		/* border-top: 1px solid rgba(29, 6, 6, 0.096); */
 		transition: 0.5s;
+	}
+	.share-button {
+		color: rgba(236, 229, 250, 0.87);
+		font-size: 1em;
+		font-weight: bold;
+		background: rgba(23, 62, 145, 0.733);
+		border: 2px solid rgba(255, 255, 255, 0.349);
+		border-radius: 3px;
+		padding: 2px 2px;
+		margin-top: 2px;
+		box-shadow: 0px 0px 8px 2px inset rgba(85, 32, 128, 0.144);
+		margin-left: 4px;
+		transition: 0.2s;
+	}
+	.share-button:active {
+		box-shadow: 0px 0px 3px 1px rgba(145, 131, 190, 0.445);
+		border: 2px solid rgba(255, 255, 255, 0.61);
+		color: rgb(236, 229, 250);
+	}
+	.download-button {
+		color: rgba(236, 229, 250, 0.87);
+		font-size: 1em;
+		font-weight: bold;
+		background: rgba(23, 62, 145, 0.733);
+		border: 2px solid rgba(255, 255, 255, 0.349);
+		border-radius: 3px;
+		padding: 2px 2px;
+		margin-top: 2px;
+		box-shadow: 0px 0px 8px 2px inset rgba(63, 97, 209, 0.144);
+		margin-left: 4px;
+		transition: 0.2s;
+	}
+	.download-button:active {
+		box-shadow: 0px 0px 3px 1px rgba(145, 131, 190, 0.445);
+		border: 2px solid rgba(255, 255, 255, 0.61);
+		color: rgb(236, 229, 250);
+	}
+	/* .download-button {
+			text-align: left;
+			color: rgba(255, 255, 255, 0.726);
+			font-size: 1em;
+			font-weight: 500;
+			background: rgba(44, 76, 144, 0.0);
+			border: 2px solid rgba(255, 255, 255, 0.335);
+			border-radius: 3px;
+			padding: 2px 4px;
+			margin-top: 2px;
+			margin-left: 8px;
+			box-shadow: 0px 0px 8px 1px inset rgba(170, 141, 207, 0.384);
+		} */
+	.grid-cell {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+	.grid-cell:nth-child(1) {
+		grid-column: span 2;
+		display: flex;
+		justify-content: center;
+	}
+	.songUrlText {
+		opacity: 0;
+		height: 20px;
+		width: 20px;
 	}
 	.misc-cell {
 		display: flex;
@@ -285,15 +394,15 @@
 		color: rgb(184, 146, 146);
 	}
 	/* .tool-button {
-		background: rgb(47, 83, 149);
-		font-size: 1em;
-		border: 1px solid rgb(67, 87, 126);
-		border: 1px solid rgb(112, 124, 148);
-		color: rgb(240, 240, 240);
-		padding: 5px 5px;
-		border-radius: 3px;
-		margin: 3px;
-	} */
+			background: rgb(47, 83, 149);
+			font-size: 1em;
+			border: 1px solid rgb(67, 87, 126);
+			border: 1px solid rgb(112, 124, 148);
+			color: rgb(240, 240, 240);
+			padding: 5px 5px;
+			border-radius: 3px;
+			margin: 3px;
+		} */
 	.details-button {
 		padding: 3px;
 		font-size: 0.9em;

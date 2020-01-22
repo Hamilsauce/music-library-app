@@ -153,7 +153,7 @@
 
 	.sidebarShown {
 		box-sizing: border-box;
-		z-index: 3;
+	
 		position: absolute;
 		display: flex;
 		flex-direction: row;
@@ -186,7 +186,6 @@
 		transition: 0.3s;
 	}
 	.sidebar-container {
-		z-index: 3;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

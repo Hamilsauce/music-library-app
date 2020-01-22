@@ -11,7 +11,10 @@
 				<div class="header header2">
 					<label class="header2-label">Search for a tune</label>
 					<div class="header-button-container">
-						<form class="header-form" @submit.prevent="handleSubmit">
+						<form
+							class="header-form"
+							@submit.prevent="handleSubmit"
+						>
 							<input
 								type="text"
 								v-model="filterInput"
@@ -19,20 +22,18 @@
 								name="filter-input"
 								class="filter-input"
 							/>
-									<div
-					class="sort-cell"
-				>
-					<label for="select-sort">Sort By:</label>
-					<select
-						v-model="sortCriteria"
-						class="select-sort"
-					>
-						<option value="songTitle">songTitle</option>
-						<option value="Genre">Genre</option>
-						<option value="Likes">Likes</option>
-						<option value="Plays">Plays</option>
-					</select>
-				</div>
+							<div class="sort-cell">
+								<label for="select-sort">Sort By:</label>
+								<select
+									v-model="sortCriteria"
+									class="select-sort"
+								>
+									<option value="songTitle">songTitle</option>
+									<option value="Genre">Genre</option>
+									<option value="Likes">Likes</option>
+									<option value="Plays">Plays</option>
+								</select>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -43,7 +44,10 @@
 					<ToolBar class="toolbar"></ToolBar>
 				</transition>
 				<div class="body-row">
-					<router-view :filterInput="filterInput" :songs="songs"></router-view>
+					<router-view
+						:filterInput="filterInput"
+						:songs="songs"
+					></router-view>
 					<transition name="fade">
 						<Sidebar :sidebarDisplayState="sidebarDisplayState"></Sidebar>
 					</transition>
@@ -75,7 +79,7 @@
 				headerDisplayState: true,
 				filterClickCount: 0,
 				sidebarDisplayState: false,
-				assistantMessage: 'Select a tile to listen.',
+				assistantMessage: "Select a tile to listen.",
 				sortCriteria: "",
 				filterInput: "",
 				CellData: [
@@ -92,7 +96,7 @@
 					content: "",
 					markup: ""
 				},
-				songs: [],
+				songs: []
 			};
 		},
 		methods: {
@@ -129,13 +133,13 @@
 			},
 
 			listenForActiveSong() {
-				EventBus.$on('songActivated', () => {
+				EventBus.$on("songActivated", () => {
 					setTimeout(() => {
-						this.assistantMessage = 'Press again to open song page';
+						this.assistantMessage = "Press again to open song page";
 					}, 1000);
 
 					setTimeout(() => {
-						this.assistantMessage = 'Select a tile to listen.';
+						this.assistantMessage = "Select a tile to listen.";
 					}, 7000);
 				});
 			}
@@ -143,9 +147,7 @@
 		mounted() {
 			this.initializeData();
 			this.listenForActiveSong();
-		},
-
-
+		}
 	};
 </script>
 
@@ -155,7 +157,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: end;
-		font-size:0.9em;
+		font-size: 0.9em;
 		width: fit-content;
 		margin-top: 4px;
 		padding-right: 5px;
@@ -163,7 +165,7 @@
 		padding-top: 1px;
 		padding-bottom: 2px;
 		background: solid rgba(139, 39, 39, 0.856);
-	/* background: rgb(179, 63, 69); */
+		/* background: rgb(179, 63, 69); */
 		color: rgba(250, 236, 238, 0.85);
 		border-bottom: 1px solid rgba(199, 176, 176, 0.356);
 		box-shadow: 0px 0px 5px 1px inset rgba(144, 70, 73, 0.548);
@@ -174,10 +176,10 @@
 		text-align: center;
 		/* height: fit-content; */
 		padding-bottom: 1px;
-		padding: left	5px;
+		padding: left 5px;
 		margin: 0px 0px 0px 6px;
 		box-sizing: border-box;
-			color: rgba(250, 236, 238, 1);
+		color: rgba(250, 236, 238, 1);
 		background: rgba(179, 63, 69, 0.733);
 		font-size: 1em;
 		border: 1px solid rgba(139, 39, 39, 0);
@@ -195,13 +197,15 @@
 	}
 	.logo1 {
 		text-align: right;
-		padding-left: 50px;
-		color: rgba(32, 32, 32, 0.678);
+		padding-left: 40px;
+		color: rgba(37, 37, 37, 0.829);
 		font-size: 0.9em;
+		letter-spacing: 15px;
 	}
 	.logo2 {
 		color: rgb(216, 216, 216);
 		margin-top: 0px;
+		padding-left: 0px;
 	}
 	@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 	.fade-enter {
@@ -277,7 +281,7 @@
 		color: rgb(255, 255, 255);
 		overflow: hidden;
 		/* background: rgba(54, 46, 121, 0.705);
-		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664); */
+			box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664); */
 	}
 	.app-shell {
 		box-sizing: border-box;
@@ -289,7 +293,7 @@
 		margin-top: 0px;
 		padding: 0px 0px 30px 10px;
 		border: 2px solid var(--transparentBlue);
-		border-radius: 15px ;
+		border-radius: 15px;
 		background: var(--mainRed);
 		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
 		overflow: hidden;
@@ -298,7 +302,6 @@
 		box-sizing: border-box;
 		height: 100%;
 		border-radius: 15px 15px;
-
 	}
 
 	header {
@@ -339,12 +342,12 @@
 		touch-action: manipulation;
 	}
 
-	.body-row { /*wrangles sidebar and toolbar together to keeep them on screen */
+	.body-row {
+		/*wrangles sidebar and toolbar together to keeep them on screen */
 		display: flex;
 		border-radius: 15px 15px;
-		height:	460px;
+		height: 460px;
 	}
-
 
 	.shell-head {
 		max-height: 175px;
@@ -356,7 +359,6 @@
 		min-height: 100px;
 		border-radius: 5px;
 		padding-right: 0px;
-		z-index: 0;
 		touch-action: manipulation;
 	}
 	.header {
@@ -470,7 +472,19 @@
 			border-radius: 5px;
 			height: 128vw;
 			border-radius: 5px 5px;
+		}
 
+		.logo1 {
+			text-align: right;
+			padding-left: 50px;
+			color: rgba(37, 37, 37, 0.829);
+			font-size: 0.9em;
+			letter-spacing: 5px;
+		}
+		.logo2 {
+			color: rgb(216, 216, 216);
+			margin-top: 0px;
+			padding-left: 0px;
 		}
 		.app-shell {
 			max-width: 100vw;
