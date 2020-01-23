@@ -6,7 +6,7 @@
 		<div class="app-shell">
 			<div class="shell-head">
 				<div class="header header1">
-					<h1><span class="logo1">ham</span> <span class="logo2">RADIO</span></h1>
+					<h1><div class="logo1">ham</div> <div class="logo2">RADIO</div></h1>
 				</div>
 				<div class="header header2">
 					<label class="header2-label">Search for a tune</label>
@@ -192,20 +192,27 @@
 	h1 {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-around;
+		/* justify-content: space-around; */
 		height: fit-content;
+		margin: auto;
+		line-height: 0.85;
+
+
 	}
 	.logo1 {
 		text-align: right;
-		padding-left: 40px;
+		padding-left: 30px;
 		color: rgba(37, 37, 37, 0.829);
 		font-size: 0.9em;
-		letter-spacing: 15px;
+		letter-spacing: 1px;
+		font-weight: 600;
 	}
 	.logo2 {
-		color: rgb(216, 216, 216);
+		color: rgba(240, 240, 240, 0.945);
 		margin-top: 0px;
-		padding-left: 0px;
+		padding-left:5px;
+		font-weight: 700;
+		letter-spacing: 1px;
 	}
 	@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 	.fade-enter {
@@ -312,14 +319,6 @@
 		padding: 0px 20px;
 		border-radius: 8px;
 	}
-	header > h1 {
-		font-weight: 800;
-		font-size: 2.3em;
-		line-height: 1;
-		letter-spacing: 0.05em;
-		width: 100%;
-		text-align: center;
-	}
 
 	.assistant {
 		margin: 5px auto 0px auto;
@@ -383,12 +382,8 @@
 		user-select: none;
 		width: fit-content;
 	}
-	.header1 > h1 {
-		margin: 0px;
-		color: rgba(255, 255, 255, 0.863);
-	}
 
-	.header-button-container {
+.header-button-container {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -458,10 +453,10 @@
 			justify-content: space-around;
 		}
 
-		header > h1 {
+		/* header > h1 {
 			font-size: 1.4em;
 			line-height: 0.5;
-		}
+		} */
 
 		#app {
 			padding: 0px 0px 0px 0px;
@@ -476,10 +471,10 @@
 
 		.logo1 {
 			text-align: right;
-			padding-left: 50px;
+			padding-left: 40px;
 			color: rgba(37, 37, 37, 0.829);
-			font-size: 0.9em;
-			letter-spacing: 5px;
+			/* font-size: 0.9em; */
+			/* letter-spacing: 5px; */
 		}
 		.logo2 {
 			color: rgb(216, 216, 216);
@@ -535,12 +530,7 @@
 			padding-left: 10px;
 		}
 
-		.header1 > h1 {
-			font-weight: 800;
-			font-size: 2em;
-			line-height: 1;
-			margin: auto;
-		}
+
 
 		.filter-input {
 			margin: auto;
