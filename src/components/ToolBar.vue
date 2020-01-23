@@ -48,13 +48,34 @@
 
 				<div class="grid-cell">
 					<div class="tooltip">
-						<input
+						<button
 							class="share-button"
 							@click="shareActiveSong"
 							type="button"
 							name="share-button"
 							value="Share"
 						>
+							<!-- <?xml version="1.0" encoding="utf-8"?> -->
+							<svg
+								version="1.1"
+								id="Icons"
+								xmlns="http://www.w3.org/2000/svg"
+								xmlns:xlink="http://www.w3.org/1999/xlink"
+								x="0px"
+								y="0px"
+								height="17px"
+								width="18px"
+								viewBox="0 0 35 25"
+								style="enable-background:new 0 0 32 32;"
+								fill="#fff"
+								xml:space="preserve"
+							>
+								<path d="M29.3,2.6c-0.3-0.2-0.7-0.3-1-0.2L3,11.7c-0.4,0.1-0.7,0.5-0.7,0.9c0,0.4,0.3,0.8,0.7,0.9l10.2,3.8l10-10
+	c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-9.8,9.8l6.6,10.6c0.2,0.3,0.5,0.5,0.8,0.5c0.1,0,0.1,0,0.2,0c0.4-0.1,0.7-0.4,0.8-0.7l6.2-25.2
+	C29.7,3.3,29.6,2.9,29.3,2.6z" />
+							</svg>
+
+						</button>
 					</div>
 					<input
 						class="download-button"
@@ -72,7 +93,7 @@
 						class="songUrlText"
 					>
 				</div>
-				<div class="grid-cell">
+				<!-- <div class="grid-cell">
 					<div class="tooltip">
 						<input
 							class="share-button"
@@ -87,7 +108,7 @@
 						>Copy to clipboard</span>
 						Copy text
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</transition>
 		<div class="audio-container">
@@ -181,15 +202,14 @@
 				urlTextContiner.setSelectionRange(0, 99999);
 				document.execCommand("copy");
 
-				let shareMsg = '';
+				let shareMsg = "";
 				if (!this.songTitle) {
-					shareMsg = 'Select a song to share it!'
+					shareMsg = "Select a song to share it!";
 				} else {
 					shareMsg = `The link for '${this.songTitle}' has been copied to your clipboard!`;
 				}
 				alert(shareMsg);
 			}
-
 		},
 
 		computed: {
@@ -303,59 +323,64 @@
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: 1;
 		padding: 2px 5px 0px 0px;
+		justify-content: left;
 		margin: auto;
 		/* border-top: 1px solid rgba(29, 6, 6, 0.096); */
 		transition: 0.5s;
 	}
 	.share-button {
 		color: rgba(236, 229, 250, 0.87);
-		font-size: 1em;
+		font-size: 0.9em;
 		font-weight: bold;
 		background: rgba(23, 62, 145, 0.733);
 		border: 2px solid rgba(255, 255, 255, 0.349);
 		border-radius: 3px;
-		padding: 2px 2px;
-		margin-top: 2px;
+		padding: 1px 2px 0px 2px;
+		margin: 1px 0px 0px 0px;
 		box-shadow: 0px 0px 8px 2px inset rgba(85, 32, 128, 0.144);
-		margin-left: 4px;
-		transition: 0.2s;
+		transition: 0.5s;
+		outline: none;
 	}
 	.share-button:active {
 		box-shadow: 0px 0px 3px 1px rgba(145, 131, 190, 0.445);
 		border: 2px solid rgba(255, 255, 255, 0.61);
 		color: rgb(236, 229, 250);
+		outline: none;
 	}
 	.download-button {
 		color: rgba(236, 229, 250, 0.87);
-		font-size: 1em;
-		font-weight: bold;
+		font-size: 0.7em;
+		font-weight: 500;
+		letter-spacing: 2px;
 		background: rgba(23, 62, 145, 0.733);
 		border: 2px solid rgba(255, 255, 255, 0.349);
 		border-radius: 3px;
-		padding: 2px 2px;
-		margin-top: 2px;
+		padding: 0px 2px;
+		margin: 1px 0px 1px 0px;
 		box-shadow: 0px 0px 8px 2px inset rgba(63, 97, 209, 0.144);
 		margin-left: 4px;
 		transition: 0.2s;
+		outline: none;
 	}
 	.download-button:active {
 		box-shadow: 0px 0px 3px 1px rgba(145, 131, 190, 0.445);
 		border: 2px solid rgba(255, 255, 255, 0.61);
 		color: rgb(236, 229, 250);
+		outline: none;
 	}
 	/* .download-button {
-			text-align: left;
-			color: rgba(255, 255, 255, 0.726);
-			font-size: 1em;
-			font-weight: 500;
-			background: rgba(44, 76, 144, 0.0);
-			border: 2px solid rgba(255, 255, 255, 0.335);
-			border-radius: 3px;
-			padding: 2px 4px;
-			margin-top: 2px;
-			margin-left: 8px;
-			box-shadow: 0px 0px 8px 1px inset rgba(170, 141, 207, 0.384);
-		} */
+				text-align: left;
+				color: rgba(255, 255, 255, 0.726);
+				font-size: 1em;
+				font-weight: 500;
+				background: rgba(44, 76, 144, 0.0);
+				border: 2px solid rgba(255, 255, 255, 0.335);
+				border-radius: 3px;
+				padding: 2px 4px;
+				margin-top: 2px;
+				margin-left: 8px;
+				box-shadow: 0px 0px 8px 1px inset rgba(170, 141, 207, 0.384);
+			} */
 	.grid-cell {
 		display: flex;
 		flex-direction: row;
@@ -364,7 +389,8 @@
 	.grid-cell:nth-child(1) {
 		grid-column: span 2;
 		display: flex;
-		justify-content: center;
+		justify-content: flex-end;
+		/* margin-left: 10px; */
 	}
 	.songUrlText {
 		opacity: 0;
@@ -394,15 +420,15 @@
 		color: rgb(184, 146, 146);
 	}
 	/* .tool-button {
-			background: rgb(47, 83, 149);
-			font-size: 1em;
-			border: 1px solid rgb(67, 87, 126);
-			border: 1px solid rgb(112, 124, 148);
-			color: rgb(240, 240, 240);
-			padding: 5px 5px;
-			border-radius: 3px;
-			margin: 3px;
-		} */
+				background: rgb(47, 83, 149);
+				font-size: 1em;
+				border: 1px solid rgb(67, 87, 126);
+				border: 1px solid rgb(112, 124, 148);
+				color: rgb(240, 240, 240);
+				padding: 5px 5px;
+				border-radius: 3px;
+				margin: 3px;
+			} */
 	.details-button {
 		padding: 3px;
 		font-size: 0.9em;

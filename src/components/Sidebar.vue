@@ -153,7 +153,7 @@
 
 	.sidebarShown {
 		box-sizing: border-box;
-	
+
 		position: absolute;
 		display: flex;
 		flex-direction: row;
@@ -177,11 +177,11 @@
 		justify-content: center;
 		margin: 0px;
 		margin-bottom: 50px;
-		padding: 20px 1px 20px 1px;
+		padding: 20px 0px 20px 0px;
 		border-radius: 50% 0px 0px 50%;
 		border: 1px solid #d5dae0ad;
-		border-left: 2px solid #eef0f363;
-		border-right: 1px solid #284b785d;
+		border-left: 1px solid #eef0f363;
+		border-right: 0px solid #284b785d;
 		background: rgba(255, 255, 255, 0.3);
 		transition: 0.3s;
 	}
@@ -195,17 +195,17 @@
 		margin-bottom: 40px;
 		text-align: left;
 		color: #9c2d3a;
-		font-size: 1.2em;
+		font-size: 1.1em;
 		cursor: pointer;
 		border-radius: 75% 0px 0px 75%;
-		transition: 0.7s;
+		transition: 0.2s;
 		-webkit-tap-highlight-color: transparent;
 	}
 	.toggleClicked {
 		opacity: 1;
 		background: rgba(255, 255, 255, 0.7);
 		color: #1e3c64a2;
-		font-size: 1.2em;
+		font-size: 1em;
 		margin: 0px 0px 50px 0px;
 		padding: 10px 0px 10px 0px;
 		border-right: 0px solid #284b7800;
@@ -232,7 +232,7 @@
 	}
 	.linkItem {
 		padding: 2px 5px 5px 5px;
-		margin: 5px 0px;
+		margin: 5px 0px 5px 5px;
 		border-radius: 15px;
 		transition: 0.4s;
 	}
