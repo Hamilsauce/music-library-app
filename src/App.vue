@@ -6,7 +6,10 @@
 		<div class="app-shell">
 			<div class="shell-head">
 				<div class="header header1">
-					<h1><div class="logo1">ham</div> <div class="logo2">RADIO</div></h1>
+					<h1>
+						<div class="logo1">ham</div>
+						<div class="logo2">RADIO</div>
+					</h1>
 				</div>
 				<div class="header header2">
 					<label class="header2-label">Search for a tune</label>
@@ -22,7 +25,8 @@
 								name="filter-input"
 								class="filter-input"
 							/>
-							<div class="sort-cell">
+						// TODO Hiding sort option until ready to do something with it
+							<!-- <div class="sort-cell">
 								<label for="select-sort">Sort By:</label>
 								<select
 									v-model="sortCriteria"
@@ -33,7 +37,8 @@
 									<option value="Likes">Likes</option>
 									<option value="Plays">Plays</option>
 								</select>
-							</div>
+							</div> -->
+
 						</form>
 					</div>
 				</div>
@@ -164,8 +169,8 @@
 		padding-left: 5px;
 		padding-top: 1px;
 		padding-bottom: 2px;
-		background: solid rgba(139, 39, 39, 0.856);
-		/* background: rgb(179, 63, 69); */
+		background: solid rgb(158, 51, 51);
+		background: solid #BC484E;
 		color: rgba(250, 236, 238, 0.85);
 		border-bottom: 1px solid rgba(199, 176, 176, 0.356);
 		box-shadow: 0px 0px 5px 1px inset rgba(144, 70, 73, 0.548);
@@ -174,46 +179,17 @@
 		min-width: 80px;
 		max-width: fit-content;
 		text-align: center;
-		/* height: fit-content; */
 		padding-bottom: 1px;
 		padding: left 5px;
 		margin: 0px 0px 0px 6px;
 		box-sizing: border-box;
 		color: rgba(250, 236, 238, 1);
-		background: rgba(179, 63, 69, 0.733);
 		font-size: 1em;
 		border: 1px solid rgba(139, 39, 39, 0);
 		opacity: 0.85;
 		border-radius: 3px;
 	}
-	.header1 {
-		margin: 0px;
-	}
-	h1 {
-		display: flex;
-		flex-direction: column;
-		/* justify-content: space-around; */
-		height: fit-content;
-		margin: auto;
-		line-height: 0.85;
 
-
-	}
-	.logo1 {
-		text-align: right;
-		padding-left: 30px;
-		color: rgba(37, 37, 37, 0.829);
-		font-size: 0.9em;
-		letter-spacing: 1px;
-		font-weight: 600;
-	}
-	.logo2 {
-		color: rgba(240, 240, 240, 0.945);
-		margin-top: 0px;
-		padding-left:5px;
-		font-weight: 700;
-		letter-spacing: 1px;
-	}
 	@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 	.fade-enter {
 		opacity: 0;
@@ -253,12 +229,9 @@
 	html {
 		box-sizing: border-box;
 		margin: 0;
-		/* padding: 25px; */
 		padding-top: 0px;
-		/* height: fit-content; */
 		height: 100%;
 		background: rgba(54, 46, 121, 0.849);
-		/* box-shadow: 0px 0px 50px 100px inset #2a4f7f; */
 		background: rgba(54, 46, 121, 0.705);
 		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
 	}
@@ -266,7 +239,6 @@
 		box-sizing: border-box;
 		margin: 0;
 		height: 100%;
-		/* height: fit-content; */
 		height: 100%;
 		padding: 0;
 		background: rgba(54, 46, 121, 0.705);
@@ -287,14 +259,11 @@
 		font-weight: 500;
 		color: rgb(255, 255, 255);
 		overflow: hidden;
-		/* background: rgba(54, 46, 121, 0.705);
-			box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664); */
 	}
 	.app-shell {
 		box-sizing: border-box;
 		max-width: 750px;
 		width: 100%;
-		/* height: fit-content; */
 		height: 100%;
 		margin: auto;
 		margin-top: 0px;
@@ -304,6 +273,32 @@
 		background: var(--mainRed);
 		box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
 		overflow: hidden;
+	}
+
+	.header1 {
+		margin: 0px;
+	}
+	h1 {
+		display: flex;
+		flex-direction: column;
+		height: fit-content;
+		margin: auto;
+		line-height: 0.85;
+	}
+	.logo1 {
+		text-align: right;
+		padding-left: 30px;
+		color: rgba(37, 37, 37, 0.829);
+		font-size: 0.9em;
+		letter-spacing: 1px;
+		font-weight: 600;
+	}
+	.logo2 {
+		color: rgba(240, 240, 240, 0.945);
+		margin-top: 0px;
+		padding-left: 5px;
+		font-weight: 700;
+		letter-spacing: 1px;
 	}
 	.shell-body {
 		box-sizing: border-box;
@@ -342,7 +337,6 @@
 	}
 
 	.body-row {
-		/*wrangles sidebar and toolbar together to keeep them on screen */
 		display: flex;
 		border-radius: 15px 15px;
 		height: 460px;
@@ -383,7 +377,7 @@
 		width: fit-content;
 	}
 
-.header-button-container {
+	.header-button-container {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -453,11 +447,6 @@
 			justify-content: space-around;
 		}
 
-		/* header > h1 {
-			font-size: 1.4em;
-			line-height: 0.5;
-		} */
-
 		#app {
 			padding: 0px 0px 0px 0px;
 		}
@@ -473,8 +462,7 @@
 			text-align: right;
 			padding-left: 40px;
 			color: rgba(37, 37, 37, 0.829);
-			/* font-size: 0.9em; */
-			/* letter-spacing: 5px; */
+			letter-spacing: 5px;
 		}
 		.logo2 {
 			color: rgb(216, 216, 216);
@@ -529,8 +517,6 @@
 			padding: 0px;
 			padding-left: 10px;
 		}
-
-
 
 		.filter-input {
 			margin: auto;

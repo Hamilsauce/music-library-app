@@ -88,5 +88,15 @@
 				"label": ""
 			}
 		]
+	},
+	{
+		"path": "$ROOTPATH$\\src\\App.vue",
+		"bookmarks": [
+			{
+				"line": 27,
+				"column": 6,
+				"label": ""
+			}
+		]
 	}
 ]
