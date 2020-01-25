@@ -1,12 +1,15 @@
 <template>
 	<div
-        @click="cellActive"
-        :class="{ activeCell: activated }"
-        class="grid-cell"
-    >
+		@click="cellActive"
+		:class="{ activeCell: activated }"
+		class="grid-cell"
+	>
 		<div class="internal-grid">
-			<div class="cell-head">
-				<div class="button-container" :class="{ buttonContainerHidden: !activated }">
+			<div class="cell-head" :class="{ activeCellHead: activated}">
+				<div
+					class="button-container"
+					:class="{ buttonContainerHidden: !activated }"
+				>
 					<button @click="showSongDetails">Song Details</button>
 				</div>
 				<div class="checkbox-container">
@@ -55,14 +58,13 @@
 				errorMsg: ""
 			};
 		},
-
 		methods: {
 			cellActive() {
 				let songInfo = [];
 				let urlOrError = [];
 
 				if (this.song.hasOwnProperty("audioUrl")) {
-					urlOrError = ["url", this.song.audioUrl];
+					urlOrError = ["url", this.cleanedAudioUrl];
 					songInfo.push(urlOrError);
 				} else {
 					urlOrError = ["error", "noUrl"];
@@ -79,6 +81,26 @@
 		computed: {
 			activated: function() {
 				return this.selectedSong === this.song.songTitle;
+			},
+			cleanedAudioUrl() {
+				let urlValue = "";
+				if (!this.song.audioUrl) {
+					urlValue = "No audio for this song!";
+					return urlValue;
+				} else {
+					let urlSplit = this.song.audioUrl.trim().split("");
+
+					let cleanUrl = urlSplit
+						.map(char => {
+							let cleanChar = char === " " ? "%20" : char;
+							return cleanChar;
+						})
+						.reduce((acc, currChar) => {
+							return (acc += currChar);
+						}, "");
+					console.log(cleanUrl);
+					return cleanUrl;
+				}
 			}
 		},
 		watch: {},
@@ -92,7 +114,7 @@
 
 <style scoped>
 	* {
-		--mainRed: #a04650;
+		--mainRed: #bc484e;
 		--mainBlue: #284b78;
 		--transparentBlue: #e0e7f771;
 		--mainPurple: #9c3a5f;
@@ -108,9 +130,9 @@
 		min-width: 75px;
 		padding: 0vw 0vw 1vw 0vw;
 		color: rgb(106, 107, 114);
-		background: rgb(255, 255, 250);
+		background: rgb(240, 233, 222);
 		border-radius: 3px;
-		border: 2px solid rgba(255, 255, 255, 0);
+		border: 2px solid rgb(255, 255, 255);
 		font-size: 1em;
 		font-weight: 500;
 		transition: 200ms box-shadow ease-out, 225ms background ease,
@@ -119,31 +141,51 @@
 		overflow: hidden;
 	}
 	.activeCell {
-		/* transform: scale(1.3);
-        z-index: 3; */
+background: rgba(255, 255, 255, 0.986);
 	}
 
 	.grid-cell:hover {
-		box-shadow: 0px 0px 125px 25px inset rgba(173, 69, 173, 0.753);
-		background: rgba(207, 148, 219, 0.589);
+		box-shadow: 0px 0px 125px 25px inset rgb(255, 255, 255);
+		background: rgba(255, 255, 255, 0.849);
+		border: 2px solid white;
+		cursor: pointer;
+		transition: 0.25s;
+	}
+	.grid-cell:active {
+		box-shadow: 0px 0px 100x 25px inset rgba(141, 40, 141, 0.548);
+		background: rgba(227, 187, 235, 0.589);
 		border: 2px solid white;
 		font-weight: 600;
 		cursor: pointer;
 		color: white;
-		transition: 0.3s;
+		transition: 0.25s;
 	}
 	.internal-grid {
 		display: grid;
 	}
 	.cell-head {
+		color: white;
 		display: grid;
-		grid-template-columns: 90% 20px;
+		grid-template-columns:1fr 20px;
 		justify-content: space-between;
 		margin: 0;
 		height: fit-content;
 		width: 100%;
 		padding-bottom: 5px;
-		background: rgb(241, 241, 241);
+		background: #4282d6;
+		border: 1px solid rgba(255, 255, 255, 0.836);
+		border-bottom: 2px solid rgba(255, 255, 255, 0.836);
+		transition: 0.3s;
+	}
+	.activeCellHead {
+		color: white;
+		box-shadow: 0px 0px 30px 5px inset  hsla(207, 75%, 37%, 0.575);;
+		background: #186ad4fd;
+	}
+	.cell-head:hover {
+		color: white;
+		box-shadow: 0px 0px 30px 5px inset  hsla(207, 75%, 37%, 0.575);;
+		background: #186ad4fd;
 	}
 	.button-container {
 		text-align: left;
@@ -161,8 +203,8 @@
 	.checkbox-container {
 		text-align: right;
 		margin: auto;
-		height: 20px;
-		width: 20px;
+		height: 15px;
+		width: 25px;
 		padding-right: 5px;
 	}
 	.checkboxSvg {
@@ -173,6 +215,11 @@
 	}
 	.cell-foot {
 		font-size: 0.8em;
+	}
+
+	.cell-head button {
+		color: white;
+
 	}
 
 	p {

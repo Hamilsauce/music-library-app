@@ -25,8 +25,8 @@
 								name="filter-input"
 								class="filter-input"
 							/>
-						// TODO Hiding sort option until ready to do something with it
-							<!-- <div class="sort-cell">
+					<!-- TODO Hiding sort option until ready to do something with it
+							<div class="sort-cell">
 								<label for="select-sort">Sort By:</label>
 								<select
 									v-model="sortCriteria"

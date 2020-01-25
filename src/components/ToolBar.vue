@@ -166,8 +166,8 @@
 				EventBus.$on("songActivated", playSong => {
 					const audioPlayer = document.getElementById("audio-player");
 
-					if (this.songTitle == playSong[0]) {
-						//! checks newly selected song is already selected, ends execution if so
+					if (this.songTitle == playSong[0]) {   //! checks newly selected song is already selected, ends execution if so
+
 						return;
 					} else if (playSong[1] === "noUrl") {
 						this.songName = `No audio for ${playSong[0]}`;
@@ -196,10 +196,10 @@
 				audioPlayer.pause();
 				this.audioPaused = true;
 			},
-			shareActiveSong() {
-				const urlTextContiner = document.querySelector(".songUrlText");
-				urlTextContiner.select();
-				urlTextContiner.setSelectionRange(0, 99999);
+			shareActiveSong() {  //! in order to copy song url to clipboard at button click, use a hidden textbox that has the url. when button clicked, the text is selected and copied
+				const urlTextContainer = document.querySelector(".songUrlText");
+				urlTextContainer.select();
+				urlTextContainer.setSelectionRange(0, 99999);
 				document.execCommand("copy");
 
 				let shareMsg = "";
@@ -219,6 +219,7 @@
 			songTitle: function() {
 				return this.songName;
 			}
+		
 		},
 
 		created() {
@@ -369,18 +370,18 @@
 		outline: none;
 	}
 	/* .download-button {
-				text-align: left;
-				color: rgba(255, 255, 255, 0.726);
-				font-size: 1em;
-				font-weight: 500;
-				background: rgba(44, 76, 144, 0.0);
-				border: 2px solid rgba(255, 255, 255, 0.335);
-				border-radius: 3px;
-				padding: 2px 4px;
-				margin-top: 2px;
-				margin-left: 8px;
-				box-shadow: 0px 0px 8px 1px inset rgba(170, 141, 207, 0.384);
-			} */
+					text-align: left;
+					color: rgba(255, 255, 255, 0.726);
+					font-size: 1em;
+					font-weight: 500;
+					background: rgba(44, 76, 144, 0.0);
+					border: 2px solid rgba(255, 255, 255, 0.335);
+					border-radius: 3px;
+					padding: 2px 4px;
+					margin-top: 2px;
+					margin-left: 8px;
+					box-shadow: 0px 0px 8px 1px inset rgba(170, 141, 207, 0.384);
+				} */
 	.grid-cell {
 		display: flex;
 		flex-direction: row;
@@ -420,15 +421,15 @@
 		color: rgb(184, 146, 146);
 	}
 	/* .tool-button {
-				background: rgb(47, 83, 149);
-				font-size: 1em;
-				border: 1px solid rgb(67, 87, 126);
-				border: 1px solid rgb(112, 124, 148);
-				color: rgb(240, 240, 240);
-				padding: 5px 5px;
-				border-radius: 3px;
-				margin: 3px;
-			} */
+					background: rgb(47, 83, 149);
+					font-size: 1em;
+					border: 1px solid rgb(67, 87, 126);
+					border: 1px solid rgb(112, 124, 148);
+					color: rgb(240, 240, 240);
+					padding: 5px 5px;
+					border-radius: 3px;
+					margin: 3px;
+				} */
 	.details-button {
 		padding: 3px;
 		font-size: 0.9em;

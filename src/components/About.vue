@@ -49,9 +49,9 @@
 	}
     .content {
         width: 100%;
-            height: 128vw;
-        background: var(--mainBlue);
-        border: 1px solid var(--lightPurple);
+            height: 95vw;
+        background:rgba(255, 255, 255, 0);
+        border: 1px solid rgba(255, 255, 255, 0);
         border-radius: 0px 0px 5px 5px;
         margin: 2px;
         margin-bottom: 0;
@@ -64,6 +64,7 @@
 
 
     .soundcloud {
-        max-height: 100%;
+        max-height: 465px;
+
     }
 </style>
