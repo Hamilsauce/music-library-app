@@ -138,7 +138,16 @@
 			},
 
 			listenForActiveSong() {
-				EventBus.$on("songActivated", () => {
+				EventBus.$on("songActivated", songData => {
+					let activeSongName = songData[0];
+
+					let songObj = this.songs.find(song => song.songTitle === activeSongName);
+					songObj.plays++;
+
+				});
+			},
+			makeAssistantTalk() {
+
 					setTimeout(() => {
 						this.assistantMessage = "Press again to open song page";
 					}, 1000);
@@ -146,7 +155,7 @@
 					setTimeout(() => {
 						this.assistantMessage = "Select a tile to listen.";
 					}, 7000);
-				});
+
 			}
 		},
 		mounted() {
