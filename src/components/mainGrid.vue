@@ -15,11 +15,9 @@
 		</div>
 	</div>
 </template>
-
 <script>
 	import WorkCell from "./WorkCell.vue";
 	import EventBus from "./eventBus.js";
-
 	export default {
 		name: "MainGrid",
 		components: {
@@ -65,7 +63,6 @@
 				this.displayDimmer = true;
 				console.log(songTitle);
 				EventBus.$emit('dimmerActive');
-
 			},
 			handleSortChange() { //! Not currently used
 				let sortedSongs = [];
@@ -85,7 +82,6 @@
 				});
 				return newSongs;
 			}
-
 			//TODO below commented code useful for sorting reference
 				// filtered.sort((a, b) => {
 				// 	let first = a[criteria].toUpperCase();
@@ -101,17 +97,13 @@
 				// console.log('after sort');
 				// filtered.forEach(song => console.log(song[criteria]))
 				// return filtered;
-
-
 		},
-
 		computed: {
 			refinedSongList: function() {
 				let filtered = this.filterSongs();
 				return filtered;
 			}
 		},
-
 		mounted() {
 			this.listenForData();
 			this.handleSortChange();

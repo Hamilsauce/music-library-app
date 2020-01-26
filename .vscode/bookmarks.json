@@ -38,13 +38,8 @@
 		"path": "$ROOTPATH$\\src\\components\\MainGrid.vue",
 		"bookmarks": [
 			{
-				"line": 41,
-				"column": 4,
-				"label": ""
-			},
-			{
-				"line": 88,
-				"column": 6,
+				"line": 39,
+				"column": 5,
 				"label": ""
 			}
 		]

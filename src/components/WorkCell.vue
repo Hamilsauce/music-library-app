@@ -5,7 +5,10 @@
 		class="grid-cell"
 	>
 		<div class="internal-grid">
-			<div class="cell-head" :class="{ activeCellHead: activated}">
+			<div
+				class="cell-head"
+				:class="{ activeCellHead: activated}"
+			>
 				<div
 					class="button-container"
 					:class="{ buttonContainerHidden: !activated }"
@@ -73,7 +76,6 @@
 				songInfo.push(this.song.songTitle);
 				this.$emit("songCellActivated", songInfo);
 			},
-
 			showSongDetails() {
 				this.$emit("showSongDetails", this.song.songTitle);
 			}
@@ -141,7 +143,7 @@
 		overflow: hidden;
 	}
 	.activeCell {
-background: rgba(255, 255, 255, 0.986);
+		background: rgba(255, 255, 255, 0.986);
 	}
 
 	.grid-cell:hover {
@@ -166,7 +168,7 @@ background: rgba(255, 255, 255, 0.986);
 	.cell-head {
 		color: white;
 		display: grid;
-		grid-template-columns:1fr 20px;
+		grid-template-columns: 1fr 20px;
 		justify-content: space-between;
 		margin: 0;
 		height: fit-content;
@@ -179,12 +181,12 @@ background: rgba(255, 255, 255, 0.986);
 	}
 	.activeCellHead {
 		color: white;
-		box-shadow: 0px 0px 30px 5px inset  hsla(207, 75%, 37%, 0.575);;
+		box-shadow: 0px 0px 30px 5px inset hsla(207, 75%, 37%, 0.575);
 		background: #186ad4fd;
 	}
 	.cell-head:hover {
 		color: white;
-		box-shadow: 0px 0px 30px 5px inset  hsla(207, 75%, 37%, 0.575);;
+		box-shadow: 0px 0px 30px 5px inset hsla(207, 75%, 37%, 0.575);
 		background: #186ad4fd;
 	}
 	.button-container {
@@ -219,7 +221,6 @@ background: rgba(255, 255, 255, 0.986);
 
 	.cell-head button {
 		color: white;
-
 	}
 
 	p {

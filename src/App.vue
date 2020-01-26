@@ -25,7 +25,7 @@
 								name="filter-input"
 								class="filter-input"
 							/>
-					<!-- TODO Hiding sort option until ready to do something with it
+							<!-- TODO Hiding sort option until ready to do something with it
 							<div class="sort-cell">
 								<label for="select-sort">Sort By:</label>
 								<select
@@ -136,26 +136,24 @@
 				this.filterInput = "";
 				this.toggleSubmit();
 			},
-
 			listenForActiveSong() {
 				EventBus.$on("songActivated", songData => {
 					let activeSongName = songData[0];
 
-					let songObj = this.songs.find(song => song.songTitle === activeSongName);
+					let songObj = this.songs.find(
+						song => song.songTitle === activeSongName
+					);
 					songObj.plays++;
-
 				});
 			},
 			makeAssistantTalk() {
+				setTimeout(() => {
+					this.assistantMessage = "Press again to open song page";
+				}, 1000);
 
-					setTimeout(() => {
-						this.assistantMessage = "Press again to open song page";
-					}, 1000);
-
-					setTimeout(() => {
-						this.assistantMessage = "Select a tile to listen.";
-					}, 7000);
-
+				setTimeout(() => {
+					this.assistantMessage = "Select a tile to listen.";
+				}, 7000);
 			}
 		},
 		mounted() {
@@ -179,7 +177,7 @@
 		padding-top: 1px;
 		padding-bottom: 2px;
 		background: solid rgb(158, 51, 51);
-		background: solid #BC484E;
+		background: solid #bc484e;
 		color: rgba(250, 236, 238, 0.85);
 		border-bottom: 1px solid rgba(199, 176, 176, 0.356);
 		box-shadow: 0px 0px 5px 1px inset rgba(144, 70, 73, 0.548);
