@@ -17,25 +17,27 @@
     <section class="formContainer">
       <p class="form-header">Enter some detes about said song</p>
 
-      <form class="newSongForm">
+        <!-- submits to musicServer.js express server at below route -->
+      <form method="POST" action="/new-song-submission" class="newSongForm">
         <label for="titleField" class="form-label">Title</label>
         <input type="text" class="textField titleField" name="titleField">
 
         <label for="genreField" class="form-label">Genre</label>
         <input type="text" class="textField genreField" name="genreField">
-
+<!--
         <label for="artistField" class="form-label">Artist</label>
-        <input type="text" class="textField artistField" name="artistField">
+        <input type="text" class="textField artistField" name="artistField"> -->
 
         <label for="durationField" class="form-label">Duration</label>
         <input type="text" class="textField durationField" name="durationField">
 
-        <label for="audioField" class="form-label">Audio Url</label>
-        <input type="text" class="textField audioField" name="audioField">
-
         <label for="descriptonField" class="form-label">Descripton</label>
         <textarea rows="4" cols="20" class="textField descriptonField" name="descriptonField">
         </textarea>
+
+        <label for="audioField" class="form-label">Audio Url</label>
+        <input type="text" class="textField audioField" name="audioField">
+
 
        <section class="footer">
           <div class="msgBox"></div >
