@@ -1,41 +1,44 @@
 <template>
-	<div class="main">
-		<transition name="fade">
-			<div
-				class="sidebarShown"
-				:style="{ width: sidebarDisplayState === true ? '150px' : '0px' }"
-				:class="{ sideBarDisable: disableState }"
-				id="sidebar-div"
-			>
+	<div class="sidebar">
+		<div class="sidebar-container2">
+
+			<transition name="fade">
 				<div
-					class="links"
+					class="sidebarShown"
 					:style="{ width: sidebarDisplayState === true ? '150px' : '0px' }"
+					:class="{ sideBarDisable: disableState }"
+					id="sidebar-div"
 				>
-					<h3>Nav</h3>
-					<div class="linkItem">
-						<router-link
-							class="routerLink"
-							to="/"
-						>Library</router-link>
-					</div>
-					<div class="linkItem">
-						<router-link
-							to="/newsong"
-							class="routerLink"
-						>New Song</router-link>
-					</div>
-					<div class="linkItem">
-						<router-link
-							to="/About"
-							class="routerLink"
-						>About</router-link>
-					</div>
-					<div class="github-link linkItem">
-						<a href="https://github.com/Hamilsauce">github</a>
+					<div
+						class="links"
+						:style="{ width: sidebarDisplayState === true ? '150px' : '0px' }"
+					>
+						<h3>Nav</h3>
+						<div class="linkItem">
+							<router-link
+								class="routerLink"
+								to="/"
+							>Library</router-link>
+						</div>
+						<div class="linkItem">
+							<router-link
+								to="/newsong"
+								class="routerLink"
+							>New Song</router-link>
+						</div>
+						<div class="linkItem">
+							<router-link
+								to="/About"
+								class="routerLink"
+							>About</router-link>
+						</div>
+						<div class="github-link linkItem">
+							<a href="https://github.com/Hamilsauce">github</a>
+						</div>
 					</div>
 				</div>
-			</div>
-		</transition>
+			</transition>
+		</div>
 		<div
 			class="sidebar-container"
 			@click="toggleSidebar"
@@ -144,11 +147,21 @@
 		text-align: left;
 	}
 
-	.main {
+	.sidebar {
 		display: flex;
 		flex-direction: row;
 		padding-left: 1px;
-		justify-content: center;
+		justify-content: flex-end;
+		/* align-items: center; */
+		z-index: 5;
+	}
+	.sidebar-container2 {
+		display: flex;
+		flex-direction: row;
+		padding-left: 1px;
+		justify-content: flex-end;
+		/* align-items: center; */
+		z-index: 5;
 	}
 
 	.sidebarShown {
@@ -157,19 +170,20 @@
 		position: absolute;
 		display: flex;
 		flex-direction: row;
+		/* right: 50px; */
 		justify-content: center;
-		right: 30vw;
-		height: 450px;
+		/* right: 30vw; */
+		height: 460px;
 		width: 0px;
 		padding-top: 5px;
 		margin: 0px;
-		border-radius: 5px 0px 0px 25px;
+		/* border-radius: 5px 0px 0px 25px; */
 		/* border-radius: 5px 0px 0px 75%; */
 		background: var(--mainRed);
 		touch-action: manipulation;
 		overflow: hidden;
 		transition: 0.5s;
-		box-shadow: -6px 3px 5px 1px rgba(41, 22, 73, 0.226);
+		box-shadow: -6px 3px 5px 1px rgba(78, 26, 31, 0.226);
 	}
 	.sidebar-toggle {
 		display: flex;
@@ -265,7 +279,7 @@
 	/*
 	* media screen-palooza needed for positioning sidebar correctly (absolute positioned...need better way)
 	*/
-	@media screen and (min-width: 1025px) {
+	/* @media screen and (min-width: 1025px) {
 		.sidebarShown {
 			right: 28vw;
 		}
@@ -286,12 +300,12 @@
 			right: 19px;
 			height: 470px;
 		}
-	}
-	@media screen and (min-height: 730px) {
+	} */
+	/* @media screen and (min-height: 730px) {
 		.sidebarShown {
-			/* right: 19px; */
-			/* height: 545px; */
+			right: 19px;
+			height: 545px;
 			border-radius: 10px 0px 0px 90%;
 		}
-	}
+	} */
 </style>

@@ -338,14 +338,14 @@
 		box-sizing: border-box;
 		max-height: 560px;
 		width: 100%;
-		border-radius: 15px 15px;
+
 		overflow: auto;
 		touch-action: manipulation;
 	}
 
 	.body-row {
 		display: flex;
-		border-radius: 15px 15px;
+		border-radius: 10px 10px;
 		height: 460px;
 	}
 
