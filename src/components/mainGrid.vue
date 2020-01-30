@@ -75,12 +75,6 @@
 				EventBus.$on('filterInputSubmit', input => {
 					this.filterInput = input;
 				});
-			},
-			filterSongs() {
-				let newSongs = this.songs.filter(song => {
-					return song.songTitle.toUpperCase().indexOf(this.filterInput.toUpperCase()) >= 0;
-				});
-				return newSongs;
 			}
 			//TODO below commented code useful for sorting reference
 				// filtered.sort((a, b) => {
@@ -100,7 +94,9 @@
 		},
 		computed: {
 			refinedSongList: function() {
-				let filtered = this.filterSongs();
+				let filtered = this.songs.filter(song => {
+					return song.songTitle.toUpperCase().indexOf(this.filterInput.toUpperCase()) >= 0;
+				});
 				return filtered;
 			}
 		},
@@ -154,9 +150,9 @@
 		border-top: 2px solid var(--mainBlue);
 		border-bottom: 2px solid var(--mainBlue);
 
-		background:rgba(51, 121, 153, 0.685);
+		background:rgb(47, 59, 128);
 		/* background:	var(--mainBlue) ; */
-			box-shadow: 0px 0px 200px 50px inset  #6748cede;
+			box-shadow: 0px 0px 400px 50px inset  #6148cec9;
 		border-radius: 0px 0px 5px 5px;
 
 	}
@@ -201,7 +197,7 @@
 		.grid-body {
 			max-width: 110vw;
 			height: fit-content;
-			min-height: 185vw;
+			/* min-height: 185vw; */
 			grid-template-columns: repeat(2, minmax(175px 1fr));
 			gap: 7px;
 			grid-row-gap: 8px;

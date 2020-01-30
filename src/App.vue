@@ -43,7 +43,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="shell-body">
 				<transition name="fade">
 					<ToolBar class="toolbar"></ToolBar>
@@ -71,6 +70,7 @@
 	import ToolBar from "./components/ToolBar";
 	import Sidebar from "./components/Sidebar";
 	import EventBus from "./components/eventBus.js";
+	import * as firebase from "firebase";
 
 	export default {
 		name: "app",
@@ -106,19 +106,23 @@
 		},
 		methods: {
 			initializeData() {
-				fetch("https://hamilsauce.github.io/audio/SongData.json")
-					.then(response => response.json())
-					.then(data => {
-						this.songs = data.songs;
+				// fetch("https://hamilsauce.github.io/audio/SongData.json")
+				const dbRef = firebase.database().ref("songs");
+				dbRef.on("value", snap => {
+					this.songs = Object.values(snap.val()).sort((a, b) => {
+						if (a.id > b.id) {
+							return -1;
+						} else if (a.id < b.id) {
+							return 1;
+						} else {
+							return 0;
+						}
 					});
+				});
 				EventBus.$emit("dataLoad", this.songs);
 			},
 			toggleHeader() {
 				this.headerDisplayState = !this.headerDisplayState;
-			},
-
-			toggleSubmit() {
-				this.submitDisplayState = !this.submitDisplayState;
 			},
 			handleClick() {
 				this.filterClickCount < 2
@@ -131,20 +135,22 @@
 					return;
 				}
 			},
-			handleSubmit() {
-				EventBus.$emit("userInputSubmit", this.filterInput);
-				this.filterInput = "";
-				this.toggleSubmit();
-			},
 			listenForActiveSong() {
 				EventBus.$on("songActivated", songData => {
 					let activeSongName = songData[0];
 
-					let songObj = this.songs.find(
-						song => song.songTitle === activeSongName
-					);
+					let songObj = this.songs.find(song => {
+						return song.songTitle === activeSongName;
+					});
 					songObj.plays++;
+					this.saveToFirebase(songObj);
 				});
+			},
+			saveToFirebase(song) {
+				firebase
+					.database()
+					.ref("songs/" + song.id)
+					.update(song);
 			},
 			makeAssistantTalk() {
 				setTimeout(() => {
@@ -238,8 +244,8 @@
 		margin: 0;
 		padding-top: 0px;
 		height: 100%;
-		background: rgba(54, 46, 121, 0.849);
 		background: rgba(54, 46, 121, 0.705);
+		background: rgba(46, 60, 121, 0.603);
 		box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
 	}
 	body {
@@ -338,6 +344,7 @@
 		box-sizing: border-box;
 		max-height: 560px;
 		width: 100%;
+		border: 1px solid var(--transparentBlue);
 
 		overflow: auto;
 		touch-action: manipulation;
@@ -467,9 +474,9 @@
 
 		.logo1 {
 			text-align: right;
-			padding-left: 40px;
+			padding-left: 30px;
 			color: rgba(37, 37, 37, 0.829);
-			letter-spacing: 5px;
+			letter-spacing: 8px;
 		}
 		.logo2 {
 			color: rgb(216, 216, 216);
@@ -478,16 +485,17 @@
 		}
 		.app-shell {
 			max-width: 100vw;
-			height: 175vw;
+			/* height: 175vw; */
+			height: fit-content;
 			padding: 0px 0px 25px 8px;
 			border-radius: 5px 5px 15px 15px;
 		}
 		.filter-input {
-			max-width: 150px;
+			max-width: 175px;
 		}
 		.shell-body {
 			overflow: hidden;
-			height: 145vw;
+			/* height: 145vw; */
 		}
 		.body-row {
 			overflow: hidden;

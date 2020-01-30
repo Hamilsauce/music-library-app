@@ -219,7 +219,7 @@
 			songTitle: function() {
 				return this.songName;
 			}
-		
+
 		},
 
 		created() {
