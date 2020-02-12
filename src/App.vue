@@ -21,7 +21,7 @@
 							<input
 								type="text"
 								v-model="filterInput"
-								@click="handleClick"
+								@click="handleFilterInput"
 								name="filter-input"
 								class="filter-input"
 							/>
@@ -124,7 +124,7 @@
 			toggleHeader() {
 				this.headerDisplayState = !this.headerDisplayState;
 			},
-			handleClick() {
+			handleFilterInput() {
 				this.filterClickCount < 2
 					? (this.filterClickCount = this.filterClickCount + 1)
 					: (this.filterClickCount = this.filterClickCount);
@@ -152,6 +152,18 @@
 					.ref("songs/" + song.id)
 					.update(song);
 			},
+			addNewSong() {
+				EventBus.$on('newSongSubmitted', newSong => {
+					const newSongId = this.songs[0].id + 1;
+					// console.log(this.songs);
+
+					newSong.id = newSongId;
+
+					this.songs.push(newSong);
+					this.saveToFirebase(newSong);
+
+				})
+			},
 			makeAssistantTalk() {
 				setTimeout(() => {
 					this.assistantMessage = "Press again to open song page";
@@ -165,11 +177,14 @@
 		mounted() {
 			this.initializeData();
 			this.listenForActiveSong();
+			this.addNewSong();
 		}
 	};
 </script>
 
 <style>
+	@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+
 	.sort-cell {
 		grid-column: span 1;
 		display: flex;
@@ -203,7 +218,6 @@
 		border-radius: 3px;
 	}
 
-	@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 	.fade-enter {
 		opacity: 0;
 		width: 0;
@@ -230,9 +244,9 @@
 	}
 	* {
 		--mainRed: #bc484e;
-		--mainBlue: #284b78;
+		--mainBlue: #30477A;
 		--transparentBlue: #e0e7f771;
-		--mainPurple: #9c3a5f;
+		--mainPurple: #af3076;
 		--lightPurple: #ac73ac;
 		--fadedPurple: #bba4bb;
 		--mainWhite: #fffffa;
@@ -345,9 +359,12 @@
 		max-height: 560px;
 		width: 100%;
 		border: 1px solid var(--transparentBlue);
-
 		overflow: auto;
 		touch-action: manipulation;
+	}
+	.newSongPage {
+		overflow: auto;
+
 	}
 
 	.body-row {

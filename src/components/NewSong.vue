@@ -1,73 +1,81 @@
 <template>
-	<div class="main">
+	<div class="newSongPage">
 		<header class="songDetailsHeader">
-			<h2 class="headerText">New Song</h2>
+			<h2 class="newSongHeaderText">New Song</h2>
 		</header>
 
 		<section class="formContainer">
 			<p class="form-header">Enter some detes about said song</p>
-			<form class="newSongForm">
+			<form class="newSongForm" @submit.prevent="submitNewSong">
 				<label
 					for="titleField"
 					class="form-label"
-				>Title</label>
-				<input
-					type="text"
-					class="textField"
-					name="titleField"
-				>
+				>Title
+					<input
+						type="text"
+						class="textField"
+						name="titleField"
+						v-model="newSong.songTitle"
+					></label>
 
 				<label
 					for="genreField"
 					class="form-label"
-				>Genre</label>
-				<input
-					type="text"
-					class="textField"
-					name="genreField"
-				>
+				>Genre
+					<input
+						type="text"
+						class="textField"
+						name="genreField"
+						v-model="newSong.genre"
+					></label>
 
 				<label
 					for="artistField"
 					class="form-label"
-				>Artist</label>
-				<input
-					type="text"
-					class="textField"
-					name="artistField"
-				>
+				>Artist
+					<input
+						type="text"
+						class="textField"
+						name="artistField"
+						v-model="newSong.artist"
+					></label>
 
 				<label
 					for="durationField"
 					class="form-label"
-				>Duration</label>
-				<input
-					type="text"
-					class="textField"
-					name="durationField"
-				>
+				>Duration
+					<input
+						type="text"
+						class="textField"
+						name="durationField"
+						v-model="newSong.duration"
+					></label>
 
 				<label
 					for="audioField"
 					class="form-label"
-				>Audio Url</label>
-				<input
-					type="text"
-					class="textField"
-					name="audioField"
-				>
+				>Audio Url
+					<input
+						type="text"
+						class="textField"
+						name="audioField"
+						v-model="newSong.audioUrl"
+					></label>
+				<div class="descriptionContainer">
 
-				<label
-					for="descriptonField"
-					class="form-label"
-				>Descripton</label>
-				<textarea
-					rows="4"
-					cols="20"
-					class="textField descriptonField"
-					name="descriptonField"
-				>
-        </textarea>
+					<label
+						for="descriptonField"
+						class="form-label"
+					>Descripton</label>
+					<textarea
+						rows="4"
+						cols="20"
+						class="textField descriptonField"
+						name="descriptonField"
+						v-model="newSong.description"
+					>
+					</textarea>
+				</div>
 
 				<section class="form-buttons">
 					<div class="button-container">
@@ -92,17 +100,45 @@
 </template>
 
 <script>
+	import EventBus from "./eventBus.js";
+
 	export default {
 		name: "NewSong",
 		components: {},
 		props: [],
 		data() {
 			return {
-				message: ""
+				message: "",
+				newSong: {
+					id: "",
+					plays: 0,
+					songTitle: "",
+					genre: "",
+					artist: "",
+					duration: "",
+					audioUrl: "",
+					description: "",
+					published: ""
+				}
 			};
 		},
 
-		methods: {},
+		methods: {
+			submitNewSong() {
+				EventBus.$emit("newSongSubmitted", this.newSong);
+				this.newSong = {
+					id: "",
+					plays: 0,
+					songTitle: "",
+					genre: "",
+					artist: "",
+					duration: "",
+					audioUrl: "",
+					description: "",
+					published: ""
+				}
+			}
+		},
 		computed: {},
 		watch: {},
 
@@ -115,23 +151,13 @@
 </script>
 
 <style scoped>
-	:root {
-		--mainRed: #a04650;
-		--mainBlue: #284b78;
-		--transparentBlue: #c8d6f8b6;
-		--mainPurple: #9c3a5f;
-		--lightPurple: #ac89ac;
-		--fadedPurple: #bba4bb;
-		--mainWhite: #fffffa;
-	}
-
-	.main {
+	.newSongPage {
 		display: grid;
-		/* grid-gap: 10px; */
+		grid-gap: 10px;
 		width: 100%;
 		margin: 0;
 		height: 130vw;
-		border-radius: 5px;
+		/* border-radius: 5px; */
 		border: 2px solid var(--mainBlue);
 		background: var(--mainBlue);
 		overflow: auto;
@@ -144,18 +170,21 @@
 	}
 
 	.songDetailsHeader {
-		height: 100%;
+		/* height: 100%; */
+		width: 100%;
 		padding: 0;
-		margin: 0px auto;
+		margin: auto;
+		background: var(--mainPurple);
+		border-radius: 7px 0px 0px 0px;
 	}
 
 	.header {
 		/* display: grid; */
 		padding: 0px;
 		margin: 0;
-		background: rgba(156, 100, 146, 1);
+		/* background: rgba(156, 100, 146, 1); */
 	}
-	.headerText {
+	.newSongHeaderText {
 		font-weight: 400;
 		letter-spacing: 8px;
 		color: rgba(250, 250, 250, 1);
@@ -167,8 +196,9 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		justify-content: center;
+		grid-gap: 10px;
 
-		background: rgba(242, 245, 208, 0.5);
+		/* background: rgba(242, 245, 208, 0.5); */
 		width: 100%;
 		height: 100%;
 		padding: 5px 0px;
@@ -181,6 +211,7 @@
 		/* letter-spacing: 1px; */
 		color: rgb(255, 255, 255);
 		padding: 2px 5px 0px 5px;
+		margin: 0px;
 		font-size: 1em;
 	}
 	.newSongForm {
@@ -190,7 +221,7 @@
 		max-width: 330px;
 		padding: 5px;
 		margin: auto;
-		grid-gap: 5px;
+		grid-gap: 10px;
 	}
 	.form-label {
 		padding: 2px 5px 0px 5px;
@@ -199,13 +230,22 @@
 		letter-spacing: 7px;
 		font-size: 1.1em;
 		font-weight: 300;
-		color: rgba(236, 236, 236,1);
+		color: rgba(236, 236, 236, 1);
+	}
+	.descriptionContainer {
+		padding: 2px 5px 0px 5px;
+		margin-top: 10px;
+		margin-bottom: 0px;
+		letter-spacing: 7px;
+		font-size: 1.1em;
+		font-weight: 300;
+		color: rgba(236, 236, 236, 1);
 	}
 
 	.textField {
 		box-sizing: border-box;
 		border: 1px solid rgba(80, 80, 80, 0.2);
-		border-radius: 3px;
+		/* border-radius: 3px; */
 		font-size: 1.3em;
 		font-weight: 300;
 		color: rgba(80, 80, 80, 0.75);
@@ -228,7 +268,7 @@
 		color: white;
 		padding: 2px 15px;
 		border-top: 2px solid rgba(200, 190, 200, 0);
-		border-radius: 2px 2px 8px 8px;
+		/* border-radius: 2px 2px 8px 8px; */
 	}
 
 	.button-container {
@@ -247,7 +287,7 @@
 		font-weight: 400;
 		color: rgba(230, 231, 230, 0.9);
 		background: rgba(190, 91, 91, 1);
-		border-radius: 3px;
+		/* border-radius: 3px; */
 		border: 1px solid rgba(230, 231, 230, 0);
 	}
 	.submitSong {
@@ -255,14 +295,14 @@
 	}
 
 	/* .audioField {
-		box-sizing: border-box;
-		border: 1px solid rgba(80, 80, 80, 0.2);
-		border-radius: 3px;
-		font-size: 1.3em;
-		font-weight: 300;
-		color: rgba(80, 80, 80, 0.75);
-		width: 325px;
-		padding: 7px;
-		margin: auto;
-	} */
+					box-sizing: border-box;
+					border: 1px solid rgba(80, 80, 80, 0.2);
+					border-radius: 3px;
+					font-size: 1.3em;
+					font-weight: 300;
+					color: rgba(80, 80, 80, 0.75);
+					width: 325px;
+					padding: 7px;
+					margin: auto;
+				} */
 </style>

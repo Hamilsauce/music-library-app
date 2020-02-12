@@ -124,6 +124,7 @@
 		--fadedPurple: #bba4bb;
 		--mainWhite: #fffffa;
 		touch-action: manipulation;
+		outline: none;
 	}
 	.grid-cell {
 		display: grid;
@@ -160,7 +161,7 @@
 		font-weight: 600;
 		cursor: pointer;
 		color: white;
-		transition: 0.25s;
+		transition: 0.45s;
 	}
 	.internal-grid {
 		display: grid;
@@ -182,12 +183,12 @@
 	.activeCellHead {
 		color: white;
 		box-shadow: 0px 0px 30px 5px inset hsla(207, 75%, 37%, 0.575);
-		background: #186ad4fd;
+		background: #e40ad2;
 	}
 	.cell-head:hover {
 		color: white;
 		box-shadow: 0px 0px 30px 5px inset hsla(207, 75%, 37%, 0.575);
-		background: #186ad4fd;
+		/* background: #186ad4fd; */
 	}
 	.button-container {
 		text-align: left;

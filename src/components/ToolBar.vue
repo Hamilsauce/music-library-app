@@ -14,10 +14,10 @@
 						:class="{ fadeTitle: displayPlayingMessage }"
 					>{{ songTitle }}</span>
 				</transition>
-				<span
+				<!-- <span
 					class="now-playing-message"
 					v-show="displayPlayingMessage === true"
-				>Now Playing</span>
+				>Now Playing</span> -->
 			</div>
 			<div>
 				<input
@@ -259,8 +259,7 @@
 		background: var(--mainRed);
 		color: white;
 		font-size: 0.9em;
-		/* padding: 2px 0px 0px 0px; */
-		/* margin: 0px 5px 0px 0px; */
+		overflow: hidden;
 		border: 1px solid rgba(190, 138, 138, 0.021);
 		border-radius: 5px 5px 0px 0px;
 	}
@@ -299,8 +298,8 @@
 		overflow: hidden;
 	}
 	.now-playing-message {
-		opacity: 0.7;
-		transition: 0.25s ease-out;
+		opacity: 0.1;
+		/* transition: 0.1s ease-out; */
 		z-index: 3;
 	}
 	.song-title {
@@ -310,7 +309,7 @@
 	}
 	.fadeTitle {
 		opacity: 0;
-		transition: 0.5s ease-out;
+		transition: 0.01s ease-out;
 	}
 
 	select > option {

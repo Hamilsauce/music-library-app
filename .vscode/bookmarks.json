@@ -55,16 +55,6 @@
 		]
 	},
 	{
-		"path": "$ROOTPATH$\\src\\components\\ToolBar.vue",
-		"bookmarks": [
-			{
-				"line": 53,
-				"column": 30,
-				"label": ""
-			}
-		]
-	},
-	{
 		"path": "$ROOTPATH$\\src\\App.vue",
 		"bookmarks": [
 			{
