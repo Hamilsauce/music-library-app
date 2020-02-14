@@ -87,6 +87,7 @@
 				assistantMessage: "Select a tile to listen.",
 				sortCriteria: "",
 				filterInput: "",
+				googleDisplayName: '',
 				userAuthData: {
 					email: '',
 					password: ''
@@ -171,16 +172,27 @@
 			loginSubmitted() {
 				EventBus.$on('submittedLogin', loginData => {
 					this.userAuthData = loginData;
-				})
+				});
+				EventBus.$on('googleLogin', loginData => {
+					this.googleDisplayName = loginData;
+					this.makeAssistantTalk();
+				});
+
+
 			},
 			makeAssistantTalk() {
-				setTimeout(() => {
-					this.assistantMessage = "Press again to open song page";
-				}, 1000);
+				// setTimeout(() => {
+				// 	this.assistantMessage = "Press again to open song page";
+				// }, 1000);
 
 				setTimeout(() => {
-					this.assistantMessage = "Select a tile to listen.";
-				}, 7000);
+					if (this.googleDisplayName) {
+						this.assistantMessage = `Signed in as ${this.googleDisplayName}`;
+					} else {
+						this.assistantMessage = `Not signed in.`;
+
+					}
+				}, 3000);
 			}
 		},
 		mounted() {
