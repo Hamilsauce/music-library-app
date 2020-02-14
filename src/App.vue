@@ -87,6 +87,10 @@
 				assistantMessage: "Select a tile to listen.",
 				sortCriteria: "",
 				filterInput: "",
+				userAuthData: {
+					email: '',
+					password: ''
+				},
 				CellData: [
 					{
 						elementId: "",
@@ -164,6 +168,11 @@
 
 				})
 			},
+			loginSubmitted() {
+				EventBus.$on('submittedLogin', loginData => {
+					this.userAuthData = loginData;
+				})
+			},
 			makeAssistantTalk() {
 				setTimeout(() => {
 					this.assistantMessage = "Press again to open song page";
@@ -178,6 +187,7 @@
 			this.initializeData();
 			this.listenForActiveSong();
 			this.addNewSong();
+			this.loginSubmitted();
 		}
 	};
 </script>

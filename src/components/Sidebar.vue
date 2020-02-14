@@ -28,6 +28,12 @@
 						</div>
 						<div class="linkItem">
 							<router-link
+								to="/loginView"
+								class="routerLink"
+							>Login</router-link>
+						</div>
+						<div class="linkItem">
+							<router-link
 								to="/About"
 								class="routerLink"
 							>About</router-link>
@@ -68,11 +74,21 @@
 			return {
 				disableState: false /* not currently used, intended to prevent expanding sidebar when song modal is displayed  */,
 				sidebarDisplayState: false,
-				toggleClicked: false /* for toggle button active indications  */
+				toggleClicked: false, /* for toggle button active indications  */
+				userAuthData: {
+					email: '',
+					password: ''
+				},
 			};
 		},
 
 		methods: {
+			handleLogin(loginData) {
+				console.log('loginData');
+
+				this.userAuthData = loginData;
+				this.$emit('submittedLogin', loginData)
+			},
 			disableForDimmer() {
 				EventBus.$on("dimmerActive", () => {
 					this.disableState = true;
