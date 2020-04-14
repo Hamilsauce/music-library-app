@@ -10,6 +10,8 @@
   "dependencies": {
     "core-js": "^3.4.3",
     "firebase": "^7.7.0",
+    "v-blur": "^1.0.4",
+    "v-click-outside": "^3.0.1",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3"
   },

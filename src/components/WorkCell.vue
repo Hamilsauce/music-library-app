@@ -7,7 +7,7 @@
 		<div class="internal-grid">
 			<div
 				class="cell-head"
-				:class="{ activeCellHead: activated}"
+				:class="{ activeCellHead: activated }"
 			>
 				<div
 					class="button-container"
@@ -30,7 +30,7 @@
 						src="https://hamilsauce.github.io/music-library-app/src/assets/unchecked-box.svg"
 						width="20px"
 						height="20px"
-						alt="checkbox"
+						alt="box"
 					/>
 				</div>
 			</div>
