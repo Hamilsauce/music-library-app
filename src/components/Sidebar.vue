@@ -1,5 +1,5 @@
 <template>
-	<div class="sidebar">
+	<div class="sidebar" @mouseleave="onClickOutside">
 		<div class="sidebar-container2">
 			<transition name="fade">
 				<div
@@ -13,6 +13,9 @@
 						<h3>Nav</h3>
 						<div class="linkItem">
 							<router-link class="routerLink" to="/">Library</router-link>
+						</div>
+						<div class="linkItem">
+							<router-link class="routerLink" to="/songdetails">Song View</router-link>
 						</div>
 						<div class="linkItem">
 							<router-link to="/newsong" class="routerLink">New Song</router-link>
@@ -90,11 +93,21 @@ export default {
 				this.toggleClicked = false;
 			}, 425);
 		},
-		onClickOutside() {
-        if (this.sidebarDisplayState === true && this.toggleClicked === false) {
-          this.sidebarDisplayState = false;
-
-        }
+		onClickOutside(e) {
+			let event = e.type;
+			if (event === "mouseleave") {
+				setTimeout(() => {
+					if (this.sidebarDisplayState === true && this.toggleClicked === false) {
+						this.sidebarDisplayState = false;
+					}
+				}, 500);
+			} else if (event === "click") {
+				setTimeout(() => {
+					if (this.sidebarDisplayState === true && this.toggleClicked === false) {
+						this.sidebarDisplayState = false;
+					}
+				}, 250);
+			}
 		},
 		peepSidebar() {
 			/* flashes sidebar at page load  */
@@ -103,7 +116,7 @@ export default {
 				setTimeout(() => {
 					this.toggleSidebar();
 				}, 700);
-			},1000);
+			}, 1000);
 		}
 	},
 	computed: {},
@@ -181,7 +194,7 @@ h3 {
 	/* right: 50px; */
 	justify-content: center;
 	/* right: 30vw; */
-	height: 460px;
+	height: 510px;
 	width: 0px;
 	padding-top: 5px;
 	margin: 0px;
@@ -199,13 +212,28 @@ h3 {
 	justify-content: center;
 	margin: 0px;
 	margin-bottom: 50px;
-	padding: 20px 0px 20px 0px;
+	margin-left: 3px;
+	padding: 20px 0px 20px 3px;
 	border-radius: 50% 0px 0px 50%;
 	border: 1px solid #d5dae0ad;
 	border-left: 1px solid #eef0f363;
 	border-right: 0px solid #284b785d;
-	background: rgba(255, 255, 255, 0.3);
-	transition: 0.3s;
+	background: rgba(255, 255, 255, 0.5);
+	box-shadow: 2px 0px 10px 1px rgba(63, 63, 63, 0.5);
+	transition: 0.4s ease;
+}
+.toggleClicked {
+	background: rgba(255, 255, 255, 0.7);
+	color: #1e3c64a2;
+	font-size: 1em;
+	margin: 0px 0px 50px 3px;
+	padding: 10px 0px 10px 3px;
+	border-right: 0px solid #284b7800;
+	border-left: 1px solid #eef0f35e;
+	border-radius: 65% 0px 0px 65%;
+	box-shadow: 1px 0px 9px 1px rgba(53, 36, 36, 0.274);
+
+	-webkit-tap-highlight-color: transparent;
 }
 .sidebar-container {
 	display: flex;
@@ -223,18 +251,6 @@ h3 {
 	transition: 0.2s;
 	-webkit-tap-highlight-color: transparent;
 }
-.toggleClicked {
-	opacity: 1;
-	background: rgba(255, 255, 255, 0.7);
-	color: #1e3c64a2;
-	font-size: 1em;
-	margin: 0px 0px 50px 0px;
-	padding: 10px 0px 10px 0px;
-	border-right: 0px solid #284b7800;
-	border-left: 1px solid #eef0f35e;
-	border-radius: 65% 0px 0px 65%;
-	-webkit-tap-highlight-color: transparent;
-}
 .disableState {
 	transition: 0.5s;
 	width: 0px;
@@ -249,11 +265,11 @@ h3 {
 	width: 0px;
 	height: fit-content;
 	text-align: right;
-	font-size: 1em;
+	font-size: 1.1em;
 	letter-spacing: 0.1em;
 }
 .linkItem {
-	padding: 2px 5px 5px 5px;
+	padding: 2px 5px 10px 5px;
 	margin: 5px 0px 5px 5px;
 	border-radius: 15px;
 	transition: 0.4s;

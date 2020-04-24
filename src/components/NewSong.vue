@@ -156,7 +156,7 @@
 		grid-gap: 10px;
 		width: 100%;
 		margin: 0;
-		height: 130vw;
+		/* height: 130vw; */
 		/* border-radius: 5px; */
 		border: 2px solid var(--mainBlue);
 		background: var(--mainBlue);

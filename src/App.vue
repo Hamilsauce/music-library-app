@@ -18,7 +18,7 @@
 							<input
 								type="text"
 								v-model="filterInput"
-								@click="handleFilterInput"
+								@click="selectTextOnClick"
 								name="filter-input"
 								class="filter-input"
 							/>
@@ -34,7 +34,7 @@
 									<option value="Likes">Likes</option>
 									<option value="Plays">Plays</option>
 								</select>
-							</div> -->
+							</div>-->
 						</form>
 					</div>
 				</div>
@@ -56,9 +56,7 @@
 			v-if="headerDisplayState === false"
 			@click="toggleHeader"
 			style="text-align: center; position: relative;"
-		>
-			Show Header
-		</div>
+		>Show Header</div>
 	</div>
 </template>
 <script>
@@ -105,29 +103,28 @@ export default {
 		};
 	},
 	methods: {
-      listenForAuthChange() {
-				const auth = firebase.auth();
-				// const firebaseUser = auth.currentUser;
-				auth.onAuthStateChanged(firebaseUser => {
-					if (firebaseUser) {
-						firebaseUser.providerData.forEach(profile => {
-							this.googleDisplayName = profile.displayName;
-							// console.log("Sign-in provider: " + profile.providerId);
-							// console.log("  Provider-specific UID: " + profile.uid);
-							// console.log("  Name: " + profile.displayName);
-							// console.log("  Email: " + profile.email);
-							// console.log("  Photo URL: " + profile.photoURL);
-						});
-						console.log(firebaseUser);
-					} else {
-							this.googleDisplayName = '';
-                        console.log("not logged in");
+		listenForAuthChange() {
+			const auth = firebase.auth();
+			// const firebaseUser = auth.currentUser;
+			auth.onAuthStateChanged(firebaseUser => {
+				if (firebaseUser) {
+					firebaseUser.providerData.forEach(profile => {
+						this.googleDisplayName = profile.displayName;
+						// console.log("Sign-in provider: " + profile.providerId);
+						// console.log("  Provider-specific UID: " + profile.uid);
+						// console.log("  Name: " + profile.displayName);
+						// console.log("  Email: " + profile.email);
+						// console.log("  Photo URL: " + profile.photoURL);
+					});
+					console.log(firebaseUser);
+				} else {
+					this.googleDisplayName = "";
+					console.log("not logged in");
 					// EventBus.$emit("googleLogin", this.googleDisplayName);
-
-					}
-					EventBus.$emit("googleLogin", this.googleDisplayName);
-				});
-			},
+				}
+				EventBus.$emit("googleLogin", this.googleDisplayName);
+			});
+		},
 		initializeData() {
 			const dbRef = firebase.database().ref("songs");
 			dbRef.on("value", snap => {
@@ -202,11 +199,18 @@ export default {
 					this.assistantMessage = `Not signed in.`;
 				}
 			}, 3000);
+		},
+		selectTextOnClick(e) {
+			const elem = e.target;
+			elem.focus();
+			elem.setSelectionRange(0, elem.value.length);
+
+			// elem.selectText();
 		}
-  },
-  created() {
-    this.listenForAuthChange();
-  },
+	},
+	created() {
+		this.listenForAuthChange();
+	},
 	mounted() {
 		this.initializeData();
 		this.listenForActiveSong();
@@ -277,7 +281,7 @@ export default {
 }
 * {
 	--mainRed: #bc484e;
-	--mainBlue: #30477a;
+	--mainBlue: rgb(48, 71, 122);
 	--transparentBlue: #e0e7f771;
 	--mainPurple: #af3076;
 	--lightPurple: #ac73ac;
@@ -310,7 +314,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	height: fit-content;
-	padding: 0px 0px 30px 0px;
+	padding: 0px 0px 10px 0px;
 	margin: 0;
 	line-height: 1.6;
 	text-align: center;
@@ -327,11 +331,11 @@ body {
 	height: 100%;
 	margin: auto;
 	margin-top: 0px;
-	padding: 0px 0px 30px 10px;
+	padding: 0px 0px 20px 10px;
 	border: 2px solid var(--transparentBlue);
 	border-radius: 15px;
 	background: var(--mainRed);
-	box-shadow: 0px 0px 30px 10px rgba(23, 23, 78, 0.322);
+	box-shadow: 0px 0px 0px 10px rgba(23, 23, 78, 0.322);
 	overflow: hidden;
 }
 
@@ -402,17 +406,18 @@ i:active {
 .body-row {
 	display: flex;
 	border-radius: 10px 10px;
-	height: 460px;
+	height: 515px;
 }
 
 .shell-head {
-	max-height: 175px;
 	box-sizing: border-box;
 	display: grid;
 	grid-template-columns: 6fr 9fr 1fr;
+	justify-content: center;
 	background: var(--mainRed);
 	grid-column: content-start / span 4;
-	min-height: 100px;
+	/* min-height: 100px; */
+	padding: 10px 5px 0px 5px;
 	border-radius: 5px;
 	padding-right: 0px;
 	touch-action: manipulation;
@@ -421,9 +426,10 @@ i:active {
 	margin: 0;
 	box-sizing: border-box;
 	background: var(--mainRed);
-	padding: 1vw 2.5vw;
+	padding: 0px;
 	border-radius: 3px;
 	touch-action: manipulation;
+	height: fit-contentt;
 }
 
 .header1 {
@@ -438,6 +444,7 @@ i:active {
 	font-weight: 800;
 	user-select: none;
 	width: fit-content;
+	/* height: max-content; */
 }
 
 .header-button-container {
@@ -451,6 +458,7 @@ i:active {
 }
 
 .filter-input {
+	margin-bottom: 5px;
 	box-sizing: border-box;
 	width: 100%;
 	height: 25px;
@@ -461,7 +469,7 @@ i:active {
 	margin: auto;
 	margin-right: 5px;
 	grid-area: input;
-	max-width: 200px;
+	max-width: 170px;
 	font-size: 1em;
 	touch-action: manipulation;
 	outline: none;
@@ -473,7 +481,7 @@ i:active {
 	grid-area: hText;
 	margin-bottom: 3px;
 	padding-bottom: 5px;
-	margin: 10px auto 0px auto;
+	margin: 0px auto 0px auto;
 	opacity: 0.85;
 	text-align: center;
 }
@@ -506,7 +514,7 @@ a {
 		padding: 0px;
 	}
 	header {
-		padding: 0px 0px 10px 0px;
+		padding: 0px 0px 5px 0px;
 		justify-content: space-around;
 	}
 
@@ -517,7 +525,7 @@ a {
 		box-sizing: border-box;
 		overflow: auto;
 		border-radius: 5px;
-		height: 128vw;
+		height: 140vw;
 		border-radius: 5px 5px;
 	}
 
@@ -536,11 +544,12 @@ a {
 		max-width: 100vw;
 		/* height: 175vw; */
 		height: fit-content;
-		padding: 0px 0px 25px 8px;
+		padding: 0px 0px 15px 8px;
 		border-radius: 5px 5px 15px 15px;
 	}
 	.filter-input {
-		max-width: 175px;
+		margin-bottom: 5px;
+		max-width: 160px;
 	}
 	.shell-body {
 		overflow: hidden;
@@ -570,7 +579,7 @@ a {
 	.header2-label {
 		margin: auto;
 		margin-bottom: 4px;
-		margin-top: 7px;
+		margin-top: 2px;
 		padding: 0px 0px;
 	}
 

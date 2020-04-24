@@ -93,22 +93,7 @@
 						class="songUrlText"
 					>
 				</div>
-				<!-- <div class="grid-cell">
-					<div class="tooltip">
-						<input
-							class="share-button"
-							@click="shareActiveSong"
-							type="button"
-							name="share-button"
-							value="Share"
-						>
-						<span
-							class="tooltiptext"
-							id="myTooltip"
-						>Copy to clipboard</span>
-						Copy text
-					</div>
-				</div> -->
+
 			</div>
 		</transition>
 		<div class="audio-container">
