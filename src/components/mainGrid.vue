@@ -182,7 +182,7 @@ work-cell {
 	border-color: #3d6797c4;
 }
 .grid-cell:last-child {
-	grid-column: 1 / -1;
+	grid-column: span 1;
 }
 /* .grid-cell.activeCell {
 	grid-column: 1 / span 2;
@@ -206,8 +206,8 @@ a {
 		height: fit-content;
 		/* min-height: 185vw; */
 		grid-template-columns: repeat(2, minmax(175px 1fr));
-		gap: 7px;
-		grid-row-gap: 8px;
+		gap: 4px;
+		grid-row-gap: 6px;
 		border-radius: 0px 0px 5px 5px;
 		border: 1px solid var(--lightPurple);
 		border-radius: 5px;
@@ -221,7 +221,7 @@ a {
 		grid-column: span 1;
 	}
 }
-@media screen and (min-width: 400px) {
+@media screen and (maxs-width: 400px) {
 	.grid-body {
 		grid-template-columns: 1fr;
 	}
