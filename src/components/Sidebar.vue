@@ -15,13 +15,10 @@
 							<router-link class="routerLink" to="/">Library</router-link>
 						</div>
 						<div class="linkItem">
-							<router-link class="routerLink" to="/songdetails">Song View</router-link>
+							<router-link class="routerLink" to="/newsong">New Song</router-link>
 						</div>
 						<div class="linkItem">
-							<router-link to="/newsong" class="routerLink">New Song</router-link>
-						</div>
-						<div class="linkItem">
-							<router-link to="/loginView" class="routerLink">Login</router-link>
+							<router-link to="/loginview" class="routerLink">Login</router-link>
 						</div>
 						<div class="linkItem">
 							<router-link to="/About" class="routerLink">About</router-link>
@@ -73,12 +70,6 @@ export default {
 	},
 
 	methods: {
-		handleLogin(loginData) {
-			console.log("loginData");
-
-			this.userAuthData = loginData;
-			this.$emit("submittedLogin", loginData);
-		},
 		disableForDimmer() {
 			EventBus.$on("dimmerActive", () => {
 				this.disableState = true;
@@ -100,13 +91,13 @@ export default {
 					if (this.sidebarDisplayState === true && this.toggleClicked === false) {
 						this.sidebarDisplayState = false;
 					}
-				}, 500);
+				}, 200);
 			} else if (event === "click") {
 				setTimeout(() => {
 					if (this.sidebarDisplayState === true && this.toggleClicked === false) {
 						this.sidebarDisplayState = false;
 					}
-				}, 250);
+				}, 200);
 			}
 		},
 		peepSidebar() {

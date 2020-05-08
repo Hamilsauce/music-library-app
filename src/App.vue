@@ -74,6 +74,7 @@ export default {
 	props: {},
 	data() {
 		return {
+			ebRun: 0,
 			headerDisplayState: true,
 			filterClickCount: 0,
 			sidebarDisplayState: false,
@@ -182,6 +183,31 @@ export default {
 				this.saveToFirebase(newSong);
 			});
 		},
+		appDeleteSong() {
+			EventBus.$on("deleteSong", targetSong => {
+				const songIndex = this.songs.findIndex(song => {
+					return song.id == targetSong.id;
+				});
+				console.log(songIndex);
+				let deleteRef = firebase.database().ref("songs/" + targetSong.id);
+				console.log(deleteRef);
+
+				deleteRef
+					.remove()
+					.then(() => {
+						console.log("Remove succeeded.");
+					})
+					.catch(error => {
+						console.log("Remove failed: " + error.message);
+					});
+				// this.songs.splice(songIndex, 1);
+				// firebase
+				// 	.database()
+				// 	.ref("songs/" + song.id)
+				// 	.update(song);
+				// this.saveToFirebase(this.songs);
+			});
+		},
 		loginSubmitted() {
 			EventBus.$on("submittedLogin", loginData => {
 				this.userAuthData = loginData;
@@ -216,6 +242,7 @@ export default {
 		this.listenForActiveSong();
 		this.addNewSong();
 		this.loginSubmitted();
+		this.appDeleteSong();
 	}
 };
 </script>

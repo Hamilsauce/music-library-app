@@ -1,60 +1,90 @@
 <template>
-	<div class="details-container">
-		<div class="SongDetails">
-			<div class="header">Song Title stuff! Maybe put some toolbar stuff up here</div>
-			<div class="detail detail1">
-				<div class="cell-body">Song Details stuff1</div>
+	<div class="details-container" :song="$attrs[parseInt(songId)]">
+		<div class="SongDetails" :class="{deleted: isDeleted }">
+			<div class="header">Song Details</div>
+			<div class="detail1">
+				<div class="detail1-group duration-group">
+					<span class="caption">Duration</span>
+					<span class="cell-body">{{song.duration }}</span>
+				</div>
+				<div class="detail1-group plays-group">
+					<span class="caption">Plays</span>
+					<span class="cell-body">{{song.plays }}</span>
+				</div>
 			</div>
 			<div class="detail detail2">
-				<div class="cell-body">Song Details stuff2</div>
+				<div class="detail-group id-group">
+					<span class="caption">ID</span>
+					<span class="cell-body">{{song.id}}</span>
+				</div>
+				<div class="detail-group title-group">
+					<span class="caption">Title</span>
+					<span class="cell-body">{{song.songTitle }}</span>
+				</div>
 			</div>
+
 			<div class="detail detail3">
-				<div class="cell-body">Song Details stuff3</div>
+				<div class="detail-group published-group">
+					<span class="caption">Published</span>
+					<span class="cell-body">{{song.published}}</span>
+				</div>
+				<div class="detail-group genre-group">
+					<span class="caption">Genre</span>
+					<span class="cell-body">{{song.genre}}</span>
+				</div>
+				<div class="detail-group artist-group">
+					<span class="caption">Artist</span>
+					<span class="cell-body">{{song.artist}}</span>
+				</div>
 			</div>
 			<div class="detail detail4">
 				<div class="cell-body">Song Details stuff4</div>
 			</div>
-			<div class="footer"></div>
+			<div class="action-list">
+				<div class="action-item editButton">Edit</div>
+				<div class="action-item newButton">New</div>
+				<div class="action-item deleteButton" @click="deleteSong">Delete</div>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-// import EventBus from '@/components/eventBus.js';
+import EventBus from "@/components/eventBus.js";
 
 export default {
 	name: "SongDetails",
 	components: {},
 	props: {
-		// song: Object,
-		// selectedSong: String
+		song: Object,
+		// songs: Array,
+		songId: Number
 	},
 	data() {
 		return {
-			// checkedSong: "",
-			// audioUrl: "",
-			// errorMsg: ""
+			isDeleted: false,
+			timesEmitted: 0
 		};
 	},
 	methods: {
-		// cellActive() {
-		// 	let songInfo = [];
-		// 	let urlOrError = [];
-		// 	if (this.song.hasOwnProperty("audioUrl")) {
-		// 		urlOrError = ["url", this.cleanedAudioUrl];
-		// 		songInfo.push(urlOrError);
-		// 	} else {
-		// 		urlOrError = ["error", "noUrl"];
-		// 		songInfo.push(urlOrError);
-		// 	}
-		// 	songInfo.push(this.song.songTitle);
-		// 	this.$emit("songCellActivated", songInfo);
-		// },
-		// showSongDetails() {
-		// 	this.$emit("showSongDetails", this.song.songTitle);
+		deleteSong() {
+			console.log(this.song.id);
+
+			EventBus.$emit("deleteSong", this.song);
+			this.isDeleted = true;
+			this.timesEmitted += 1;
+			console.log("in song view ", this.timesEmitted);
+		}
+	},
+	computed: {
+		//! song object ended up coming through router (i think), dont need this now
+		// thissong() {
+		// 	let targetSong = this.songs.find(song => {
+		// 		return parseInt(song.id) == parseInt(this.songId);
+		// 	});
+		// 	return targetSong;
 		// }
 	},
-	computed: {},
 	watch: {},
 
 	created() {},
@@ -67,14 +97,16 @@ export default {
 <style scoped>
 * {
 	--mainRed: #bc484e;
-	--mainBlue: #284b78;
+	--mainBlue: #436ca1;
 	--transparentBlue: #e0e7f771;
 	--mainPurple: #9c3a5f;
 	--lightPurple: #ac73ac;
 	--fadedPurple: #bba4bb;
 	--mainWhite: #fffffa;
+	box-sizing: border-box;
 	touch-action: manipulation;
 	outline: none;
+	font-size: 1.01em;
 }
 
 .details-container {
@@ -100,11 +132,11 @@ export default {
 }
 .SongDetails {
 	display: grid;
-	/* grid-template-columns: 1fr 1fr; */
-	grid-template-rows: 60px repeat(3, 1fr) 40px;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: 45px 1fr 2fr 3fr 38px;
 	gap: 5px;
 	padding: 1vw;
-	color: rgb(106, 107, 114);
+	color: rgb(255, 255, 255);
 	background: rgb(240, 233, 222);
 	border-radius: 3px;
 	border: 2px solid rgb(255, 255, 255);
@@ -117,14 +149,14 @@ export default {
 	grid-template-areas:
 		"head head head head"
 		"det1 det2 det2 det2"
-		"det3 det3 det3 det3"
+		"det1 det3 det3 det3"
 		"det4 det4 det4 det4"
 		"foot foot foot foot";
 }
 .SongDetails:first-child {
 	grid-column: 1 / -1;
 }
-.SongDetails:hover {
+/* .SongDetails:hover {
 	box-shadow: 0px 0px 125px 25px inset rgba(255, 179, 16, 0.726);
 	background: rgb(231, 255, 212);
 	border: 2px solid white;
@@ -140,7 +172,7 @@ export default {
 	color: white;
 	text-shadow: none;
 	transition: 0.6s;
-}
+} */
 .SongDetails:active div {
 	text-shadow: none;
 }
@@ -152,11 +184,10 @@ export default {
 	grid-template-columns: 1fr 20px; */
 	justify-content: space-between;
 	margin: 0;
-	/* height: 100%; */
-	/* max-height: 75px; */
+	font-size: 1.4em;
 	width: 100%;
-	padding-bottom: 5px;
-	background: #4282d6c9;
+	padding: 5px;
+	background: #3f6699;
 	border: 1px solid rgba(255, 255, 255, 0.836);
 	border-bottom: 2px solid rgba(255, 255, 255, 0.836);
 	transition: 0.3s;
@@ -171,18 +202,43 @@ export default {
 	box-shadow: 0px 0px 30px 5px inset hsla(207, 75%, 37%, 0.575); /* background: #186ad4fd; */
 }
 .detail {
-	padding-bottom: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 10px 5px;
 	background: #4282d6c9;
 	border: 1px solid rgba(255, 255, 255, 0.836);
 	border-bottom: 2px solid rgba(255, 255, 255, 0.836);
-	text-shadow: 0px 0px 2px white;
+	/* text-shadow: 0px 0px 2px white; */
+	word-wrap: break-word;
 	transition: 0.3s;
 }
+.detail-group {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	/* align-content: flex-start; */
+	/* align-items: flex-start; */
+	padding: 0px 10px 0px 10px;
+}
 .detail1 {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	padding: 0 10px;
 	grid-area: det1;
 	background: #cf2f37d5;
+	/* max-width: fit-content; */
 }
+.detail1-group {
+	padding: 0px 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
 .detail2 {
+	padding: 5px;
 	grid-area: det2;
 	background: #a53c64d5;
 }
@@ -194,9 +250,52 @@ export default {
 	grid-area: det4;
 	background: #18a1a1d7;
 }
-.footer {
+.editButton {
+	border-right: 1px solid rgba(255, 255, 255, 0.404);
+}
+.newButton {
+}
+
+.deleteButton {
+	/* padding: 0px 5px; */
+	border-left: 1px solid rgba(255, 255, 255, 0.404);
+}
+.deleted {
+	opacity: 0.6;
+	transition: 1s;
+}
+.action-list {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 0px;
+	margin: 0;
+	justify-content: space-evenly;
+}
+.action-list {
 	grid-area: foot;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	border: 2px solid #d8a13bd5;
+	text-align: center;
 	background: #ca922ad5;
+}
+.action-item {
+	margin: 0px 0;
+	padding: 5px 30px;
+	text-align: center;
+	cursor: pointer;
+}
+.action-item:hover {
+	background: #a3741dd5;
+	box-shadow: 0px 0px 50px inset #ffcc6ee3;
+	transition: 0.3s ease-in-out;
+}
+.action-item:active {
+	background: #fabe50d5;
+	box-shadow: 0px 0px 50px inset #c48f2ce3;
+	transition: 0.2s ease-in-out;
 }
 </style>
 <!--

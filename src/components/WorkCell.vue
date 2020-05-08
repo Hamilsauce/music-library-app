@@ -1,13 +1,12 @@
 <template>
 	<div @click="cellActive" :class="{ activeCell: activated }" class="grid-cell">
-		<!-- <div class="internal-grid"> -->
 		<div class="cell-head" :class="{ activeCellHead: activated }">
 			<div class="button-container" :class="{ buttonContainerHidden: !activated }">
-				<!-- <button @click="showSongDetails">Song Details</button> -->
 				<router-link
+					v-show="activated"
 					@click="showSongDetails"
 					class="routerLink details-button"
-					to="/songdetails"
+					:to="{name: 'Songdetails', params: {songId: song.id, song: song}}"
 				>Song Details</router-link>
 			</div>
 			<div class="checkbox-container">
@@ -35,10 +34,6 @@
 			<div class="play-count-display">{{ `Plays: ${song.plays}` }}</div>
 			<div class="duration-display">{{ trimDuration(song.duration) }}</div>
 		</div>
-		<!-- <div class="cell-foot">
-				<p>{{ song.genre }}</p>
-		</div>-->
-		<!-- </div> -->
 	</div>
 </template>
 
@@ -178,16 +173,12 @@ export default {
 	color: white;
 	transition: 0.45s;
 }
-/* .internal-grid {
-	display: grid;
-} */
 .cell-head {
 	color: white;
 	display: grid;
 	grid-template-columns: 1fr 20px;
 	justify-content: space-between;
 	margin: 0;
-	height: fit-content;
 	width: 100%;
 	padding-bottom: 5px;
 	background: #4282d6;
@@ -198,7 +189,7 @@ export default {
 .activeCellHead {
 	color: white;
 	box-shadow: 0px 0px 30px 5px inset hsla(207, 75%, 37%, 0.575);
-	background: #e40ad2;
+	background: #a12e98;
 }
 .cell-head:hover {
 	color: white;
@@ -250,13 +241,9 @@ export default {
 .title-display {
 	grid-area: title;
 	margin: 0;
+	padding-top: 5px;
 	padding-bottom: 4px;
 }
-/* .genre-display {
-	grid-area: genre;
-	font-size: 0.9em;
-	overflow: auto;
-} */
 .play-count-display {
 	grid-area: play;
 	font-size: 0.9em;

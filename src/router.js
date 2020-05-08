@@ -25,12 +25,13 @@ export default new Router({
       component: NewSong
     },
     {
-      path: '/songdetails',
-      name: 'SongDetails',
-      component: SongDetails
+      path: '/songdetails/:songId',
+      name: 'Songdetails',
+      component: SongDetails,
+      props: true
     },
     {
-      path: '/Loginview',
+      path: '/loginview',
       name: 'LoginView',
       component: LoginView
     }
