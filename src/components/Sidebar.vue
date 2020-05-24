@@ -11,18 +11,19 @@
 				>
 					<div class="links" :style="{ width: sidebarDisplayState === true ? '150px' : '0px' }">
 						<h3>Nav</h3>
-						<div class="linkItem">
+						<div class="linkItem" @click="toggleSidebar">
 							<router-link class="routerLink" to="/">Library</router-link>
 						</div>
-						<div class="linkItem">
+						<div class="linkItem" @click="toggleSidebar">
 							<router-link class="routerLink" to="/newsong">New Song</router-link>
 						</div>
-						<div class="linkItem">
+						<div class="linkItem" @click="toggleSidebar">
 							<router-link to="/loginview" class="routerLink">Login</router-link>
 						</div>
-						<div class="linkItem">
+						<div class="linkItem" @click="toggleSidebar">
 							<router-link to="/About" class="routerLink">About</router-link>
 						</div>
+
 						<div class="github-link linkItem">
 							<a href="https://github.com/Hamilsauce">github</a>
 						</div>
@@ -164,7 +165,6 @@ h3 {
 	flex-direction: row;
 	padding-left: 1px;
 	justify-content: flex-end;
-	/* align-items: center; */
 	z-index: 5;
 }
 .sidebar-container2 {
@@ -172,7 +172,6 @@ h3 {
 	flex-direction: row;
 	padding-left: 1px;
 	justify-content: flex-end;
-	/* align-items: center; */
 	z-index: 5;
 }
 
@@ -182,15 +181,11 @@ h3 {
 	position: absolute;
 	display: flex;
 	flex-direction: row;
-	/* right: 50px; */
 	justify-content: center;
-	/* right: 30vw; */
-	height: 510px;
+	height: 525px;
 	width: 0px;
 	padding-top: 5px;
 	margin: 0px;
-	/* border-radius: 5px 0px 0px 25px; */
-	/* border-radius: 5px 0px 0px 75%; */
 	background: var(--mainRed);
 	touch-action: manipulation;
 	overflow: hidden;

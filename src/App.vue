@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<header v-if="headerDisplayState === true">
+		<header class="assistantContainer" v-if="headerDisplayState === true">
 			<h6 class="assistant">{{ assistantMessage }}</h6>
 		</header>
 		<div class="app-shell">
@@ -51,12 +51,12 @@
 				</div>
 			</div>
 		</div>
-		<div
+		<!-- <div
 			class="hiddenMessage"
 			v-if="headerDisplayState === false"
 			@click="toggleHeader"
 			style="text-align: center; position: relative;"
-		>Show Header</div>
+		>Show Header</div>-->
 	</div>
 </template>
 <script>
@@ -330,10 +330,10 @@ body {
 	box-sizing: border-box;
 	margin: 0;
 	height: 100%;
-	height: 100%;
+	height: 100vh;
 	padding: 0;
 	background: rgba(54, 46, 121, 0.705);
-	box-shadow: 0px 0px 1000px 40px inset rgba(32, 104, 133, 0.664);
+	box-shadow: 0px 0px 1000px 40px inset rgba(22, 21, 95, 0.664);
 }
 
 #app {
@@ -342,6 +342,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	height: fit-content;
 	padding: 0px 0px 10px 0px;
+	height: 100%;
 	margin: 0;
 	line-height: 1.6;
 	text-align: center;
@@ -355,14 +356,13 @@ body {
 	box-sizing: border-box;
 	max-width: 750px;
 	width: 100%;
-	height: 100%;
 	margin: auto;
 	margin-top: 0px;
 	padding: 0px 0px 20px 10px;
 	border: 2px solid var(--transparentBlue);
 	border-radius: 15px;
 	background: var(--mainRed);
-	box-shadow: 0px 0px 0px 10px rgba(23, 23, 78, 0.322);
+	box-shadow: 0px 0px 100px 1px rgba(25, 25, 39, 0.767);
 	overflow: hidden;
 }
 
@@ -407,13 +407,14 @@ header {
 }
 
 .assistant {
-	margin: 5px auto 0px auto;
+	/* margin: 5px auto 0px auto; */
 	padding: 0;
 	color: rgba(255, 255, 255, 0.822);
+	margin: 0;
 }
 
 i:active {
-	box-shadow: 0px 0px 3px 2px rgba(76, 76, 77, 0.164);
+	box-shadow: 3px 0px 3px 2px rgba(76, 76, 77, 0.164);
 	background: rgba(255, 255, 255, 0.466);
 	color: var(--mainRed);
 }
@@ -542,6 +543,7 @@ a {
 	}
 	header {
 		padding: 0px 0px 5px 0px;
+		margin: 0;
 		justify-content: space-around;
 	}
 

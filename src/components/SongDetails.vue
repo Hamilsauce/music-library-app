@@ -2,44 +2,61 @@
 	<div class="details-container" :song="$attrs[parseInt(songId)]">
 		<div class="SongDetails" :class="{deleted: isDeleted }">
 			<div class="header">Song Details</div>
+
 			<div class="detail1">
 				<div class="detail1-group duration-group">
-					<span class="caption">Duration</span>
-					<span class="cell-body">{{song.duration }}</span>
+					<div class="caption">Duration</div>
+					<div class="cell-body">{{songData.duration }}</div>
 				</div>
+
 				<div class="detail1-group plays-group">
-					<span class="caption">Plays</span>
-					<span class="cell-body">{{song.plays }}</span>
+					<div class="caption">Plays</div>
+					<div class="cell-body">{{songData.plays }}</div>
 				</div>
 			</div>
+
 			<div class="detail detail2">
 				<div class="detail-group id-group">
-					<span class="caption">ID</span>
-					<span class="cell-body">{{song.id}}</span>
+					<div class="caption">ID</div>
+					<div class="cell-body">{{songData.id}}</div>
 				</div>
+
 				<div class="detail-group title-group">
-					<span class="caption">Title</span>
-					<span class="cell-body">{{song.songTitle }}</span>
+					<div class="caption">Title</div>
+					<div class="cell-body">{{songData.songTitle }}</div>
 				</div>
 			</div>
 
 			<div class="detail detail3">
 				<div class="detail-group published-group">
-					<span class="caption">Published</span>
-					<span class="cell-body">{{song.published}}</span>
+					<div class="caption">Published</div>
+					<div class="cell-body">{{songData.published}}</div>
 				</div>
 				<div class="detail-group genre-group">
-					<span class="caption">Genre</span>
-					<span class="cell-body">{{song.genre}}</span>
+					<div class="caption">Genre</div>
+					<div class="cell-body">{{songData.genre}}</div>
 				</div>
 				<div class="detail-group artist-group">
-					<span class="caption">Artist</span>
-					<span class="cell-body">{{song.artist}}</span>
+					<div class="caption">Artist</div>
+					<div class="cell-body">{{songData.artist}}</div>
 				</div>
 			</div>
-			<div class="detail detail4">
-				<div class="cell-body">Song Details stuff4</div>
+			<div class="detail-group description-group">
+				<div class="upper caption">Description and URL</div>
+
+				<div class="middle cell-body">{{songData.description || "Not a description to be had."}}</div>
+
+				<div class="detail-group lower">
+					<div class="lower caption">
+						<label for="urlItem" class="urlLabel lower caption">
+							Audio Source for
+							<span class="italics">{{songData.songTitle}}</span>
+						</label>
+						<div class="lower cell-body urlContainer" name="urlContainer">{{songData.audioUrl}}</div>
+					</div>
+				</div>
 			</div>
+
 			<div class="action-list">
 				<div class="action-item editButton">Edit</div>
 				<div class="action-item newButton">New</div>
@@ -57,11 +74,11 @@ export default {
 	components: {},
 	props: {
 		song: Object,
-		// songs: Array,
 		songId: Number
 	},
 	data() {
 		return {
+			editing: null,
 			isDeleted: false,
 			timesEmitted: 0
 		};
@@ -77,13 +94,11 @@ export default {
 		}
 	},
 	computed: {
-		//! song object ended up coming through router (i think), dont need this now
-		// thissong() {
-		// 	let targetSong = this.songs.find(song => {
-		// 		return parseInt(song.id) == parseInt(this.songId);
-		// 	});
-		// 	return targetSong;
-		// }
+		//*Copies incoming song object data, making it available for modification so that users cna edit it
+		songData() {
+			let targetSong = this.song;
+			return targetSong;
+		}
 	},
 	watch: {},
 
@@ -96,7 +111,7 @@ export default {
 
 <style scoped>
 * {
-	--mainRed: #bc484e;
+	--mainRed: rgb(188, 72, 78);
 	--mainBlue: #436ca1;
 	--transparentBlue: #e0e7f771;
 	--mainPurple: #9c3a5f;
@@ -106,50 +121,50 @@ export default {
 	box-sizing: border-box;
 	touch-action: manipulation;
 	outline: none;
-	font-size: 1.01em;
+	font-size: 1em;
 }
 
 .details-container {
 	box-sizing: border-box;
-	display: grid;
-	gap: 4px;
-	grid-row-gap: 5px;
-	grid-template-columns: 1fr;
-	grid-template-rows: auto;
-	max-height: fit-content;
-	min-height: 100%;
+	/* display: grid; */
+	/* gap: 0px; */
+	/* grid-row-gap: 0px; */
+	/* grid-template-columns: 1fr; */
+	/* grid-template-rows: auto; */
+	/* min-height: 100%; */
+	/* max-height: 520px; */
 	width: 100%;
-	margin: auto;
+	margin: 0px;
 	margin-top: 0px;
-	padding: 2px;
-	border-top: 2px solid var(--mainBlue);
-	border-bottom: 2px solid var(--mainBlue);
+	padding: 0px;
+	border-top: 1px solid var(--mainBlue);
+	border-bottom: 1px solid var(--mainBlue);
 
-	background: rgb(47, 59, 128);
-	/* background:	var(--mainBlue) ; */
 	box-shadow: 0px 0px 400px 50px inset #6148cec9;
 	border-radius: 0px 0px 5px 5px;
 }
 .SongDetails {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr;
-	grid-template-rows: 45px 1fr 2fr 3fr 38px;
-	gap: 5px;
-	padding: 1vw;
-	color: rgb(255, 255, 255);
+	grid-template-rows: 33px 1fr 2fr 1fr 1fr 38px;
+	gap: 1px;
+	padding: 1px;
+	color: rgb(66, 65, 65);
 	background: rgb(240, 233, 222);
 	border-radius: 3px;
-	border: 2px solid rgb(255, 255, 255);
-	font-size: 1em;
-	font-weight: 500;
+	border: 1px solid rgb(255, 255, 255);
+	font-size: 0.85em;
+	max-height: 515px;
+	font-weight: 400;
 	transition: 200ms box-shadow ease-out, 225ms background ease, 200ms border ease,
 		100ms font-weight ease;
 	user-select: none;
 	overflow: hidden;
 	grid-template-areas:
 		"head head head head"
-		"det1 det2 det2 det2"
-		"det1 det3 det3 det3"
+		"det2 det2 det2 det2"
+		"det3 det3 det3 det3"
+		"det1 det1 det1 det1"
 		"det4 det4 det4 det4"
 		"foot foot foot foot";
 }
@@ -180,11 +195,12 @@ export default {
 .header {
 	grid-area: head;
 	color: white;
-	/* display: grid;
-	grid-template-columns: 1fr 20px; */
+	letter-spacing: 2px;
+
 	justify-content: space-between;
 	margin: 0;
-	font-size: 1.4em;
+	font-size: 1.2em;
+	font-weight: 500;
 	width: 100%;
 	padding: 5px;
 	background: #3f6699;
@@ -193,7 +209,7 @@ export default {
 	transition: 0.3s;
 }
 .header.active {
-	color: white;
+	/* color: white; */
 	box-shadow: 0px 0px 30px 5px inset hsla(207, 75%, 37%, 0.575);
 	background: #e40ad2;
 }
@@ -206,20 +222,24 @@ export default {
 	flex-direction: column;
 	justify-content: space-between;
 	padding: 10px 5px;
-	background: #4282d6c9;
+	/* background: #4282d6c9; */
 	border: 1px solid rgba(255, 255, 255, 0.836);
 	border-bottom: 2px solid rgba(255, 255, 255, 0.836);
-	/* text-shadow: 0px 0px 2px white; */
 	word-wrap: break-word;
 	transition: 0.3s;
+}
+.caption {
+	font-weight: 500;
+	height: 100%;
+	/* padding: 5px; */
 }
 .detail-group {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	/* align-content: flex-start; */
-	/* align-items: flex-start; */
-	padding: 0px 10px 0px 10px;
+	align-content: flex-start;
+	align-items: flex-start;
+	/* padding: 0px 10px 0px 10px; */
 }
 .detail1 {
 	display: flex;
@@ -227,28 +247,87 @@ export default {
 	justify-content: space-around;
 	padding: 0 10px;
 	grid-area: det1;
-	background: #cf2f37d5;
-	/* max-width: fit-content; */
+	/* background: #cf2f37d5; */
 }
 .detail1-group {
 	padding: 0px 0px;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	justify-content: space-between;
 }
 
 .detail2 {
 	padding: 5px;
 	grid-area: det2;
-	background: #a53c64d5;
+	/* background: #a53c64d5; */
 }
 .detail3 {
 	grid-area: det3;
-	background: #a74b20ca;
+	/* background: #a74b20ca; */
 }
-.detail4 {
+.description-group {
 	grid-area: det4;
-	background: #18a1a1d7;
+	/* background: #18a1a1d7; */
+	padding: 0px 5px;
+	text-align: left;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 30px 1fr 1fr;
+	gap: 2px;
+	border: 1px solid rgba(255, 255, 255, 0.644);
+	grid-template-areas:
+		"u"
+		"m"
+		"l";
+}
+.detail-group-upper {
+	grid-area: u;
+	/* display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 25px 3fr 1fr;
+	gap: 2px;
+	border: 1px solid rgba(255, 255, 255, 0.644); */
+
+	height: 100%;
+	width: 100%;
+	margin: auto;
+	text-align: center;
+}
+.urlContainer {
+	width: 100%;
+	height: auto;
+	margin-top: 5px;
+	margin: 0;
+	padding: 0px;
+	text-align: left;
+}
+.upper {
+	/* background: rgba(23, 95, 161, 0.829); */
+	/* padding: 15px auto; */
+	/* color: rgba(245, 245, 245, 0.966); */
+	border-top: 2px solid rgba(250, 250, 250, 0.719);
+	text-align: left;
+	letter-spacing: 2px;
+	padding: 0;
+	/* font-size: 1.1em;
+	font-weight: 500; */
+}
+.detail-group-lower {
+	grid-area: l;
+	text-align: left;
+	/* line-height: 5px; */
+	/* padding: 0; */
+}
+.description-middle {
+	text-align: left;
+	grid-area: m;
+}
+/* .lower.caption {
+	padding: 0;
+	text-align: left;
+} */
+.urlLabel {
+	padding: 5px 0px;
 }
 .editButton {
 	border-right: 1px solid rgba(255, 255, 255, 0.404);
@@ -277,9 +356,10 @@ export default {
 	grid-area: foot;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	border: 2px solid #d8a13bd5;
+	border: 2px solid #cfc8bcd5;
 	text-align: center;
 	background: #ca922ad5;
+	/* background: #ca922ad5; */
 }
 .action-item {
 	margin: 0px 0;
@@ -288,7 +368,7 @@ export default {
 	cursor: pointer;
 }
 .action-item:hover {
-	background: #a3741dd5;
+	background: rgba(23, 62, 145, 0.733);
 	box-shadow: 0px 0px 50px inset #ffcc6ee3;
 	transition: 0.3s ease-in-out;
 }
@@ -296,6 +376,13 @@ export default {
 	background: #fabe50d5;
 	box-shadow: 0px 0px 50px inset #c48f2ce3;
 	transition: 0.2s ease-in-out;
+}
+.urlLabel {
+	font-style: italic;
+	font-weight: 00;
+	margin-bottom: 5px;
+	line-height: 3px;
+	padding: 0;
 }
 </style>
 <!--

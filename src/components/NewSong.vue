@@ -97,7 +97,6 @@ export default {
 	computed: {},
 	watch: {},
 
-	/* Vue lifecycle hooks (Ref: https://vuejs.org/v2/guide/instance.html#Instance-Lifecycle-Hooks) */
 	created() {},
 	mounted() {},
 	updated() {},
