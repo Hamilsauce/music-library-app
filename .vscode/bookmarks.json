@@ -55,41 +55,21 @@
 		]
 	},
 	{
-		"path": "$ROOTPATH$\\src\\App.vue",
-		"bookmarks": [
-			{
-				"line": 202,
-				"column": 24,
-				"label": ""
-			},
-			{
-				"line": 302,
-				"column": 14,
-				"label": ""
-			},
-			{
-				"line": 367,
-				"column": 16,
-				"label": ""
-			},
-			{
-				"line": 423,
-				"column": 3,
-				"label": ""
-			},
-			{
-				"line": 564,
-				"column": 8,
-				"label": ""
-			}
-		]
-	},
-	{
 		"path": "$ROOTPATH$\\src\\components\\WorkCell.vue",
 		"bookmarks": [
 			{
 				"line": 221,
 				"column": 1,
+				"label": ""
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$\\src\\components\\SongDetails.vue",
+		"bookmarks": [
+			{
+				"line": 283,
+				"column": 20,
 				"label": ""
 			}
 		]

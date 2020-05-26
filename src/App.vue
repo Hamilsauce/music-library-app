@@ -200,12 +200,25 @@ export default {
 					.catch(error => {
 						console.log("Remove failed: " + error.message);
 					});
-				// this.songs.splice(songIndex, 1);
-				// firebase
-				// 	.database()
-				// 	.ref("songs/" + song.id)
-				// 	.update(song);
-				// this.saveToFirebase(this.songs);
+			});
+		},
+		updateSongDetails() {
+			EventBus.$on("updateSongDetails", targetSong => {
+				const songIndex = this.songs.findIndex(song => {
+					return song.id == targetSong.id;
+				});
+				console.log(songIndex);
+				let songRef = firebase.database().ref("songs/" + targetSong.id);
+				console.log(songRef);
+
+				songRef
+					.set(targetSong)
+					.then(() => {
+						console.log("Update succeeded.");
+					})
+					.catch(error => {
+						console.log("Updaate failed: " + error.message);
+					});
 			});
 		},
 		loginSubmitted() {
@@ -243,6 +256,7 @@ export default {
 		this.addNewSong();
 		this.loginSubmitted();
 		this.appDeleteSong();
+		this.updateSongDetails();
 	}
 };
 </script>
