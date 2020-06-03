@@ -63,15 +63,5 @@
 				"label": ""
 			}
 		]
-	},
-	{
-		"path": "$ROOTPATH$\\src\\components\\SongDetails.vue",
-		"bookmarks": [
-			{
-				"line": 283,
-				"column": 20,
-				"label": ""
-			}
-		]
 	}
 ]

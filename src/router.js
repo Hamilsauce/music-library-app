@@ -12,17 +12,23 @@ export default new Router({
   routes: [{
       path: '/',
       name: 'MainGrid',
-      component: MainGrid
+      component: MainGrid,
+      props: true
+
     },
     {
       path: '/about',
       name: 'about',
-      component: About
+      component: About,
+      props: true
+
     },
     {
       path: '/newsong',
       name: 'NewSong',
-      component: NewSong
+      component: NewSong,
+      props: true
+
     },
     {
       path: '/songdetails/:songId',
@@ -33,7 +39,9 @@ export default new Router({
     {
       path: '/loginview',
       name: 'LoginView',
-      component: LoginView
+      component: LoginView,
+      props: true
+
     }
   ]
 })

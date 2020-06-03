@@ -5,12 +5,14 @@
 		</header>
 		<div class="app-shell">
 			<div class="shell-head">
-				<div class="header header1">
-					<h1>
-						<div class="logo1">ham</div>
-						<div class="logo2">RADIO</div>
-					</h1>
-				</div>
+				<router-link class="routerLink" to="/">
+					<div class="header header1">
+						<h1>
+							<div class="logo1">ham</div>
+							<div class="logo2">RADIO</div>
+						</h1>
+					</div>
+				</router-link>
 				<div class="header header2">
 					<label class="header2-label">Search for a tune</label>
 					<div class="header-button-container">
@@ -51,12 +53,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div
-			class="hiddenMessage"
-			v-if="headerDisplayState === false"
-			@click="toggleHeader"
-			style="text-align: center; position: relative;"
-		>Show Header</div>-->
 	</div>
 </template>
 <script>
@@ -104,6 +100,10 @@ export default {
 		};
 	},
 	methods: {
+		vuexTest() {
+			console.log(this.$store);
+		},
+
 		listenForAuthChange() {
 			const auth = firebase.auth();
 			// const firebaseUser = auth.currentUser;
@@ -257,6 +257,7 @@ export default {
 		this.loginSubmitted();
 		this.appDeleteSong();
 		this.updateSongDetails();
+		this.vuexTest();
 	}
 };
 </script>
@@ -344,12 +345,14 @@ body {
 	box-sizing: border-box;
 	margin: 0;
 	height: 100%;
-	height: 100vh;
+	height: 100%;
 	padding: 0;
 	background: rgba(54, 46, 121, 0.705);
 	box-shadow: 0px 0px 1000px 40px inset rgba(22, 21, 95, 0.664);
 }
-
+a {
+	text-decoration: none;
+}
 #app {
 	box-sizing: content-box;
 	-webkit-font-smoothing: antialiased;
@@ -382,6 +385,14 @@ body {
 
 .header1 {
 	margin: 0px;
+}
+.logo1:hover {
+	text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.397);
+	transition: 0.3s ease;
+}
+.logo2:hover {
+	text-shadow: 0px 0px 6px rgba(59, 59, 59, 0.986);
+	transition: 0.3s ease;
 }
 h1 {
 	display: flex;

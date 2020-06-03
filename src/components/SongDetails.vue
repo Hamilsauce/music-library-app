@@ -23,7 +23,7 @@
 						type="text"
 						name="duration-input"
 						id="duration-input"
-						class="duration-input"
+						class="duration-input edit-input"
 					/>
 				</div>
 
@@ -36,7 +36,7 @@
 						type="text"
 						name="plays-input"
 						id="plays-input"
-						class="plays-input"
+						class="plays-input edit-input"
 					/>
 				</div>
 			</div>
@@ -51,7 +51,7 @@
 						type="text"
 						name="id-input"
 						id="id-input"
-						class="id-input"
+						class="id-input edit-input"
 					/>
 				</div>
 
@@ -64,7 +64,7 @@
 						type="text"
 						name="songTitle-input"
 						id="songTitle-input"
-						class="songTitle-input"
+						class="songTitle-input edit-input"
 					/>
 				</div>
 			</div>
@@ -79,7 +79,7 @@
 						type="text"
 						name="published-input"
 						id="published-input"
-						class="published-input"
+						class="published-input edit-input"
 					/>
 				</div>
 				<div class="detail-group genre-group">
@@ -91,7 +91,7 @@
 						type="text"
 						name="genre-input"
 						id="genre-input"
-						class="genre-input"
+						class="genre-input edit-input"
 					/>
 				</div>
 				<div class="detail-group artist-group">
@@ -103,7 +103,7 @@
 						type="text"
 						name="artist-input"
 						id="artist-input"
-						class="artist-input"
+						class="artist-input edit-input"
 					/>
 				</div>
 			</div>
@@ -114,13 +114,13 @@
 						class="description-content cell-body"
 						v-if="editing === false"
 					>{{songData.description || "Not a description to be had."}}</div>
-					<input
+					<textarea
 						v-else-if="editing === true"
 						type="text"
 						v-model="songData.description"
 						name="description-input"
 						id="description-input"
-						class="description-input"
+						class="description-input edit-input"
 					/>
 				</div>
 
@@ -138,14 +138,16 @@
 						type="text"
 						name="audioUrl-input"
 						id="audioUrl-input"
-						class="audioUrl-input"
+						class="audioUrl-input edit-input"
 					/>
 				</div>
 			</div>
 
 			<div class="action-list">
 				<div class="action-item editButton" @click="toggleEditMode">{{editButtonText}}</div>
-				<div class="action-item newButton" @click="handleNewSongClick">New</div>
+				<router-link class="routerLink" to="/newsong">
+					<div class="action-item newButton" @click="handleNewSongClick">New</div>
+				</router-link>
 				<div class="action-item deleteButton" @click="toggleDeletePrompt">Delete</div>
 			</div>
 		</div>
@@ -160,7 +162,7 @@ export default {
 	components: {},
 	props: {
 		song: Object,
-		songId: Number
+		songId: undefined
 	},
 	data() {
 		return {
@@ -190,9 +192,7 @@ export default {
 				this.editButtonText = "Edit";
 			}
 		},
-		handleNewSongClick() {
-			this.showDeletePrompt = !this.showDeletePrompt;
-		}
+		handleNewSongClick() {}
 	},
 	computed: {
 		//*Copies incoming song object data, making it available for modification so that users cna edit it
@@ -223,8 +223,12 @@ export default {
 	touch-action: manipulation;
 	outline: none;
 	font-size: 1em;
+	font-family: "Montserrat", sans-serif;
 }
-
+a {
+	text-decoration: none;
+	color: white;
+}
 .details-container {
 	position: relative;
 	width: 100%;
@@ -239,14 +243,15 @@ export default {
 .SongDetails {
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 33px 1fr 2fr 1fr 1fr 34px;
-	gap: 1px;
+	grid-template-rows: 40px 1fr 1fr 1fr 1fr 34px;
+	gap: 0px;
+	justify-content: space-;
 	padding: 1px;
 	color: rgb(66, 65, 65);
 	background: rgb(240, 233, 222);
 	border-radius: 3px;
 	border: 1px solid rgb(255, 255, 255);
-	font-size: 0.85em;
+	font-size: 1em;
 	max-height: 515px;
 	font-weight: 400;
 	transition: 200ms box-shadow ease-out, 225ms background ease, 200ms border ease,
@@ -351,13 +356,19 @@ export default {
 .detail {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-around;
 	padding: 5px 15px;
 	border: 1px solid rgba(255, 255, 255, 0.836);
 	border-bottom: 2px solid rgba(255, 255, 255, 0.836);
 	word-wrap: break-word;
 	transition: 0.3s;
 	user-select: text;
+}
+
+.edit-input {
+	padding: 3px;
+	font-family: "Montserrat", sans-serif;
+	font-size: 0.9rem;
 }
 .caption {
 	font-weight: 500;
@@ -385,6 +396,10 @@ export default {
 }
 .detail3 {
 	grid-area: det3;
+	padding: 20px auto;
+}
+.detail3 div {
+	margin-bottom: 5px;
 }
 .detail4 {
 	grid-area: det4;
@@ -408,12 +423,17 @@ export default {
 .description-content {
 	font-size: 0.9em;
 }
+.description-input {
+	font-family: "Montserrat", sans-serif;
+	font-size: 0.9rem;
+	resize: none;
+}
 .upper.caption {
 	text-align: left;
 	letter-spacing: 2px;
 	height: fit-content;
 	padding: 0;
-	margin-bottom: 3px;
+	margin-bottom: 0px;
 }
 
 .url-group {
@@ -429,7 +449,7 @@ export default {
 }
 .urlLabel {
 	letter-spacing: 2px;
-	margin-bottom: 3px;
+	margin-bottom: 0px;
 }
 .urlContainer {
 	width: 100%;

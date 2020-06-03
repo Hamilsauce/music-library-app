@@ -3,13 +3,17 @@ import App from './App.vue'
 import router from './router';
 import * as firebase from 'firebase';
 import vClickOutside from 'v-click-outside'
+import store from '@/store'
 
 Vue.use(vClickOutside)
 Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App),
+
+
   created() {
     firebase.initializeApp({
       apiKey: "AIzaSyC6vTWeKm37XxoqzOyAEbNUs_60XK0xAjI",
