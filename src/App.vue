@@ -53,6 +53,12 @@
 				</div>
 			</div>
 		</div>
+		<!-- <div
+			class="hiddenMessage"
+			v-if="headerDisplayState === false"
+			@click="toggleHeader"
+			style="text-align: center; position: relative;"
+		>Show Header</div>-->
 	</div>
 </template>
 <script>
@@ -100,10 +106,6 @@ export default {
 		};
 	},
 	methods: {
-		vuexTest() {
-			console.log(this.$store);
-		},
-
 		listenForAuthChange() {
 			const auth = firebase.auth();
 			// const firebaseUser = auth.currentUser;
@@ -157,10 +159,10 @@ export default {
 		},
 		listenForActiveSong() {
 			EventBus.$on("songActivated", songData => {
-				let activeSongName = songData[0];
+				let activeSongId = songData[0];
 
 				let songObj = this.songs.find(song => {
-					return song.songTitle === activeSongName;
+					return song.id === activeSongId;
 				});
 				songObj.plays++;
 				this.saveToFirebase(songObj);
@@ -257,7 +259,6 @@ export default {
 		this.loginSubmitted();
 		this.appDeleteSong();
 		this.updateSongDetails();
-		this.vuexTest();
 	}
 };
 </script>

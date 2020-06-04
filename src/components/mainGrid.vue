@@ -7,7 +7,7 @@
 				v-for="song in refinedSongList"
 				:key="song.id"
 				:song="song"
-				:selectedSong="selectedSong"
+				:selectedSongId="selectedSongId"
 				@songCellActivated="handleActiveSong"
 				@showSongDetails="showSongDetails"
 			></work-cell>
@@ -28,7 +28,7 @@ export default {
 			songsFiltered: "",
 			sortCriteria: String,
 			displayDimmer: false,
-			selectedSong: null //* gets its value from workcell click event, used by all workcells as reference
+			selectedSongId: null //* gets its value from workcell click event, used by all workcells as reference
 		};
 	},
 	props: {
@@ -43,20 +43,20 @@ export default {
 			});
 		},
 		handleActiveSong(songInfo) {
-			let [urlOrError, songName] = songInfo;
+			let [urlOrError, selectedSongId, selectedSongName] = songInfo;
 
-			if (this.selectedSong != songName) {
+			if (this.selectedSongId != selectedSongId) {
 				if (urlOrError[0] === "url") {
 					let songUrl = urlOrError[1];
-					let playSong = [songName, songUrl];
+					let playSong = [selectedSongId, songUrl, selectedSongName];
 					EventBus.$emit("songActivated", playSong);
 				} else {
 					let noUrl = urlOrError[1];
-					let playSong = [songName, noUrl];
+					let playSong = [selectedSongId, noUrl, selectedSongName];
 					EventBus.$emit("songActivated", playSong);
 				}
 			}
-			this.selectedSong = songName;
+			this.selectedSongId = selectedSongId;
 		},
 		showSongDetails(songTitle) {
 			this.displayDimmer = true;
@@ -94,6 +94,19 @@ export default {
 		// return filtered;
 	},
 	computed: {
+		//! USES VUEX
+		// filterInput() {
+		// 	return this.$store.state.filterValue;
+		// },
+		//! USES VUEX
+		// refinedSongList2: function() {
+		// 	let filtered = this.$store.getters.getSongs.filter(song => {
+		// 		return (
+		// 			song.songTitle.toUpperCase().indexOf(this.filterInput.toUpperCase()) >= 0
+		// 		);
+		// 	});
+		// 	return filtered;
+		// },
 		refinedSongList: function() {
 			let filtered = this.songs.filter(song => {
 				return (

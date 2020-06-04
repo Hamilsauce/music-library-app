@@ -45,7 +45,7 @@ export default {
 	components: {},
 	props: {
 		song: Object,
-		selectedSong: String
+		selectedSongId: Number
 	},
 	data() {
 		return {
@@ -65,6 +65,7 @@ export default {
 				urlOrError = ["error", "noUrl"];
 				songInfo.push(urlOrError);
 			}
+			songInfo.push(this.song.id);
 			songInfo.push(this.song.songTitle);
 			this.$emit("songCellActivated", songInfo);
 		},
@@ -86,7 +87,7 @@ export default {
 	},
 	computed: {
 		activated: function() {
-			return this.selectedSong === this.song.songTitle;
+			return this.selectedSongId === this.song.id;
 		},
 		cleanedAudioUrl() {
 			let urlValue = "";
