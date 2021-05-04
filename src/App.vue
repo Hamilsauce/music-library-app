@@ -248,6 +248,7 @@ export default {
 
 			// elem.selectText();
 		}
+
 	},
 	created() {
 		this.listenForAuthChange();

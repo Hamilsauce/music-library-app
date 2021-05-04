@@ -1,7 +1,11 @@
 <template>
 	<section class="toolbar">
 		<div class="top-bar">
-			<div class="expand-button" @click="toggleBottomBar" title="Click here to show more options!">
+			<div
+				class="expand-button"
+				@click="toggleBottomBar"
+				title="Click here to show more options!"
+			>
 				<i class="fas fa-caret-square-down"></i>
 			</div>
 			<div class="top-bar-div title-container">
@@ -10,7 +14,8 @@
 						class="song-title"
 						v-show="safeReveal === true"
 						:class="{ fadeTitle: displayPlayingMessage }"
-					>{{ songTitle }}</span>
+						>{{ songTitle }}</span
+					>
 				</transition>
 				<!-- <span
 					class="now-playing-message"
@@ -39,7 +44,10 @@
 			</div>
 		</div>
 		<transition name="fade">
-			<div class="bottom-bar" :style="{height: expandBottomBar === true ? '30px' : '0px' }">
+			<div
+				class="bottom-bar"
+				:style="{ height: expandBottomBar === true ? '30px' : '0px' }"
+			>
 				<div class="grid-cell">
 					<div class="tooltip">
 						<button
@@ -72,11 +80,21 @@
 							</svg>
 						</button>
 					</div>
-					<input class="download-button" type="button" name="download-button" value="download" />
+					<input
+						class="download-button"
+						type="button"
+						name="download-button"
+						value="download"
+					/>
 				</div>
 
 				<div class="grid-cell">
-					<input type="text" v-model="audioSrc" value="no active song" class="songUrlText" />
+					<input
+						type="text"
+						v-model="audioSrc"
+						value="no active song"
+						class="songUrlText"
+					/>
 				</div>
 			</div>
 		</transition>
@@ -175,7 +193,15 @@ export default {
 				shareMsg = `The link for '${this.songTitle}' has been copied to your clipboard!`;
 			}
 			alert(shareMsg);
-		}
+		},
+		// downloadSong() {
+		// 	const downloading = browser.downloads.download({
+		// 		url: this.songUrl,
+		// 		filename: `${this.songTitle}.mp3`,
+		// 		conflictAction: "uniquify"
+		// 	});
+		// 	downloading.then()
+		// }
 	},
 
 	computed: {
