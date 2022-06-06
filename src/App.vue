@@ -447,7 +447,7 @@ i:active {
 
 .MainGrid {
 	box-sizing: border-box;
-	max-height: 560px;
+	/* max-height: 560px; */
 	width: 100%;
 	border: 1px solid var(--transparentBlue);
 	overflow: auto;
@@ -460,7 +460,8 @@ i:active {
 .body-row {
 	display: flex;
 	border-radius: 10px 10px;
-	height: 515px;
+	max-height: 700px;
+	overflow: hidden;
 }
 
 .shell-head {
@@ -575,12 +576,15 @@ a {
 
 	#app {
 		padding: 0px 0px 0px 0px;
+	overflow: hidden;
+
 	}
 	.MainGrid {
 		box-sizing: border-box;
 		overflow: auto;
 		border-radius: 5px;
 		height: 140vw;
+	overflow: hidden;
 		border-radius: 5px 5px;
 	}
 
@@ -599,6 +603,7 @@ a {
 		max-width: 100vw;
 		/* height: 175vw; */
 		height: fit-content;
+	overflow: hidden;
 		padding: 0px 0px 15px 8px;
 		border-radius: 5px 5px 15px 15px;
 	}

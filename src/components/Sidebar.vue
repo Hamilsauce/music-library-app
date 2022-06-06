@@ -182,7 +182,8 @@ h3 {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	height: 525px;
+	/* height: 525px; */
+	height: 100%;
 	width: 0px;
 	padding-top: 5px;
 	margin: 0px;
